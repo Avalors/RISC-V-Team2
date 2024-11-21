@@ -1,1 +1,25 @@
+# Team Progress
 
+This file will note down **major meetups** and breakdown the progress completed by those meetups. Note that only meetings with all 4 members present will be documented in this file.
+
+## Lab meetup (14/11)
+  - Discussed and allocated lab 4 parts to team members
+    ![Alt text](../../images/topsv.png)
+    ![image](https://github.com/user-attachments/assets/4229391c-f2dd-4d15-9164-3958981c14b4)
+
+  - Team goals:
+    1. Lab 4 design
+    2. Single cycle
+    3. Pipeline
+    4. Hazard detection, stall, flush
+    5. Cache memory & branch prediction
+
+## Lab meetup (21/11)
+  - Lab 4 parts were mostly completed before the lab meetup
+  - Some amendments were made such as amending the control unit and instruction memory files (Jihwan & Ahmed), whilst Elson and Antoine worked on role allocation and reformatting the repo. 
+  - Main issues discussed during meeting:
+    - In what order should do everything
+    - Set a timeline
+    - Split roles, set what should be done individually, what should be done collectively
+    - Start tracking logbooks for team meetings
+    - Meet 3 times a week to keep the momentum going for the project
