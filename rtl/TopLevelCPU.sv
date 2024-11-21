@@ -11,7 +11,8 @@ module TopLevelCPU (
     logic [31:0] ALUop1, ALUop2, ALUout;  // ALU operands and result
     logic EQ;                             // Equality output from ALU
     logic [31:0] RD1, RD2, WD3;           // Register file read/write data
-    logic RegWrite, ALUsrc, PCsrc, Immsrc; // Control signals
+    logic RegWrite, ALUsrc, PCsrc;        // Control signals
+    logic [1:0] ImmSrc;                   // 2-bit Immediate source signal
     logic [2:0] ALUctrl;                  // ALU control signal
 
     // Program Counter
@@ -24,16 +25,21 @@ module TopLevelCPU (
     );
 
     // Instruction Memory (asynchronous read)
-    rom #(.A(5), .RD(32)) InstructionMemory (
+    rom #(
+        .ADDRESS_WIDTH(5),
+        .DATA_WIDTH(32)
+    ) InstructionMemory (
         .clk(clk),
         .addr(PC[6:2]), // Address from PC (word-aligned)
         .instr(instr)
     );
 
     // Sign Extension Unit
-    signextension #(.DATA_WIDTH(32)) SignExtender (
+    signextension #(
+        .DATA_WIDTH(32)
+    ) SignExtender (
         .ImmI(instr[31:20]), // Immediate field from instruction
-        .ImmSrc(Immsrc),
+        .ImmSrc(ImmSrc[0]),  // Only the least significant bit is used
         .ImmOp(ImmOp)
     );
 
@@ -67,14 +73,14 @@ module TopLevelCPU (
     );
 
     // Instruction Decoder (Control Unit)
-    InstructionDecoder ControlUnit (
-        .eq(EQ),                // Equality signal from ALU
-        .instr(instr),          // Current instruction
-        .Regwrite(RegWrite),    // Register write enable
-        .ALUctrl(ALUctrl),      // ALU control signal
+    ControlUnit ControlUnit (
+        .opcode(instr[6:0]),    // Opcode from instruction
+        .EQ(EQ),                // Equality signal from ALU
+        .RegWrite(RegWrite),    // Register write enable
         .ALUsrc(ALUsrc),        // ALU source select
-        .Immsrc(Immsrc),        // Immediate source select
-        .PCsrc(PCsrc)           // Program Counter source select
+        .ImmSrc(ImmSrc),        // Immediate source select
+        .PCsrc(PCsrc),          // Program Counter source select
+        .ALUctrl(ALUctrl)       // ALU control signal
     );
 
     // Output register a0 (Register 10)
