@@ -5,6 +5,7 @@ This file will note down **major meetups** and breakdown the progress completed 
 ## Lab meetup (14/11)
   - Discussed and allocated lab 4 parts to team members
     ![Alt text](../../images/topsv.png)
+    This covers the role allocation for lab 4 only
     ![image](https://github.com/user-attachments/assets/4229391c-f2dd-4d15-9164-3958981c14b4)
 
   - Team goals:
@@ -20,6 +21,12 @@ This file will note down **major meetups** and breakdown the progress completed 
   - Main issues discussed during meeting:
     - In what order should do everything
     - Set a timeline
-    - Split roles, set what should be done individually, what should be done collectively
+    - Split roles, set what should be done individually, what should be done collectively (namely pipelining, cache & branch prediction)
     - Start tracking logbooks for team meetings
     - Meet 3 times a week to keep the momentum going for the project
+    - We decided to each individually test our own modules, Jihwan (in charge of the testbench) would mainly be focused on the integration for example.
+    - In terms of role allocation:
+        - Antoine: ALU
+        - Elson: Register File
+        - Ahmed: Control Unit
+        - Jihwan: Integration and integrated testbenching
