@@ -12,7 +12,7 @@ module TopLevelCPU (
     logic EQ;                             // Equality output from ALU
     logic [31:0] RD1, RD2, WD3;           // Register file read/write data
     logic RegWrite, ALUsrc, PCsrc, Immsrc; // Control signals
-    logic [3:0] ALUctrl;                  // ALU control signal
+    logic [2:0] ALUctrl;                  // ALU control signal
 
     // Program Counter
     program_counter #(.WIDTH(32)) PC_Reg (
