@@ -20,4 +20,4 @@ module program_counter#(
         next_PC = PCsrc ? branch_PC:inc_PC;
     end
     
-endmodule
+endmodule 
