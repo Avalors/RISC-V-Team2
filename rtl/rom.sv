@@ -25,4 +25,4 @@ always_ff @(posedge clk)
     // output is synchronous 
     instr <= rom_array [addr];
 
-endmodule
+endmodule 
