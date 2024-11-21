@@ -71,4 +71,4 @@ Note: The following evidence was collected from running `tag v0.4.0`, the
 |              | Instruction Memory            |                    |                  |                          | x               |
 |              | Control Unit                  |                    |                  |  x                        | x               |
 |              | Sign Extend                   |                    |                  |                          |x               |
-|              | Testbench                     |   x                 | x               | x                         | x                 |
+|              | Testbench                     |   x                 |                |                          |                  |
