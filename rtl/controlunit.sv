@@ -1,40 +1,47 @@
-module ControlUnit (
-    input logic [6:0] opcode,        
-    input logic EQ,             
-    output logic RegWrite,        
-    output logic ALUsrc,             
-    output logic [1:0] ImmSrc,        
-    output logic PCsrc,              
-    output logic [2:0] ALUctrl        
+module controlunit (
+    input  logic [6:0] opcode,
+    input  logic       EQ,
+    output logic       RegWrite,
+    output logic       ALUsrc,
+    output logic [1:0] ImmSrc,
+    output logic       PCsrc,
+    output logic [2:0] ALUctrl
 );
-
+    // Explicit RISC-V opcodes
+    localparam OP_IMM   = 7'b0010011;  // ADDI and other immediate ALU ops
+    localparam OP_JAL   = 7'b1101111;  // JAL
+    
     always_comb begin
-        RegWrite = 0;
-        ALUsrc = 0;
+        // Default values (prevent latches)
+        RegWrite = 1'b0;
+        ALUsrc = 1'b0;
         ImmSrc = 2'b00;
-        PCsrc = 0;    
-        ALUctrl = 3'b000; 
+        PCsrc = 1'b0;
+        ALUctrl = 3'b000;
 
         case (opcode)
-            7'b0010011: begin // addi (I-type)
-                RegWrite = 1;
-                ALUsrc = 1; 
-                ImmSrc = 2'b00; 
-                PCsrc = 0; 
-                ALUctrl = 3'b000; 
+            OP_IMM: begin
+                // ADDI instruction settings
+                RegWrite = 1'b1;  // Enable register write
+                ALUsrc = 1'b1;    // Use immediate as second operand
+                ImmSrc = 2'b00;   // I-type immediate
+                PCsrc = 1'b0;     // Normal PC increment
+                ALUctrl = 3'b000; // Addition operation
             end
-            7'b1100011: begin // bne (B-type)
-                RegWrite = 0;
-                ALUsrc = 0; 
-                ImmSrc = 2'b01; 
-                PCsrc = EQ ? 0 : 1; 
-                ALUctrl = 3'b001; 
+            
+            OP_JAL: begin
+                RegWrite = 1'b0;  // No register write for simple JAL
+                ALUsrc = 1'b0;    // Don't care
+                ImmSrc = 2'b11;   // J-type immediate
+                PCsrc = 1'b1;     // Take the jump
+                ALUctrl = 3'b000; // Don't care
             end
+
             default: begin
-                RegWrite = 0;
-                ALUsrc = 0;
+                RegWrite = 1'b0;
+                ALUsrc = 1'b0;
                 ImmSrc = 2'b00;
-                PCsrc = 0;
+                PCsrc = 1'b0;
                 ALUctrl = 3'b000;
             end
         endcase

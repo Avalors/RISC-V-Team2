@@ -3,7 +3,7 @@ module mux #(
 )(
     input logic [DATA_WIDTH-1:0] in0,
     input logic [DATA_WIDTH-1:0] in1,
-    input logic                  se1,
+    input logic                  sel,
     output logic [DATA_WIDTH-1:0] out
 );
 

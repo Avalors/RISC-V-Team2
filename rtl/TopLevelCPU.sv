@@ -1,3 +1,4 @@
+/* verilator lint_off SYNCASYNCNET */
 module TopLevelCPU (
     input logic clk,          // Clock signal
     input logic rst,          // Reset signal
@@ -11,7 +12,8 @@ module TopLevelCPU (
     logic [31:0] ALUop1, ALUop2, ALUout;  // ALU operands and result
     logic EQ;                             // Equality output from ALU
     logic [31:0] RD1, RD2, WD3;           // Register file read/write data
-    logic RegWrite, ALUsrc, PCsrc, Immsrc; // Control signals
+    logic RegWrite, ALUsrc, PCsrc;        // Control signals
+    logic [1:0] ImmSrc;                   // 2-bit Immediate source signal
     logic [2:0] ALUctrl;                  // ALU control signal
 
     // Program Counter
@@ -24,60 +26,68 @@ module TopLevelCPU (
     );
 
     // Instruction Memory (asynchronous read)
-    rom #(.A(5), .RD(32)) InstructionMemory (
+    rom #(
+        .ADDRESS_WIDTH(5),
+        .DATA_WIDTH(32)
+    ) InstructionMemory (
         .clk(clk),
-        .addr(PC[6:2]), // Address from PC (word-aligned)
+        .addr(PC[6:2]),
         .instr(instr)
     );
 
     // Sign Extension Unit
-    signextension #(.DATA_WIDTH(32)) SignExtender (
-        .ImmI(instr[31:20]), // Immediate field from instruction
-        .ImmSrc(Immsrc),
+    signextension #(
+        .DATA_WIDTH(32)
+    ) SignExtender (
+        .ImmI(instr[31:20]),
+        .ImmSrc(ImmSrc[0]),
         .ImmOp(ImmOp)
     );
 
-    // Register File
-    RegisterFile RegFile (
+    // Register File with reset
+    registerfile RegFile (
         .clk(clk),
-        .WE3(RegWrite),         // Write Enable
-        .AD1(instr[19:15]),     // rs1
-        .AD2(instr[24:20]),     // rs2
-        .AD3(instr[11:7]),      // rd
-        .WD3(WD3),              // Data to write
-        .RD1(RD1),              // Data read from rs1
-        .RD2(RD2)               // Data read from rs2
+        .rst(rst),
+        .WE3(RegWrite),
+        .AD1(instr[19:15]),
+        .AD2(instr[24:20]),
+        .AD3(instr[11:7]),
+        .WD3(WD3),
+        .RD1(RD1),
+        .RD2(RD2),
+        .a0(a0)
     );
 
     // ALU Operand MUX
     mux #(.DATA_WIDTH(32)) ALUOperandMux (
-        .in0(RD2),              // rs2 value
-        .in1(ImmOp),            // Immediate value
-        .sel(ALUsrc),           // Select signal
-        .out(ALUop2)            // Output to ALU
+        .in0(RD2),
+        .in1(ImmOp),
+        .sel(ALUsrc),
+        .out(ALUop2)
     );
 
     // ALU
     ALU ArithmeticLogicUnit (
-        .ALUop1(RD1),           // rs1 value
-        .ALUop2(ALUop2),        // ALU operand
-        .ALUctrl(ALUctrl),      // Control signal
-        .Result(ALUout),        // ALU output
-        .EQ(EQ)                 // Equality flag
+        .ALUop1(RD1),
+        .ALUop2(ALUop2),
+        .ALUctrl(ALUctrl),
+        .Result(ALUout),
+        .EQ(EQ)
     );
 
-    // Instruction Decoder (Control Unit)
-    InstructionDecoder ControlUnit (
-        .eq(EQ),                // Equality signal from ALU
-        .instr(instr),          // Current instruction
-        .Regwrite(RegWrite),    // Register write enable
-        .ALUctrl(ALUctrl),      // ALU control signal
-        .ALUsrc(ALUsrc),        // ALU source select
-        .Immsrc(Immsrc),        // Immediate source select
-        .PCsrc(PCsrc)           // Program Counter source select
+    // Control Unit
+    controlunit controlunit (
+        .opcode(instr[6:0]),
+        .EQ(EQ),
+        .RegWrite(RegWrite),
+        .ALUsrc(ALUsrc),
+        .ImmSrc(ImmSrc),
+        .PCsrc(PCsrc),
+        .ALUctrl(ALUctrl)
     );
 
-    // Output register a0 (Register 10)
-    assign a0 = RegFile.register[10]; // Register a0 output
+    // Write back
+    assign WD3 = ALUout;
 
 endmodule
+/* verilator lint_on SYNCASYNCNET */
