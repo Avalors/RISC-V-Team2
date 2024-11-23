@@ -10,7 +10,7 @@
 
 
 
-NB: 
+NB for wsl: 
 Install the necessary tools if you haven't already:
 sudo apt-get update
 sudo apt-get install lcov verilator
