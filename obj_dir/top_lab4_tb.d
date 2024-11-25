@@ -1,4 +1,5 @@
-top_lab4_tb.o: /mnt/c/Users/aa_dc/RISC-V-Team2/tb/test/top_lab4_tb.cpp \
+top_lab4_tb.o: \
+ /home/ahmed/Documents/iac/RISC-V-Team2/tb/test/top_lab4_tb.cpp \
  Vtop_lab4.h /usr/local/share/verilator/include/verilated.h \
  /usr/local/share/verilator/include/verilatedos.h \
  /usr/local/share/verilator/include/verilated_config.h \

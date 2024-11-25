@@ -15,7 +15,7 @@ module program_counter #(
             if (PCsrc)
                 PC <= PC + ImmOp;  // Branch/Jump
             else
-                PC <= PC + 32'd4;  // Normal increment
+                PC <= PC + 32'd1;  // Normal increment
         end
     end
 

@@ -424,7 +424,7 @@ VL_INLINE_OPT void Vtop_lab4___024root___sequent__TOP__0(Vtop_lab4___024root* vl
             ((IData)(vlSelf->TopLevelCPU__DOT__PCsrc)
               ? (vlSelf->TopLevelCPU__DOT__PC_Reg__DOT__PC 
                  + vlSelf->TopLevelCPU__DOT__ImmOp)
-              : ((IData)(4U) + vlSelf->TopLevelCPU__DOT__PC_Reg__DOT__PC));
+              : ((IData)(1U) + vlSelf->TopLevelCPU__DOT__PC_Reg__DOT__PC));
     }
     if (__Vdlyvset__TopLevelCPU__DOT__RegFile__DOT__registers__v0) {
         vlSelf->TopLevelCPU__DOT__RegFile__DOT__registers[0U] = 0U;

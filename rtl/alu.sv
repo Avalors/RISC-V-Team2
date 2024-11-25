@@ -1,4 +1,4 @@
-module ALU (
+module alu (
     input  logic [31:0] ALUop1,    
     input  logic [31:0] ALUop2,    
     input  logic [2:0]  ALUctrl,    

@@ -67,7 +67,7 @@ module TopLevelCPU (
     );
 
     // ALU
-    ALU ArithmeticLogicUnit (
+    alu ArithmeticLogicUnit (
         .ALUop1(RD1),
         .ALUop2(ALUop2),
         .ALUctrl(ALUctrl),
