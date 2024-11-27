@@ -11,7 +11,7 @@ module signextension #(
         ImmOp = {{20{ImmI[11]}}, ImmI};
         
         // Debug print
-        $display("Sign Extension: Input = %h, Output = %h", ImmI, ImmOp);
+        //$display("Sign Extension: Input = %h, Output = %h", ImmI, ImmOp);
     end
 
 endmodule

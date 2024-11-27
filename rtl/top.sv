@@ -1,5 +1,5 @@
 /* verilator lint_off SYNCASYNCNET */
-module TopLevelCPU (
+module top (
     input logic clk,          // Clock signal
     input logic rst,          // Reset signal
     output logic [31:0] a0    // Contents of register a0 (output)
