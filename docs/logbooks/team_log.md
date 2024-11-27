@@ -30,3 +30,12 @@ This file will note down **major meetups** and breakdown the progress completed 
         - Elson: Register File
         - Ahmed: Control Unit
         - Jihwan: Integration and integrated testbenching
+
+## Team meetup (27/11)
+  - We met for several hours in order to debug our code, including the possibility of using gtkwave
+  - We implemented modules from the repo provided by the UTAs
+  - We edited the modules and testbenches we previously had
+  - We went from 1 out of 6 test cases passed to 3 out of 4 
+  - We started discussing implementing the hazard control and pipelining later on
+    ![1000011679](https://github.com/user-attachments/assets/a1fe9d1a-9d5f-44af-a730-6e390b1e6e52)
+
