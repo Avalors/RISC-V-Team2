@@ -9,18 +9,27 @@
 5) View the generated coverage report in logs/html/index.html.
 
 
+**NB:**
+**Install the necessary tools if you haven't already:**
 
-NB for wsl: 
-Install the necessary tools if you haven't already:
 sudo apt-get update
 sudo apt-get install lcov verilator
 
-Create the logs directory with proper permissions:
+**Create the logs directory with proper permissions:**
+
 mkdir -p logs
+
 chmod 777 logs
 
-Install dos2unix if you don't have it:
-sudo apt-get install dos2unix
+**Install dos2unix if you don't have it (for wsl):**
 
-Convert the file:
+apt-get update
+
+apt-get install dos2unix
+
 dos2unix doit.sh
+
+chmod +x doit.sh
+
+
+This converts the Windows line endings to Unix-style, resolving the interpreter error.
