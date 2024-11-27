@@ -28,6 +28,9 @@ class Vdut__Syms final : public VerilatedSyms {
     // MODULE INSTANCE STATE
     Vdut___024root                 TOP;
 
+    // COVERAGE
+    uint32_t __Vcoverage[290];
+
     // CONSTRUCTORS
     Vdut__Syms(VerilatedContext* contextp, const char* namep, Vdut* modelp);
     ~Vdut__Syms();

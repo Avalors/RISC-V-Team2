@@ -8,7 +8,7 @@
 # C11 constructs required?  0/1 (always on now)
 VM_C11 = 1
 # Coverage output mode?  0/1 (from --coverage)
-VM_COVERAGE = 0
+VM_COVERAGE = 1
 # Parallel builds?  0/1 (from --output-split)
 VM_PARALLEL_BUILDS = 0
 # Threaded output mode?  0/1/N threads (from --threads)
@@ -24,12 +24,13 @@ VM_TRACE_FST = 0
 # Generated module classes, fast-path, compile with highest optimization
 VM_CLASSES_FAST += \
 	Vdut \
+	Vdut___024root__DepSet_h96d12fb6__0 \
 	Vdut___024root__DepSet_h5056ad81__0 \
 
 # Generated module classes, non-fast-path, compile with low/medium optimization
 VM_CLASSES_SLOW += \
-	Vdut__ConstPool_0 \
 	Vdut___024root__Slow \
+	Vdut___024root__DepSet_h96d12fb6__0__Slow \
 	Vdut___024root__DepSet_h5056ad81__0__Slow \
 
 # Generated support classes, fast-path, compile with highest optimization
@@ -44,6 +45,7 @@ VM_SUPPORT_SLOW += \
 # Global classes, need linked once per executable, fast-path, compile with highest optimization
 VM_GLOBAL_FAST += \
 	verilated \
+	verilated_cov \
 	verilated_vcd_c \
 
 # Global classes, need linked once per executable, non-fast-path, compile with low/medium optimization

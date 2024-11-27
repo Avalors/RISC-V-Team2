@@ -1,187 +1,118 @@
-#include "Valu.h"
-#include "verilated.h"
-#include "verilated_cov.h"
-#include "gtest/gtest.h"
+#include "base_testbench.h"
+#include <verilated_cov.h>
 
 #define NAME            "alu"
 
-#define OPCODE_ADD      0b0000
-#define OPCODE_SUB      0b0001
-#define OPCODE_AND      0b0010
-#define OPCODE_OR       0b0011
-#define OPCODE_XOR      0b0100
-#define OPCODE_LSL      0b0101
-#define OPCODE_LSR      0b0110
-#define OPCODE_ASR      0b0111
-#define OPCODE_SLT      0b1000
-#define OPCODE_SLTU     0b1001
-#define OPCODE_B        0b1010
+#define OPCODE_ADD      0b000
+#define OPCODE_SUB      0b001
+#define OPCODE_AND      0b010
+#define OPCODE_OR       0b011
+#define OPCODE_SLT      0b101
 
-class ALUTestbench : public ::testing::Test {
+class ALUTestbench : public BaseTestbench
+{
 protected:
-    Valu* top;
-
-    void SetUp() override {
-        top = new Valu;
-        initializeInputs();
-    }
-
-    void TearDown() override {
-        delete top;
-    }
-
-    void initializeInputs() {
-        top->a = 0;
-        top->b = 0;
+    void initializeInputs() override
+    {
+        // Initialize the ALU inputs to 0
+        top->ALUop1 = 0;
+        top->ALUop2 = 0;
         top->ALUctrl = 0;
     }
 };
 
-TEST_F(ALUTestbench, AdditionTest) {
-    int op1 = 0x55555555;
-    int op2 = 0xAAAAAAAA;
+TEST_F(ALUTestbench, AdditionTest)
+{
+    int op1 = 5;
+    int op2 = 10;
     
-    top->a = op1;
-    top->b = op2;
+    // Set inputs for addition operation
+    top->ALUop1 = op1;
+    top->ALUop2 = op2;
     top->ALUctrl = OPCODE_ADD;
 
     top->eval();
 
-    EXPECT_EQ(top->ALUout, op1 + op2);
-    EXPECT_EQ(top->EQ, op1 + op2 == 0);
+    // Check the ALU result and EQ signal for addition
+    EXPECT_EQ(top->Result, op1 + op2);
+    EXPECT_EQ(top->EQ, (op1 + op2 == 0) ? 1 : 0);
 }
 
-TEST_F(ALUTestbench, SubtractionTest) {
-    int op1 = 0xAAAAAAAA;
-    int op2 = 0x55555555;
+TEST_F(ALUTestbench, SubtractionTest)
+{
+    int op1 = 5;
+    int op2 = 5;
     
-    top->a = op1;
-    top->b = op2;
+    // Set inputs for subtraction operation
+    top->ALUop1 = op1;
+    top->ALUop2 = op2;
     top->ALUctrl = OPCODE_SUB;
 
     top->eval();
 
-    EXPECT_EQ(top->ALUout, op1 - op2);
-    EXPECT_EQ(top->EQ, op1 - op2 == 0);
+    // Check the ALU result and EQ signal for subtraction
+    EXPECT_EQ(top->Result, op1 - op2);
+    EXPECT_EQ(top->EQ, (op1 - op2 == 0) ? 1 : 0);
 }
 
-TEST_F(ALUTestbench, BinaryAndTest) {
+TEST_F(ALUTestbench, BinaryAndTest)
+{
     int op1 = 0b0110;
     int op2 = 0b0101;
     
-    top->a = op1;
-    top->b = op2;
+    // Set inputs for binary AND operation
+    top->ALUop1 = op1;
+    top->ALUop2 = op2;
     top->ALUctrl = OPCODE_AND;
 
     top->eval();
 
-    EXPECT_EQ(top->ALUout, op1 & op2);
-    EXPECT_EQ(top->EQ, (op1 & op2) == 0);
+    // Check the ALU result and EQ signal for AND operation
+    EXPECT_EQ(top->Result, op1 & op2);
+    EXPECT_EQ(top->EQ, ((op1 & op2) == 0) ? 1 : 0);
 }
 
-TEST_F(ALUTestbench, BinaryOrTest) {
+TEST_F(ALUTestbench, BinaryOrTest)
+{
     int op1 = 0b0110;
     int op2 = 0b0101;
     
-    top->a = op1;
-    top->b = op2;
+    // Set inputs for binary OR operation
+    top->ALUop1 = op1;
+    top->ALUop2 = op2;
     top->ALUctrl = OPCODE_OR;
 
     top->eval();
 
-    EXPECT_EQ(top->ALUout, op1 | op2);
-    EXPECT_EQ(top->EQ, (op1 | op2) == 0);
+    // Check the ALU result and EQ signal for OR operation
+    EXPECT_EQ(top->Result, op1 | op2);
+    EXPECT_EQ(top->EQ, ((op1 | op2) == 0) ? 1 : 0);
 }
 
-TEST_F(ALUTestbench, BinaryXorTest) {
+TEST_F(ALUTestbench, SetIfLessThanTest)
+{
     int op1 = 0b0110;
     int op2 = 0b0101;
     
-    top->a = op1;
-    top->b = op2;
-    top->ALUctrl = OPCODE_XOR;
-
-    top->eval();
-
-    EXPECT_EQ(top->ALUout, op1 ^ op2);
-    EXPECT_EQ(top->EQ, (op1 ^ op2) == 0);
-}
-
-TEST_F(ALUTestbench, LogicalShiftLeftTest) {
-    int op1 = 0b0110;
-    int op2 = 4;
-    
-    top->a = op1;
-    top->b = op2;
-    top->ALUctrl = OPCODE_LSL;
-
-    top->eval();
-
-    EXPECT_EQ(top->ALUout, op1 << op2);
-    EXPECT_EQ(top->EQ, (op1 << op2) == 0);
-}
-
-TEST_F(ALUTestbench, LogicalShiftRightTest) {
-    unsigned int op1 = 0b0110;
-    unsigned int op2 = 4;
-    
-    top->a = op1;
-    top->b = op2;
-    top->ALUctrl = OPCODE_LSR;
-
-    top->eval();
-
-    EXPECT_EQ(top->ALUout, op1 >> op2);
-    EXPECT_EQ(top->EQ, (op1 >> op2) == 0);
-}
-
-TEST_F(ALUTestbench, ASRTest) {
-    int op1 = 0xffffd8f1;
-    int op2 = 0x5;
-    
-    top->a = op1;
-    top->b = op2;
-    top->ALUctrl = OPCODE_ASR;
-
-    top->eval();
-
-    EXPECT_EQ((int)top->ALUout, op1 >> op2);
-    EXPECT_EQ(top->EQ, op2 == 0);
-}
-
-TEST_F(ALUTestbench, SetIfLessThanTest) {
-    int op1 = 0b0110;
-    int op2 = 0b0101;
-    
-    top->a = op1;
-    top->b = op2;
+    // Set inputs for SLT (Set Less Than) operation
+    top->ALUop1 = op1;
+    top->ALUop2 = op2;
     top->ALUctrl = OPCODE_SLT;
 
     top->eval();
 
-    EXPECT_EQ(top->ALUout, (op1 < op2) ? 1 : 0);
-    EXPECT_EQ(top->EQ, (op1 < op2) == 0);
+    // Check the ALU result and EQ signal for SLT operation
+    EXPECT_EQ(top->Result, (op1 < op2) ? 0b1 : 0b0);
+    EXPECT_EQ(top->EQ, ((op1 < op2) ? 0b1 : 0b0) == 0 ? 1 : 0);
 }
 
-TEST_F(ALUTestbench, LoadUpperImmTest) {
-    int op1 = 0b0110;
-    int op2 = 0b1101;
-    
-    top->a = op1;
-    top->b = op2;
-    top->ALUctrl = OPCODE_B;
-
-    top->eval();
-
-    EXPECT_EQ(top->ALUout, op2);
-    EXPECT_EQ(top->EQ, op2 == 0);
-}
-
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
     Verilated::commandArgs(argc, argv);
     testing::InitGoogleTest(&argc, argv);
     Verilated::mkdir("logs");
     auto res = RUN_ALL_TESTS();
     VerilatedCov::write(("logs/coverage_" + std::string(NAME) + ".dat").c_str());
+
     return res;
 }

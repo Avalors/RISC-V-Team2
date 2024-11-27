@@ -9,6 +9,7 @@
 #define VERILATED_VDUT_H_  // guard
 
 #include "verilated.h"
+#include "verilated_cov.h"
 
 class Vdut__Syms;
 class Vdut___024root;
