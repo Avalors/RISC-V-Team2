@@ -35,7 +35,8 @@ This file will note down **major meetups** and breakdown the progress completed 
   - We met for several hours in order to debug our code, including the possibility of using gtkwave
   - We implemented modules from the repo provided by the UTAs
   - We edited the modules and testbenches we previously had
-  - We went from 1 out of 6 test cases passed to 3 out of 4 
+  - We went from 1 out of 6 test cases passed to 3 out of 4
+  - We managed to successfully debug many issues, ranging from the wrong number of bits, syntax errors, naming issues... - we used VSCode's LiveShare feature for this. It was a team effort which took many hours and the changes were committed by Antoine but it was a team task in which everyone got to participate.
   - We started discussing implementing the hazard control and pipelining later on
     ![1000011679](https://github.com/user-attachments/assets/a1fe9d1a-9d5f-44af-a730-6e390b1e6e52)
 
