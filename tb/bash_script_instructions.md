@@ -9,8 +9,9 @@
 5) View the generated coverage report in logs/html/index.html.
 
 
-NB for wsl: 
+NB:
 Install the necessary tools if you haven't already:
+
 sudo apt-get update
 sudo apt-get install lcov verilator
 
@@ -21,6 +22,7 @@ mkdir -p logs
 chmod 777 logs
 
 Install dos2unix if you don't have it (for wsl):
+
 apt-get update
 
 apt-get install dos2unix
