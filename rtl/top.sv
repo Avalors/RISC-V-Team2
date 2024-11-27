@@ -6,18 +6,18 @@ module top (
 );
 
     // Internal Signals
-    logic [31:0] PC;                      // Program Counter
+    logic [4:0] PC;                      // Program Counter
     logic [31:0] instr;                   // Current instruction
     logic [31:0] ImmOp;                   // Sign-extended immediate value
     logic [31:0] ALUop1, ALUop2, ALUout;  // ALU operands and result
     logic EQ;                             // Equality output from ALU
-    logic [31:0] RD1, RD2, WD3;           // Register file read/write data
+    logic [31:0] RD2, WD3;                // Register file read/write data
     logic RegWrite, ALUsrc, PCsrc;        // Control signals
     logic [1:0] ImmSrc;                   // 2-bit Immediate source signal
     logic [2:0] ALUctrl;                  // ALU control signal
 
     // Program Counter
-    program_counter #(.WIDTH(32)) PC_Reg (
+    program_counter #(.WIDTH(5)) PC_Reg (
         .clk(clk),
         .rst(rst),
         .PCsrc(PCsrc),
@@ -30,8 +30,7 @@ module top (
         .ADDRESS_WIDTH(5),
         .DATA_WIDTH(32)
     ) InstructionMemory (
-        .clk(clk),
-        .addr(PC[6:2]),
+        .addr(PC),
         .instr(instr)
     );
 
@@ -39,8 +38,8 @@ module top (
     signextension #(
         .DATA_WIDTH(32)
     ) SignExtender (
-        .ImmI(instr[31:20]),
-        .ImmSrc(ImmSrc[0]),
+        .instr(instr),
+        .ImmSrc(ImmSrc),
         .ImmOp(ImmOp)
     );
 
@@ -53,7 +52,7 @@ module top (
         .AD2(instr[24:20]),
         .AD3(instr[11:7]),
         .WD3(WD3),
-        .RD1(RD1),
+        .RD1(ALUop1),
         .RD2(RD2),
         .a0(a0)
     );
@@ -68,7 +67,7 @@ module top (
 
     // ALU
     alu ArithmeticLogicUnit (
-        .ALUop1(RD1),
+        .ALUop1(ALUop1),
         .ALUop2(ALUop2),
         .ALUctrl(ALUctrl),
         .Result(ALUout),
@@ -77,7 +76,7 @@ module top (
 
     // Control Unit
     controlunit controlunit (
-        .opcode(instr[6:0]),
+        .instr(instr),
         .EQ(EQ),
         .RegWrite(RegWrite),
         .ALUsrc(ALUsrc),

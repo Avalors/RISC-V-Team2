@@ -16,7 +16,11 @@ module alu (
                 Result = ALUop1 - ALUop2;
                 EQ = (Result == 0);           // Set EQ flag if ALUop1 == ALUop2
             end
+            3'b010:     Result = ALUop1 & ALUop2;
+            3'b011:     Result = ALUop1 | ALUop2;
+            3'b101:     Result = (ALUop1 < ALUop2) ? 1 : 0;
             default: Result = 32'b0;    
         endcase
+        EQ = (Result == 0'b0) ? 1 : 0; 
     end
 endmodule

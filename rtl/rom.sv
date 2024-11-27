@@ -2,7 +2,6 @@ module rom #(
     parameter ADDRESS_WIDTH = 5,
     parameter DATA_WIDTH = 32
 )(
-    input logic clk,
     input logic [ADDRESS_WIDTH-1:0] addr,
     output logic [DATA_WIDTH-1:0] instr
 );
@@ -17,12 +16,13 @@ module rom #(
         end
 
         // Test program: Just increment a0 multiple times
-        rom_array[0] = 32'h00100513;    // addi a0, x0, 1    # a0 = 1
-        rom_array[1] = 32'h00150513;    // addi a0, a0, 1    # a0 = 2
-        rom_array[2] = 32'h00150513;    // addi a0, a0, 1    # a0 = 3
-        rom_array[3] = 32'h00150513;    // addi a0, a0, 1    # a0 = 4
-        rom_array[4] = 32'h00150513;    // addi a0, a0, 1    # a0 = 5
-        rom_array[5] = 32'h0000006f;    // jal  x0, 0        # Infinite loop
+        rom_array[0] = 32'h0ff00313;    // addi a0, x0, 1    # a0 = 1
+        rom_array[1] = 32'h00000513;    // addi a0, a0, 1    # a0 = 2
+        rom_array[2] = 32'h00000593;    // addi a0, a0, 1    # a0 = 3
+        rom_array[3] = 32'h00058513;    // addi a0, a0, 1    # a0 = 4
+        rom_array[4] = 32'h00158593;    // addi a0, a0, 1    # a0 = 5
+        rom_array[5] = 32'hfe659ce3;    
+        rom_array[6] = 32'hfe0318e3;
     end
 
     // Asynchronous read (important!)
