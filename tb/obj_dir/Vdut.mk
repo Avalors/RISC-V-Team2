@@ -7,10 +7,12 @@
 default: Vdut
 
 ### Constants...
-# Perl executable (from $PERL)
+# Perl executable (from $PERL, defaults to 'perl' if not set)
 PERL = perl
+# Python3 executable (from $PYTHON3, defaults to 'python3' if not set)
+PYTHON3 = python3
 # Path to Verilator kit (from $VERILATOR_ROOT)
-VERILATOR_ROOT = /usr/local/share/verilator
+VERILATOR_ROOT = /opt/homebrew/Cellar/verilator/5.030/share/verilator
 # SystemC include directory with systemc.h (from $SYSTEMC_INCLUDE)
 SYSTEMC_INCLUDE ?= 
 # SystemC library directory with libsystemc.a (from $SYSTEMC_LIBDIR)
@@ -47,7 +49,8 @@ VM_USER_CLASSES = \
 
 # User .cpp directories (from .cpp's on Verilator command line)
 VM_USER_DIR = \
-	/mnt/c/Users/aa_dc/RISC-V-Team2/tb/test \
+	.. \
+	../test \
 
 
 ### Default rules...
@@ -59,8 +62,8 @@ include $(VERILATOR_ROOT)/include/verilated.mk
 ### Executable rules... (from --exe)
 VPATH += $(VM_USER_DIR)
 
-verify.o: /mnt/c/Users/aa_dc/RISC-V-Team2/tb/test/verify.cpp
-	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+verify.o: /Users/elsontho/Desktop/IAC_Labs/Final-RISCVT2/RISC-V-Team2/tb/test/verify.cpp 
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST)  -c -o $@ $<
 
 ### Link rules... (from --exe)
 Vdut: $(VK_USER_OBJS) $(VK_GLOBAL_OBJS) $(VM_PREFIX)__ALL.a $(VM_HIER_LIBS)
