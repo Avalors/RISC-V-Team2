@@ -19,8 +19,11 @@ Create the logs directory with proper permissions:
 mkdir -p logs
 chmod 777 logs
 
-Install dos2unix if you don't have it:
-sudo apt-get install dos2unix
+Install dos2unix if you don't have it (for wsl):
+apt-get update
+apt-get install dos2unix
+dos2unix doit.sh
+chmod +x doit.sh
 
 Convert the file:
 dos2unix doit.sh
