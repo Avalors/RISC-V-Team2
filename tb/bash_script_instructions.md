@@ -9,7 +9,6 @@
 5) View the generated coverage report in logs/html/index.html.
 
 
-
 NB for wsl: 
 Install the necessary tools if you haven't already:
 sudo apt-get update
