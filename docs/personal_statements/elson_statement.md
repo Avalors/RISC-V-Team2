@@ -1,7 +1,9 @@
 # Personal Statement: Elson Tho
 
 **Name:** Elson Tho
+
 **CID:** 02381489 
+
 **Github Username:** 3lson
 
 ## Overview
