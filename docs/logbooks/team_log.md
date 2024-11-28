@@ -43,4 +43,5 @@ This file will note down **major meetups** and breakdown the progress completed 
 ## Lab meetup (28/11)
   - We had some errors with the integration
   - Use of gtkwave for debugging
+  - We had issues with the ALU testbench and control unit testbench which we made ourselves
 
