@@ -1,20 +1,38 @@
 # RISC-V-RV32I-Processor
 
-Lab 4 project done as a team of 4.
-We are team 2 (H.A.D.E.S), each with distinct roles:
+This project was done as a team of 4.
+We are team 2 (H.A.D.E.S), each with distinct roles for the coursework (we switched roles after lab 4):
   - Elson Tho: register file & testing own modules
   - Ahmed Hamid: control unit & testing own modules
   - Antoine Divet: ALU & testing own modules
   - Jihwan Shin: integration and testbenching
 
-We will do pipelining, cache and branch prediction as a team
+
+We will do pipelining, hazard control, cache and branch prediction as a team
 
 ## Team 2 Statement
 
 | Antoine Divet (repo manager) | Elson Tho | Ahmed Hamid | Jihwan Shin |
 |-|-|-|-|
 
+## Quick Start
 
+Note: before running **ANY** script (including the first time script), execute this 
+command.
+
+```bash
+cd tb
+```
+
+### First Time
+
+If you are using this for the first time, you need to install dependencies.
+
+```bash
+./install.sh
+```
+
+For wsl users, some packages may need to be installed, which can be found in [Bash Script instuctions](https://github.com/aa6dcc/RISC-V-Team2/blob/main/tb/bash_script_instructions.md)
 
 ## Logs
 
@@ -72,3 +90,11 @@ Note: The following evidence was collected from running `tag v0.4.0`, the
 |              | Control Unit                  |                    |                  |  x                        | x               |
 |              | Sign Extend                   |                    |                  |                          |x               |
 |              | Testbench                     |   x                 |                |                          |                  |
+| Single Cycle | Data Memory                   |                    |                  |                         |                  |
+|              | Program Counter               |                    |                  |   x                      |                  |
+|              | ALU                           |   x                |                  |                          |                  |
+|              | Register File                 |                    |    x             |                          |                  |
+|              | Instruction Memory            |                    |                  |                          |    x             |
+|              | Control Unit                  |                    |    x             |                          |                  |
+|              | Sign Extend                   |                    |                  |                          |    x             |
+|              | Doit.sh                       |   x                |                  |                          |                  |

@@ -1,13 +1,13 @@
 module controlunit #(
     parameter DATA_WIDTH = 32
 ) (
-    input logic [DATA_WIDTH-1:0] instr,  
-    input logic                 EQ,     
-    output logic [2:0]          ALUctrl, 
-    output logic                ALUsrc,  
-    output logic [1:0]          ImmSrc,  
-    output logic                PCsrc,   
-    output logic                RegWrite 
+    input logic [DATA_WIDTH-1:0] instr,  // Instruction input
+    input logic                 EQ,     // Equality flag (for branch comparison)
+    output logic [2:0]          ALUctrl, // ALU control signal
+    output logic                ALUsrc,  // ALU source (1 for immediate, 0 for register)
+    output logic [1:0]          ImmSrc,  // Immediate source selection
+    output logic                PCsrc,   // Program counter source (for branches and jumps)
+    output logic                RegWrite // Register write enable
 );
 
     // Extract instruction fields
@@ -28,9 +28,10 @@ module controlunit #(
         RegWrite = 1'b0;
 
         case (op)
-            7'b0110011: begin // R-Type
+            // R-Type
+            7'b0110011: begin 
                 case (funct3)
-                    3'b000: ALUctrl = (funct7 == 7'b0000000) ? 3'b000 : 3'b001; // ADD/SUB
+                    3'b000: ALUctrl = (funct7 == 7'b0100000) ? 3'b001 : 3'b000; // SUB/ADD
                     3'b110: ALUctrl = 3'b011; // OR
                     3'b111: ALUctrl = 3'b010; // AND
                     3'b010: ALUctrl = 3'b101; // SLT
@@ -39,7 +40,9 @@ module controlunit #(
                 RegWrite = 1'b1;
                 ALUsrc = 1'b0;
             end
-            7'b0010011: begin // I-Type
+
+            // I-Type (Arithmetic)
+            7'b0010011: begin 
                 case (funct3)
                     3'b000: ALUctrl = 3'b000; // ADDI
                     3'b110: ALUctrl = 3'b011; // ORI
@@ -51,45 +54,76 @@ module controlunit #(
                 ALUsrc = 1'b1;
                 ImmSrc = 2'b00;
             end
-            7'b0000011: begin // Load
+
+            // Load (I-Type)
+            7'b0000011: begin 
                 ALUctrl = 3'b000; // ADD for address calculation
                 RegWrite = 1'b1;
                 ALUsrc = 1'b1;
                 ImmSrc = 2'b00;
             end
-            7'b0100011: begin // Store
+
+            // Store (S-Type)
+            7'b0100011: begin 
                 ALUctrl = 3'b000; // ADD for address calculation
-                ALUsrc = 1'b1;
-                ImmSrc = 2'b01;
+                ALUsrc = 1'b0; // Uses rd2
+                ImmSrc = 2'b01; // S-Type immediate
             end
-            7'b1100011: begin // Branch
+
+            // Branch (B-Type)
+            7'b1100011: begin 
                 ALUctrl = 3'b001; // SUB for comparison
+                ImmSrc = 2'b10; // B-Type immediate
                 case (funct3)
                     3'b000: PCsrc = EQ ? 1'b1 : 1'b0; // BEQ
                     3'b001: PCsrc = EQ ? 1'b0 : 1'b1; // BNE
                     default: PCsrc = 1'b0;
                 endcase
             end
-            7'b1101111: begin // JAL
+
+            // J-Type (JAL)
+            7'b1101111: begin 
                 PCsrc = 1'b1;
                 RegWrite = 1'b1;
+                ALUsrc = 1'b1;
             end
-            7'b1100111: begin // JALR
+
+            // JALR (I-Type)
+            7'b1100111: begin 
                 PCsrc = 1'b1;
                 RegWrite = 1'b1;
                 ALUsrc = 1'b1;
             end
-            7'b0110111: begin // LUI
+
+            // LUI (Load Upper Immediate)
+            7'b0110111: begin 
                 RegWrite = 1'b1;
                 ALUsrc = 1'b1;
             end
-            7'b0010111: begin // AUIPC
+
+            // AUIPC (Add Upper Immediate to PC)
+            7'b0010111: begin 
                 RegWrite = 1'b1;
                 ALUsrc = 1'b1;
             end
+
+            // I-Type (ecall, ebreak)
+            7'b1110011: begin 
+                ALUsrc = 1'b1;
+                if (funct3 == 3'b000) begin
+                    RegWrite = 1'b0; // ecall/ebreak
+                end else begin
+                    RegWrite = 1'b1; // Other I-Type
+                end
+            end
+
+            // Default case (unknown opcode)
             default: begin
-                // Default case for unsupported instructions
-                //$display("Unsupported instruction: %b", op);
+                ALUctrl = 3'b000;
+                ALUsrc = 1'b0;
+                ImmSrc = 2'b00;
+                PCsrc = 1'b0;
+                RegWrite = 1'b0;
             end
         endcase
     end

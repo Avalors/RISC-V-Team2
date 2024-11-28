@@ -10,7 +10,6 @@ protected:
     void initializeInputs() override
     {
         top->clk = 1;
-        
         top->AD1 = 0;
         top->AD2 = 0;
         top->AD3 = 0;
