@@ -51,4 +51,6 @@ This file will note down **major meetups** and breakdown the progress completed 
 
 #fi
 
+  - We commented the doit.sh script to get a better understanding of what each line was doing, and then tried to make testbenches for the rom and sign extension modules
+
 
