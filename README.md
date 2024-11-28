@@ -32,7 +32,7 @@ If you are using this for the first time, you need to install dependencies.
 ./install.sh
 ```
 
-For wsl users, some packages may need to be installed, which can be found in https://github.com/aa6dcc/RISC-V-Team2/blob/main/tb/bash_script_instructions.md
+For wsl users, some packages may need to be installed, which can be found in [Bash Script instuctions](https://github.com/aa6dcc/RISC-V-Team2/blob/main/tb/bash_script_instructions.md)
 
 ## Logs
 
