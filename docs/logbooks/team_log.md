@@ -54,6 +54,7 @@ This file will note down **major meetups** and breakdown the progress completed 
   - We commented the doit.sh script to get a better understanding of what each line was doing, and then tried to make testbenches for the rom and sign extension modules
   - We noticed we'll have to amend some modules and testbenches in order to go from lab 4 to the finalised coursework
   - We had a lot of modules up and running by the end of the day
+
 ![image](https://github.com/user-attachments/assets/3703ac81-38f8-4b13-bb24-4329db993c46)
 ![image](https://github.com/user-attachments/assets/b44abfeb-0d67-4283-92e9-2448c3153f71)
 ![image](https://github.com/user-attachments/assets/5c775663-8845-4d05-a10a-dc0816b1a3ea)
