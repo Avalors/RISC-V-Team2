@@ -40,3 +40,17 @@ This file will note down **major meetups** and breakdown the progress completed 
   - We started discussing implementing the hazard control and pipelining later on
     ![1000011679](https://github.com/user-attachments/assets/a1fe9d1a-9d5f-44af-a730-6e390b1e6e52)
 
+## Lab meetup (28/11)
+  - We had some errors with the integration
+  - Use of gtkwave for debugging
+  - We had issues with the ALU testbench and control unit testbench which we made ourselves, as well as the MUX testbench (which was provided to us), which were working the day before but somehow only started working once we commented out the following lines from the doit.sh script:
+    
+#if [ $name=="verify.cpp" ]; then
+
+#name="top"
+
+#fi
+
+  - We commented the doit.sh script to get a better understanding of what each line was doing, and then tried to make testbenches for the rom and sign extension modules
+
+
