@@ -46,7 +46,9 @@ This file will note down **major meetups** and breakdown the progress completed 
   - We had issues with the ALU testbench and control unit testbench which we made ourselves, as well as the MUX testbench (which was provided to us), which were working the day before but somehow only started working once we commented out the following lines from the doit.sh script:
     
 #if [ $name=="verify.cpp" ]; then
+
 #name="top"
+
 #fi
 
 
