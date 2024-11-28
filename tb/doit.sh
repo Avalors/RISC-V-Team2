@@ -57,5 +57,5 @@ if [ $fails -eq 0 ]; then
 else
     total=$((passes + fails))
     echo "${RED}Failure! Only ${passes} test(s) passed out of ${total}."
-    #exit 1
+    exit 1
 fi

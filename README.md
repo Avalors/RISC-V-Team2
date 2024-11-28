@@ -90,3 +90,11 @@ Note: The following evidence was collected from running `tag v0.4.0`, the
 |              | Control Unit                  |                    |                  |  x                        | x               |
 |              | Sign Extend                   |                    |                  |                          |x               |
 |              | Testbench                     |   x                 |                |                          |                  |
+| Single Cycle | Data Memory                   |                    |                  |                         |                  |
+|              | Program Counter               |                    |                  |   x                      |                  |
+|              | ALU                           |   x                |                  |                          |                  |
+|              | Register File                 |                    |    x             |                          |                  |
+|              | Instruction Memory            |                    |                  |                          |    x             |
+|              | Control Unit                  |                    |    x             |                          |                  |
+|              | Sign Extend                   |                    |                  |                          |    x             |
+|              | Doit.sh                       |   x                |                  |                          |                  |
