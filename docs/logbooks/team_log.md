@@ -40,3 +40,7 @@ This file will note down **major meetups** and breakdown the progress completed 
   - We started discussing implementing the hazard control and pipelining later on
     ![1000011679](https://github.com/user-attachments/assets/a1fe9d1a-9d5f-44af-a730-6e390b1e6e52)
 
+## Lab meetup (28/11)
+  - We had some errors with the integration
+  - Use of gtkwave for debugging
+
