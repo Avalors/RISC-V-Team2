@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # DESCRIPTION: Verilator output: Timestamp data for --skip-identical.  Delete at will.
 C "-Wall --trace -cc /home/jihwan/Documents/iac/RISC-V-Team2/rtl/top.sv --exe /home/jihwan/Documents/iac/RISC-V-Team2/tb/test/verify.cpp -y /home/jihwan/Documents/iac/RISC-V-Team2/rtl --prefix Vdut -o Vdut -CFLAGS -isystem /opt/homebrew/Cellar/googletest/1.15.2/include -LDFLAGS -L/opt/homebrew/Cellar/googletest/1.15.2/lib -lgtest -lgtest_main -lpthread --coverage"
 S       833    56731  1732786674    20414268  1732786674    20414268 "/home/jihwan/Documents/iac/RISC-V-Team2/rtl/alu.sv"
@@ -25,3 +26,28 @@ T      1353    68053  1732787760   356082868  1732787760   356082868 "obj_dir/Vd
 T       967    68071  1732787760   356082868  1732787760   356082868 "obj_dir/Vdut__ver.d"
 T         0        0  1732787760   356082868  1732787760   356082868 "obj_dir/Vdut__verFiles.dat"
 T      1712    68062  1732787760   356082868  1732787760   356082868 "obj_dir/Vdut_classes.mk"
+=======
+# DESCRIPTION: Verilator output: Timestamp data for --skip-identical.  Delete at will.
+C "-Wall --trace -cc /Users/elsontho/Desktop/IAC_Labs/Final-RISCVT2/RISC-V-Team2/rtl/registerfile.sv --exe /Users/elsontho/Desktop/IAC_Labs/Final-RISCVT2/RISC-V-Team2/tb/test/registerfile_tb.cpp -y /Users/elsontho/Desktop/IAC_Labs/Final-RISCVT2/RISC-V-Team2/rtl --prefix Vdut -o Vdut -CFLAGS -isystem /opt/homebrew/Cellar/googletest/1.15.2/include -LDFLAGS -L/opt/homebrew/Cellar/googletest/1.15.2/lib -lgtest -lgtest_main -lpthread --coverage"
+S      1285 91568104  1732788577           0  1732788577           0 "/Users/elsontho/Desktop/IAC_Labs/Final-RISCVT2/RISC-V-Team2/rtl/registerfile.sv"
+S   9576176 84680284  1730163094           0  1730036286           0 "/opt/homebrew/Cellar/verilator/5.030/bin/verilator_bin"
+S      5218 84680401  1730163094           0  1730036286           0 "/opt/homebrew/Cellar/verilator/5.030/share/verilator/include/verilated_std.sv"
+T      5230 91601948  1732796461           0  1732796461           0 "obj_dir/Vdut.cpp"
+T      3745 91601947  1732796461           0  1732796461           0 "obj_dir/Vdut.h"
+T      2210 91601960  1732796461           0  1732796461           0 "obj_dir/Vdut.mk"
+T       800 91601945  1732796461           0  1732796461           0 "obj_dir/Vdut__Syms.cpp"
+T      1140 91601946  1732796461           0  1732796461           0 "obj_dir/Vdut__Syms.h"
+T       290 91601957  1732796461           0  1732796461           0 "obj_dir/Vdut__TraceDecls__0__Slow.cpp"
+T      4976 91601958  1732796461           0  1732796461           0 "obj_dir/Vdut__Trace__0.cpp"
+T     10255 91601956  1732796461           0  1732796461           0 "obj_dir/Vdut__Trace__0__Slow.cpp"
+T      2188 91601950  1732796461           0  1732796461           0 "obj_dir/Vdut___024root.h"
+T     80472 91601954  1732796461           0  1732796461           0 "obj_dir/Vdut___024root__DepSet_hbd7b84b1__0.cpp"
+T     82074 91601952  1732796461           0  1732796461           0 "obj_dir/Vdut___024root__DepSet_hbd7b84b1__0__Slow.cpp"
+T      7288 91601955  1732796461           0  1732796461           0 "obj_dir/Vdut___024root__DepSet_hbf6d145a__0.cpp"
+T      8858 91601953  1732796461           0  1732796461           0 "obj_dir/Vdut___024root__DepSet_hbf6d145a__0__Slow.cpp"
+T      1524 91601951  1732796461           0  1732796461           0 "obj_dir/Vdut___024root__Slow.cpp"
+T       746 91601949  1732796461           0  1732796461           0 "obj_dir/Vdut__pch.h"
+T       788 91601961  1732796461           0  1732796461           0 "obj_dir/Vdut__ver.d"
+T         0        0  1732796461           0  1732796461           0 "obj_dir/Vdut__verFiles.dat"
+T      1728 91601959  1732796461           0  1732796461           0 "obj_dir/Vdut_classes.mk"
+>>>>>>> 6c54b3beb4dc9cdca7d42b31e47b70bc1919938b

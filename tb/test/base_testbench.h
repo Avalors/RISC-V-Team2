@@ -30,7 +30,9 @@ public:
     {
         top->final();
 #ifndef __APPLE__
-        tfp->close();
+        if (tfp && tfp->isOpen()) {
+            tfp->close();
+        }
 #endif
     }
 
