@@ -47,13 +47,21 @@ for file in "${files[@]}"; do #loops through all elements in the files array
 
     # Translate Verilog -> C++ including testbench
     # Uses Verilator to compile Verilog source files into C++ code for simulation
-    verilator   -Wall --trace \ #Wall: Enables all warning messages - Trace: Enables waveform tracing for debugging
-                -cc ${RTL_FOLDER}/${name}.sv \ #Specifies the Verilog source file to compile
-                --exe ${file} \ #Includes the C++ testbench file in the build
-                -y ${RTL_FOLDER} \ #Specifies the directory containing additional Verilog files
+    # Wall: Enables all warning messages - Trace: Enables waveform tracing for debugging
+    # -cc ${RTL_FOLDER}/${name}.sv \ : Specifies the Verilog source file to compile
+    # --exe ${file} \ : Includes the C++ testbench file in the build
+    # -y ${RTL_FOLDER} \ : Specifies the directory containing additional Verilog files
+    # --prefix "Vdut" \ : Sets a prefix for generated files
+    # -o Vdut \ : Names the generated executable as Vdut
+    # -CFLAGS "-isystem /opt/homebrew/Cellar/googletest/1.15.2/include"\ : Provide include paths and linker flags for Google Test and its dependencies.
+    # -LDFLAGS "-L/opt/homebrew/Cellar/googletest/1.15.2/lib -lgtest -lgtest_main -lpthread" \
+    verilator   -Wall --trace \
+                -cc ${RTL_FOLDER}/${name}.sv \ 
+                --exe ${file} \ 
+                -y ${RTL_FOLDER} \ 
                 --prefix "Vdut" \ #Sets a prefix for generated files
                 -o Vdut \ #Names the generated executable as Vdut
-                -CFLAGS "-isystem /opt/homebrew/Cellar/googletest/1.15.2/include"\ #Provide include paths and linker flags for Google Test and its dependencies.
+                -CFLAGS "-isystem /opt/homebrew/Cellar/googletest/1.15.2/include"\ 
                 -LDFLAGS "-L/opt/homebrew/Cellar/googletest/1.15.2/lib -lgtest -lgtest_main -lpthread" \
                 --coverage #Enables coverage reporting for the simulation
 
