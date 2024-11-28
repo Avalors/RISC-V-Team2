@@ -34,9 +34,9 @@ for file in "${files[@]}"; do
     name=$(basename "$file" _tb.cpp | cut -f1 -d\-)
     
     # If verify.cpp -> we are testing the top module
-    if [ $name=="verify.cpp" ]; then
-        name="top"
-    fi
+    #if [ $name=="verify.cpp" ]; then
+       #name="top"
+    #fi
 
     # Translate Verilog -> C++ including testbench
     verilator   -Wall --trace \
