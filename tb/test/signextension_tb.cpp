@@ -38,7 +38,7 @@ TEST_F(SignExtensionTestbench, ImmSrc10Test) {
     top->instr = 0x000FF06F;  // Example instruction
     top->ImmSrc = 0b10;
 
-    top->eval();
+    top->eval();    
 
     // Expected output: Sign-extended instruction for B-type immediate
     EXPECT_EQ(top->ImmOp, 0xFFFFFFFFFFFFFFFE);  // Replace with actual expected value
