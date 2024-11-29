@@ -13,7 +13,7 @@ module alu (
         case (ALUctrl)
             3'b000: Result = ALUop1 + ALUop2; // ADD (used in addi)
             3'b001: begin                     // SUB (used in bne)
-                Result = ALUop1 - ALUop2;
+                Result = ALUop1 - ALUop2;z
                 EQ = (Result == 0);           // Set EQ flag if ALUop1 == ALUop2
             end
             3'b010:     Result = ALUop1 & ALUop2;
