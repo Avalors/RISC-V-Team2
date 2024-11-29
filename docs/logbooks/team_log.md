@@ -62,6 +62,11 @@ This file will note down **major meetups** and breakdown the progress completed 
 ![image](https://github.com/user-attachments/assets/d7fb6585-e7dc-4cd9-afd5-35feca2905d1)
 ![image](https://github.com/user-attachments/assets/9bc7ce7f-569f-4fbe-924e-1b3a08a6e105)
 
+## Lab meetup (29/11)
+  - We met today for more debugging
+  - Edited modules for program counter and rom
+  - Adjusted program counter, rom and top testbenches
+  - Went through the instructions for the project to split the tasks more appropriately, redefine the timeline
 
 
 
