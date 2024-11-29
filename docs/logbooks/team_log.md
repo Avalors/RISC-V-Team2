@@ -67,6 +67,8 @@ This file will note down **major meetups** and breakdown the progress completed 
   - Edited modules for program counter and rom
   - Adjusted program counter, rom and top testbenches
   - Went through the instructions for the project to split the tasks more appropriately, redefine the timeline
+  - First time all tests ran successfully! 
+![image](https://github.com/user-attachments/assets/46d4181e-92d0-480e-a301-8ffec25d1f41)
 
 
 

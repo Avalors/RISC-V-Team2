@@ -2,8 +2,10 @@
 
 ## Role
 
-I was in charge of designing the **ALU unit**, as well as testbenching my own modules, and then working as a team on pipelining, cache memory and branch prediction.
-I also took on the responsability of being repo master. I also worked on integration and testbenching on lab 4. 
+For lab 4, I was in charge of the doit.sh file, as well as the integration and overall testbenching (top.sv and top_tb.cpp). I also added some assembly files (xor.s, or.s, counter.s) and copied files from the lab 4 instructions (verify.cpp, mux_tb.cpp, compile.sh).
+
+For the rest of the project, I was in charge of designing the **ALU unit**, as well as testbenching my own modules, and then working as a team on pipelining, hazard control, cache memory and branch prediction.
+I also took on the responsability of being repo master and designed much of the repo.
 
 ## Timetable details
 
@@ -17,6 +19,7 @@ I also took on the responsability of being repo master. I also worked on integra
     - Pulled and pushed a lot, reformatted the entire repo entirely
     - Testing the integrated TopLevelCPU.sv file using verilator and gtkwave
     - Allocated new roles, started working on ALU
+    - Wrote basic assembly code (xor, or, counter)
     - Worked on the logbooks and personal statements
 
 ### 27/11/2024
@@ -35,4 +38,4 @@ I also took on the responsability of being repo master. I also worked on integra
     - More debugging: finally first time CPU passes all tests! Success!
     - Deleted pointless branch from our repo
     - Went over the instructions to go from lab 4 to the actual project
-    - Setting roles for hazard control, pipelining, cache, data memory
+    - Split roles for hazard control, pipelining, cache, data memory
