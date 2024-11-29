@@ -2,19 +2,30 @@
 
 ## Role
 
-I was in charge of designing the **ALU** and **Register File**, as well as testbenching my own modules, and then working as a team on pipelining, cache memory and branch prediction.
-I also helped out in designing the **control unit**.
+I was in charge of designing the **ALU**, **Register File** and **Mux**, as well as testbenching my own modules, and then working as a team on pipelining, cache memory and branch prediction.
+I also helped out in designing the **control unit** and its respective testbench. 
 
 ## Timetable details
 
 ### 14/11/2024
     - Got familiar with the top level design of RISC V, understanding the different units
-    - Created a first draft program alu.sv and registerfile.sv file based on the slides.
+    - Created a first draft program alu.sv and registerfile.sv files for Lab 4 on separate branch then merged
     - Got to meet other team members
 
 ### 21/11/2024
     - Helped Antoine restructure the repo (e.g. rtl and tb directories)
+    - Helped Jihwan to start off the controlunit.sv
 
 ### 25/11/2024
-    -uploaded formatting for individual personal statements to repo.
-    - changed the alu.sv and controlunit.sv 
+    - Uploaded formatting for individual personal statements to repo.
+    - Changed the alu.sv and controlunit.sv 
+
+### 27/11/24   
+    - Came together as a team to debug the testbenches for alu, mux, sign extension, and top-level as well as the individual modules
+    - Antoine did livehsare on VScode where we all worked together on his IDE in which he committed to the github
+
+### 28/11/24
+    - Fixed the controlunit testbench, refactored doit.sh script, and added gitignore of obj_dir
+    - Helped others push and pull to github and merge changes between remote and local
+    - Updated logbook and personal statement
+    
