@@ -8,9 +8,10 @@
 #include "verilated.h"
 #include "verilated_cov.h"
 
+
 class Vdut__Syms;
 
-class Vdut___024root final : public VerilatedModule {
+class alignas(VL_CACHE_LINE_BYTES) Vdut___024root final : public VerilatedModule {
   public:
 
     // DESIGN SPECIFIC STATE
@@ -22,6 +23,9 @@ class Vdut___024root final : public VerilatedModule {
     CData/*0:0*/ top__DOT__PCsrc;
     CData/*1:0*/ top__DOT__ImmSrc;
     CData/*2:0*/ top__DOT__ALUctrl;
+    CData/*4:0*/ top__DOT____Vcellinp__RegFile__AD3;
+    CData/*4:0*/ top__DOT____Vcellinp__RegFile__AD2;
+    CData/*4:0*/ top__DOT____Vcellinp__RegFile__AD1;
     CData/*0:0*/ top__DOT____Vtogcov__clk;
     CData/*0:0*/ top__DOT____Vtogcov__rst;
     CData/*0:0*/ top__DOT____Vtogcov__EQ;
@@ -30,7 +34,23 @@ class Vdut___024root final : public VerilatedModule {
     CData/*0:0*/ top__DOT____Vtogcov__PCsrc;
     CData/*1:0*/ top__DOT____Vtogcov__ImmSrc;
     CData/*2:0*/ top__DOT____Vtogcov__ALUctrl;
-    CData/*0:0*/ __Vclklast__TOP__clk;
+    CData/*4:0*/ top__DOT__RegFile__DOT____Vtogcov__AD1;
+    CData/*4:0*/ top__DOT__RegFile__DOT____Vtogcov__AD2;
+    CData/*4:0*/ top__DOT__RegFile__DOT____Vtogcov__AD3;
+    CData/*6:0*/ top__DOT__controlunit__DOT__op;
+    CData/*2:0*/ top__DOT__controlunit__DOT__funct3;
+    CData/*6:0*/ top__DOT__controlunit__DOT__funct7;
+    CData/*6:0*/ top__DOT__controlunit__DOT____Vtogcov__op;
+    CData/*2:0*/ top__DOT__controlunit__DOT____Vtogcov__funct3;
+    CData/*6:0*/ top__DOT__controlunit__DOT____Vtogcov__funct7;
+    CData/*0:0*/ __Vtrigprevexpr___TOP__top__DOT__EQ__0;
+    CData/*0:0*/ __VstlDidInit;
+    CData/*0:0*/ __VstlFirstIteration;
+    CData/*0:0*/ __VicoFirstIteration;
+    CData/*0:0*/ __Vtrigprevexpr___TOP__top__DOT__EQ__1;
+    CData/*0:0*/ __Vtrigprevexpr___TOP__clk__0;
+    CData/*0:0*/ __VactDidInit;
+    CData/*0:0*/ __VactContinue;
     VL_OUT(a0,31,0);
     IData/*31:0*/ top__DOT__PC;
     IData/*31:0*/ top__DOT__instr;
@@ -51,17 +71,26 @@ class Vdut___024root final : public VerilatedModule {
     IData/*31:0*/ top__DOT__InstructionMemory__DOT__unnamedblk2__DOT__i;
     IData/*31:0*/ top__DOT__RegFile__DOT__unnamedblk1__DOT__i;
     IData/*31:0*/ top__DOT__RegFile__DOT__unnamedblk2__DOT__i;
+<<<<<<< HEAD
     VlUnpacked<CData/*7:0*/, 1024> top__DOT__InstructionMemory__DOT__rom_array;
     VlUnpacked<IData/*31:0*/, 7> top__DOT__InstructionMemory__DOT__machine_code;
     VlUnpacked<IData/*31:0*/, 7> top__DOT__InstructionMemory__DOT____Vtogcov__machine_code;
+=======
+    IData/*31:0*/ __VactIterCount;
+    VlUnpacked<IData/*31:0*/, 32> top__DOT__InstructionMemory__DOT__rom_array;
+>>>>>>> 6f639c6742bb658f8884e38c3ff071e0ea8e22c5
     VlUnpacked<IData/*31:0*/, 32> top__DOT__RegFile__DOT__registers;
-    VlUnpacked<CData/*0:0*/, 2> __Vm_traceActivity;
+    VlUnpacked<CData/*0:0*/, 4> __Vm_traceActivity;
+    VlTriggerVec<2> __VstlTriggered;
+    VlTriggerVec<1> __VicoTriggered;
+    VlTriggerVec<2> __VactTriggered;
+    VlTriggerVec<2> __VnbaTriggered;
 
     // INTERNAL VARIABLES
     Vdut__Syms* const vlSymsp;
 
     // CONSTRUCTORS
-    Vdut___024root(Vdut__Syms* symsp, const char* name);
+    Vdut___024root(Vdut__Syms* symsp, const char* v__name);
     ~Vdut___024root();
     VL_UNCOPYABLE(Vdut___024root);
 
@@ -69,7 +98,7 @@ class Vdut___024root final : public VerilatedModule {
     void __Vconfigure(bool first);
     void __vlCoverInsert(uint32_t* countp, bool enable, const char* filenamep, int lineno, int column,
         const char* hierp, const char* pagep, const char* commentp, const char* linescovp);
-} VL_ATTR_ALIGNED(VL_CACHE_LINE_BYTES);
+};
 
 
 #endif  // guard
