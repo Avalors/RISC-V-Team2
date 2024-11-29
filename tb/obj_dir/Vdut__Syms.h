@@ -29,7 +29,7 @@ class Vdut__Syms final : public VerilatedSyms {
     Vdut___024root                 TOP;
 
     // COVERAGE
-    uint32_t __Vcoverage[293];
+    uint32_t __Vcoverage[545];
 
     // CONSTRUCTORS
     Vdut__Syms(VerilatedContext* contextp, const char* namep, Vdut* modelp);

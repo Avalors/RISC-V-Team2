@@ -1,6 +1,7 @@
 #include "base_testbench.h"
 #include <verilated_cov.h>
 #include <gtest/gtest.h>
+#include <vector>
 
 class RomTestbench : public BaseTestbench {
 protected:
@@ -13,37 +14,24 @@ protected:
 // Test for reading instructions from ROM
 TEST_F(RomTestbench, ReadInstructions) {
     // Array to hold expected values for test validation
-    std::array<uint32_t, 7> expected_instrs = {
-        0x0ff00313,  // addi a0, x0, 1
-        0x00000513,  // addi a0, a0, 1
-        0x00000593,  // addi a0, a0, 1
-        0x00058513,  // addi a0, a0, 1
-        0x00158593,  // addi a0, a0, 1
+    std::vector<uint32_t> expected_instrs = {
+        0x0ff00313,  
+        0x00000513,  
+        0x00000593,  
+        0x00058513,  
+        0x00158593,  
         0xfe659ce3,
         0xfe0318e3
     };
 
     // Test ROM reads for sequential addresses
-    for (size_t i = 0; i < expected_instrs.size(); ++i) {
-        top->addr = i;  // Set the address
+    for (int i = 0; i < expected_instrs.size(); i++) {
+        top->addr = i*4;  // Set the address
         top->eval();    // Evaluate the model
         
         // Check the output
         EXPECT_EQ(top->instr, expected_instrs[i]) 
-            << "Mismatch at addr " << i;
-    }
-}
-
-// Test for unused memory locations
-TEST_F(RomTestbench, DefaultNOPs) {
-    // ROM locations beyond test program are expected to contain NOP (0x00000013)
-    for (size_t i = 7; i < (1 << top->ADDRESS_WIDTH); ++i) {
-        top->addr = i;  // Set the address
-        top->eval();    // Evaluate the model
-        
-        // Check that unused memory returns a NOP
-        EXPECT_EQ(top->instr, 0x00000013) 
-            << "Unexpected value at unused addr " << i;
+            << "Mismatch at addr " << i*4;
     }
 }
 

@@ -47,7 +47,7 @@ VL_ATTR_COLD void Vdut___024root___ctor_var_reset(Vdut___024root* vlSelf) {
     vlSelf->clk = VL_RAND_RESET_I(1);
     vlSelf->rst = VL_RAND_RESET_I(1);
     vlSelf->a0 = VL_RAND_RESET_I(32);
-    vlSelf->top__DOT__PC = VL_RAND_RESET_I(5);
+    vlSelf->top__DOT__PC = VL_RAND_RESET_I(32);
     vlSelf->top__DOT__instr = VL_RAND_RESET_I(32);
     vlSelf->top__DOT__ImmOp = VL_RAND_RESET_I(32);
     vlSelf->top__DOT__ALUop1 = VL_RAND_RESET_I(32);
@@ -63,7 +63,7 @@ VL_ATTR_COLD void Vdut___024root___ctor_var_reset(Vdut___024root* vlSelf) {
     vlSelf->top__DOT____Vtogcov__clk = VL_RAND_RESET_I(1);
     vlSelf->top__DOT____Vtogcov__rst = VL_RAND_RESET_I(1);
     vlSelf->top__DOT____Vtogcov__a0 = VL_RAND_RESET_I(32);
-    vlSelf->top__DOT____Vtogcov__PC = VL_RAND_RESET_I(5);
+    vlSelf->top__DOT____Vtogcov__PC = VL_RAND_RESET_I(32);
     vlSelf->top__DOT____Vtogcov__instr = VL_RAND_RESET_I(32);
     vlSelf->top__DOT____Vtogcov__ImmOp = VL_RAND_RESET_I(32);
     vlSelf->top__DOT____Vtogcov__ALUop1 = VL_RAND_RESET_I(32);
@@ -76,10 +76,17 @@ VL_ATTR_COLD void Vdut___024root___ctor_var_reset(Vdut___024root* vlSelf) {
     vlSelf->top__DOT____Vtogcov__PCsrc = VL_RAND_RESET_I(1);
     vlSelf->top__DOT____Vtogcov__ImmSrc = VL_RAND_RESET_I(2);
     vlSelf->top__DOT____Vtogcov__ALUctrl = VL_RAND_RESET_I(3);
-    for (int __Vi0=0; __Vi0<32; ++__Vi0) {
-        vlSelf->top__DOT__InstructionMemory__DOT__rom_array[__Vi0] = VL_RAND_RESET_I(32);
+    for (int __Vi0=0; __Vi0<1024; ++__Vi0) {
+        vlSelf->top__DOT__InstructionMemory__DOT__rom_array[__Vi0] = VL_RAND_RESET_I(8);
+    }
+    for (int __Vi0=0; __Vi0<7; ++__Vi0) {
+        vlSelf->top__DOT__InstructionMemory__DOT__machine_code[__Vi0] = VL_RAND_RESET_I(32);
+    }
+    for (int __Vi0=0; __Vi0<7; ++__Vi0) {
+        vlSelf->top__DOT__InstructionMemory__DOT____Vtogcov__machine_code[__Vi0] = VL_RAND_RESET_I(32);
     }
     vlSelf->top__DOT__InstructionMemory__DOT__unnamedblk1__DOT__i = 0;
+    vlSelf->top__DOT__InstructionMemory__DOT__unnamedblk2__DOT__i = 0;
     for (int __Vi0=0; __Vi0<32; ++__Vi0) {
         vlSelf->top__DOT__RegFile__DOT__registers[__Vi0] = VL_RAND_RESET_I(32);
     }
