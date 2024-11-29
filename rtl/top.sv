@@ -6,7 +6,7 @@ module top (
 );
 
     // Internal Signals
-    logic [4:0] PC;                      // Program Counter
+    logic [31:0] PC;                      // Program Counter
     logic [31:0] instr;                   // Current instruction
     logic [31:0] ImmOp;                   // Sign-extended immediate value
     logic [31:0] ALUop1, ALUop2, ALUout;  // ALU operands and result
@@ -17,7 +17,7 @@ module top (
     logic [2:0] ALUctrl;                  // ALU control signal
 
     // Program Counter
-    program_counter #(.WIDTH(5)) PC_Reg (
+    program_counter #(.WIDTH(32)) PC_Reg (
         .clk(clk),
         .rst(rst),
         .PCsrc(PCsrc),
@@ -27,8 +27,8 @@ module top (
 
     // Instruction Memory (asynchronous read)
     rom #(
-        .ADDRESS_WIDTH(5),
-        .DATA_WIDTH(32)
+        .ADDRESS_WIDTH(32),
+        .DATA_WIDTH(8)
     ) InstructionMemory (
         .addr(PC),
         .instr(instr)

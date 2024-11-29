@@ -31,7 +31,7 @@ TEST_F(ProgramCounterTestbench, NormalIncrementingTest){
     top->rst = 0;
 
     for(int i = 0; i < 32; i++){
-        EXPECT_EQ(top->PC, i);
+        EXPECT_EQ(top->PC, i*4);
         runSimulation(1);
     }
 
@@ -41,7 +41,7 @@ TEST_F(ProgramCounterTestbench, WrapAroundTest){
     top->rst = 0;
     top->PCsrc = 0;
 
-    top->PC = 31;
+    top->PC = 4294967292;
     runSimulation(1);
     EXPECT_EQ(top->PC, 0);
 }

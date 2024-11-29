@@ -1,5 +1,5 @@
 module program_counter #(
-    parameter WIDTH = 5
+    parameter WIDTH = 32
 )(
     input  logic                 clk,
     input  logic                 rst,
@@ -10,12 +10,12 @@ module program_counter #(
 
     always_ff @(posedge clk) begin
         if (rst) begin
-            PC <= 5'h0;
+            PC <= 32'h0;
         end else begin
             if (PCsrc)
-                PC <= PC + ImmOp[4:0];  // Branch/Jump
+                PC <= PC + ImmOp;  // Branch/Jump
             else
-                PC <= PC + 5'd1;  // Normal increment
+                PC <= PC + 32'd4;  // Normal increment
         end
     end
 
