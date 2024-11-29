@@ -20,3 +20,12 @@ I also worked on the **program counter** in lab 4 and helped Jihwan change his *
     -created new references folder for all important files that we will refer back to.
     -fixed alu naming syntax error changing from: ALU -> alu correpsonding to alu.sv name and resulting in doit.sh file running successfully.
     -changed increment on PC to 1 instead of 4 given that instruction ROM stores values in 32 bits per memory locations.
+
+
+### 27/11/2024
+    -rewrote the signextension.sv module to implement correct extensions for I/S and B type instructions.
+    -fixed PC size to 5 bit output to correspond to 32 bit memory locations in instruction ROM.
+
+
+### 28/11/2024
+    -Wrote and tested Program Counter test bench
