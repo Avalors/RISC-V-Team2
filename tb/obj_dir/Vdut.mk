@@ -49,8 +49,12 @@ VM_USER_CLASSES = \
 
 # User .cpp directories (from .cpp's on Verilator command line)
 VM_USER_DIR = \
+<<<<<<< HEAD
 	.. \
 	../test \
+=======
+	/home/ahmed/Documents/iac/RISC-V-Team2/tb/test \
+>>>>>>> eb3bdf312f85bad8b93cf3d4854b3dab6203a693
 
 
 ### Default rules...
@@ -62,8 +66,13 @@ include $(VERILATOR_ROOT)/include/verilated.mk
 ### Executable rules... (from --exe)
 VPATH += $(VM_USER_DIR)
 
+<<<<<<< HEAD
 top_tb.o: /Users/elsontho/Desktop/IAC_Labs/Final-RISCVT2/RISC-V-Team2/tb/test/top_tb.cpp 
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST)  -c -o $@ $<
+=======
+top_tb.o: /home/ahmed/Documents/iac/RISC-V-Team2/tb/test/top_tb.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+>>>>>>> eb3bdf312f85bad8b93cf3d4854b3dab6203a693
 
 ### Link rules... (from --exe)
 Vdut: $(VK_USER_OBJS) $(VK_GLOBAL_OBJS) $(VM_PREFIX)__ALL.a $(VM_HIER_LIBS)

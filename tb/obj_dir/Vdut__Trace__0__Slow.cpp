@@ -162,6 +162,7 @@ VL_ATTR_COLD void Vdut___024root__trace_const_0_sub_0(Vdut___024root* vlSelf, Ve
     bufp->fullIData(oldp+90,(0x20U),32);
     bufp->fullIData(oldp+91,(5U),32);
 }
+<<<<<<< HEAD
 
 VL_ATTR_COLD void Vdut___024root__trace_full_0_sub_0(Vdut___024root* vlSelf, VerilatedVcd::Buffer* bufp);
 
@@ -272,3 +273,5 @@ VL_ATTR_COLD void Vdut___024root__trace_full_0_sub_0(Vdut___024root* vlSelf, Ver
     bufp->fullBit(oldp+88,(vlSelfRef.rst));
     bufp->fullIData(oldp+89,(vlSelfRef.a0),32);
 }
+=======
+>>>>>>> eb3bdf312f85bad8b93cf3d4854b3dab6203a693

@@ -30,7 +30,11 @@ class alignas(VL_CACHE_LINE_BYTES)Vdut__Syms final : public VerilatedSyms {
     Vdut___024root                 TOP;
 
     // COVERAGE
+<<<<<<< HEAD
     uint32_t __Vcoverage[325];
+=======
+    uint32_t __Vcoverage[293];
+>>>>>>> eb3bdf312f85bad8b93cf3d4854b3dab6203a693
 
     // CONSTRUCTORS
     Vdut__Syms(VerilatedContext* contextp, const char* namep, Vdut* modelp);

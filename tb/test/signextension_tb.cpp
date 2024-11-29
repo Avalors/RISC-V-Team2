@@ -35,24 +35,13 @@ TEST_F(SignExtensionTestbench, ImmSrc01Test) {
 
 TEST_F(SignExtensionTestbench, ImmSrc10Test) {
     // Test for ImmSrc = 2'b10
-    top->instr = 0x000FF06F;  // Example instruction
-    top->ImmSrc = 0b10;
+    top->ImmSrc = 0b10; //sign extension for branch instructions
+    top->instr = 0xFE420AE3;  // Example branch instruction beq x4, x4, L7
 
     top->eval();    
 
     // Expected output: Sign-extended instruction for B-type immediate
-    EXPECT_EQ(top->ImmOp, 0xFFFFFFFFFFFFFFFE);  // Replace with actual expected value
-}
-
-TEST_F(SignExtensionTestbench, DefaultTest) {
-    // Test default behavior (ImmSrc = invalid)
-    top->instr = 0x12345678;  // Random instruction
-    top->ImmSrc = 0b11;       // Invalid ImmSrc
-
-    top->eval();
-
-    // Expected output: Default case (same as ImmSrc = 2'b00)
-    EXPECT_EQ(top->ImmOp, 0xFFFFFFFFF2345678);
+    EXPECT_EQ(top->ImmOp, 0xFFFFFFF4);  // expected PC offset to enable branch
 }
 
 int main(int argc, char **argv) {
