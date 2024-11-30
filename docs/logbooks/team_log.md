@@ -82,6 +82,7 @@ and the last few cycles resemble this:
 ![WhatsApp Image 2024-11-30 at 16 28 53_bd83cdcf](https://github.com/user-attachments/assets/d7d6402d-6f15-48ea-ae67-18a3e8fb9a51)
   - This officially completes lab 4!
   - We can now move onto the pipelining, hazard control...
+![image](https://github.com/user-attachments/assets/1be4de09-46ea-4221-9d46-4a927ca86585)
 
 
 
