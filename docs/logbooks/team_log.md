@@ -80,6 +80,8 @@ This file will note down **major meetups** and breakdown the progress completed 
 ![WhatsApp Image 2024-11-30 at 16 28 04_63dadce4](https://github.com/user-attachments/assets/e6fa36a9-d57e-492f-8dfa-af812792dbbb)
 and the last few cycles resemble this:
 ![WhatsApp Image 2024-11-30 at 16 28 53_bd83cdcf](https://github.com/user-attachments/assets/d7d6402d-6f15-48ea-ae67-18a3e8fb9a51)
+  - This officially completes lab 4!
+  - We can now move onto the pipelining, hazard control...
 
 
 
