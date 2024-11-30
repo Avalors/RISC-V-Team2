@@ -28,4 +28,11 @@ I also worked on the **program counter** in lab 4 and helped Jihwan change his *
 
 
 ### 28/11/2024
-    -Wrote and tested Program Counter test bench
+    -Wrote and tested Program Counter test bench fully functional
+
+### 29/11/2024
+    -changed PC and instruction memory to byte sized addressing 
+    -ran complete CPU test, found fully functional lab 4
+
+### 30/11/2024
+    - worked with elson to resolve GTK wave issue, deleted verify.cpp and used it purpose in top_tb.cpp test bench.

@@ -62,13 +62,28 @@ This file will note down **major meetups** and breakdown the progress completed 
 ![image](https://github.com/user-attachments/assets/d7fb6585-e7dc-4cd9-afd5-35feca2905d1)
 ![image](https://github.com/user-attachments/assets/9bc7ce7f-569f-4fbe-924e-1b3a08a6e105)
 
-## Lab meetup (29/11)
+## Team meetup (29/11)
   - We met today for more debugging
   - Edited modules for program counter and rom
   - Adjusted program counter, rom and top testbenches
   - Went through the instructions for the project to split the tasks more appropriately, redefine the timeline
   - First time all tests ran successfully! 
 ![image](https://github.com/user-attachments/assets/46d4181e-92d0-480e-a301-8ffec25d1f41)
+
+## Team meetup (30/11)
+  - Changed the ROM so it can take the instructions from the compiled hex file
+  - Deleted program.s as it was identical to the counter.s file we had
+  - Implemented a instr_mem.sv module, as well as the corresponding instr_mem_tb.cpp testbench
+  - We then tested the instruction memory, and using verilator we saw it was fully functional
+![image](https://github.com/user-attachments/assets/f7543cea-5e5e-48bc-a64d-770b39fec8ec) 
+  - We had some issues running gtkwave, but after correcting the relevant syntax error, we could see the first few cycles in gtkwave of our counter.s program running on our CPU
+![WhatsApp Image 2024-11-30 at 16 28 04_63dadce4](https://github.com/user-attachments/assets/e6fa36a9-d57e-492f-8dfa-af812792dbbb)
+and the last few cycles resemble this:
+![WhatsApp Image 2024-11-30 at 16 28 53_bd83cdcf](https://github.com/user-attachments/assets/d7d6402d-6f15-48ea-ae67-18a3e8fb9a51)
+  - This officially completes lab 4!
+  - We can now move onto the pipelining, hazard control...
+
+
 
 
 
