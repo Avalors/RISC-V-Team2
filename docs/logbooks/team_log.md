@@ -69,6 +69,12 @@ This file will note down **major meetups** and breakdown the progress completed 
   - Went through the instructions for the project to split the tasks more appropriately, redefine the timeline
   - First time all tests ran successfully! 
 ![image](https://github.com/user-attachments/assets/46d4181e-92d0-480e-a301-8ffec25d1f41)
+  - We had some issues running gtkwave, but after correcting the relevant syntax error, we could see the first few cycles in gtkwave of our counter.s program running on our CPU
+![WhatsApp Image 2024-11-30 at 16 28 04_63dadce4](https://github.com/user-attachments/assets/e6fa36a9-d57e-492f-8dfa-af812792dbbb)
+and the last few cycles resemble this:
+![WhatsApp Image 2024-11-30 at 16 28 53_bd83cdcf](https://github.com/user-attachments/assets/d7d6402d-6f15-48ea-ae67-18a3e8fb9a51)
+
+
 
 
 
