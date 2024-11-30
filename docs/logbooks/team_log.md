@@ -72,7 +72,10 @@ This file will note down **major meetups** and breakdown the progress completed 
 
 ## Team meetup (30/11)
   - Changed the ROM so it can take the instructions from the compiled hex file
+  - Deleted program.s as it was identical to the counter.s file we had
   - Implemented a instr_mem.sv module, as well as the corresponding instr_mem_tb.cpp testbench
+  - We then tested the instruction memory, and using verilator we saw it was fully functional
+![image](https://github.com/user-attachments/assets/f7543cea-5e5e-48bc-a64d-770b39fec8ec) 
   - We had some issues running gtkwave, but after correcting the relevant syntax error, we could see the first few cycles in gtkwave of our counter.s program running on our CPU
 ![WhatsApp Image 2024-11-30 at 16 28 04_63dadce4](https://github.com/user-attachments/assets/e6fa36a9-d57e-492f-8dfa-af812792dbbb)
 and the last few cycles resemble this:
