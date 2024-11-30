@@ -26,9 +26,20 @@ module top (
     );
 
     // Instruction Memory (asynchronous read)
-    rom #(
+    /*rom #(
         .ADDRESS_WIDTH(32),
         .DATA_WIDTH(8)
+    ) InstructionMemory (
+        .addr(PC),
+        .instr(instr)
+    );*/
+
+    // Instruction Memory 2.0 
+    instr_mem #(
+        .ADDRESS_WIDTH(32),
+        .ADDRESS_REAL_WIDTH(12),
+        .DATA_WIDTH(8),
+        .DATA_OUT_WIDTH(32)
     ) InstructionMemory (
         .addr(PC),
         .instr(instr)

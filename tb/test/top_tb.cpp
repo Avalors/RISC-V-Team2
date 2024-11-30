@@ -1,23 +1,19 @@
-#include "sync_testbench.h"
-#include <verilated_cov.h>
+#include "testbench.h"
 #include <cstdlib>
 
-#define NAME            "top"
+#define CYCLES 10000
 
+unsigned int ticks = 0;
 
-class CpuTestbench : public SyncTestbench
+class CpuTestbench : public Testbench
 {
 protected:
     void initializeInputs() override
     {
         top->clk = 1;
         top->rst = 0;
-
-        // We compile the program here, so the whole thing can use it.
-        system("./compile.sh --input asm/program.S");
     }
 };
-
 
 TEST_F(CpuTestbench, InitialStateTest)
 {
@@ -119,16 +115,39 @@ TEST_F(CpuTestbench, CounterResetsAfter254)
     FAIL() << "a0 did not reset after 254";
 }
 
+TEST_F(CpuTestbench, BaseProgramTest)
+{
+    bool success = false;
+    system("./compile.sh asm/counter.s");
+
+    for (int i = 0; i < CYCLES; i++)
+    {
+        runSimulation(1);
+        if (top->a0 == 254)
+        {
+            SUCCEED();
+            success = true;
+            break;
+        }
+    }
+    if (!success)
+    {
+        FAIL() << "Counter did not reach 254";
+    }
+}
+
+// Note this is how we are going to test your CPU. Do not worry about this for
+// now, as it requires a lot more instructions to function
+// TEST_F(CpuTestbench, Return5Test)
+// {
+//     system("./compile.sh c/return_5.c");
+//     runSimulation(100);
+//     EXPECT_EQ(top->a0, 5);
+// }
 
 int main(int argc, char **argv)
 {
-    Verilated::commandArgs(argc, argv);
     testing::InitGoogleTest(&argc, argv);
-    Verilated::mkdir("logs");
     auto res = RUN_ALL_TESTS();
-    VerilatedCov::write(
-        ("logs/coverage_" + std::string(NAME) + ".dat").c_str()
-    );
-
     return res;
 }
