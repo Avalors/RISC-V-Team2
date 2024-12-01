@@ -8,9 +8,9 @@ I also helped out in designing the **control unit** and its respective testbench
 ## Timetable details
 
 ### 14/11/2024
-    - Got familiar with the top level design of RISC V, understanding the different units
-    - Created a first draft program alu.sv and registerfile.sv files for Lab 4 on separate branch then merged
-    - Got to meet other team members
+- Got familiar with the top level design of RISC V, understanding the different units
+- Created a first draft program alu.sv and registerfile.sv files for Lab 4 on separate branch then merged
+- Got to meet other team members
 
 ### 21/11/2024
     - Helped Antoine restructure the repo (e.g. rtl and tb directories)
