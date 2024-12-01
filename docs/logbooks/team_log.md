@@ -84,6 +84,11 @@ and the last few cycles resemble this:
   - We can now move onto the pipelining, hazard control...
 ![image](https://github.com/user-attachments/assets/1be4de09-46ea-4221-9d46-4a927ca86585)
 
+## Team meetup (01/12)
+  - Went over the project brief instructions
+  - Created a new branch for single cycle, and the README for the rtl folder
+  - Allocated roles for the next few days, from the f1 assembly file, to amending the sign extension or implementing the data memory
+
 
 
 
