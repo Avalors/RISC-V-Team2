@@ -83,6 +83,8 @@ I also took on the responsability of being repo master and designed much of the 
 - As data memory member:
   1. Chose a little-endian storage
 ![WhatsApp Image 2024-12-01 at 17 30 10_e1c02a71](https://github.com/user-attachments/assets/8456204a-eab3-4911-8076-8c556e6c0885)
+![WhatsApp Image 2024-12-01 at 17 37 17_c6b1f882](https://github.com/user-attachments/assets/c0bbc31c-7c97-4c37-af00-50db77d61f35)
+
 
 
 
