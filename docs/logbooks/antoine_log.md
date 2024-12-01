@@ -70,12 +70,20 @@ I also took on the responsability of being repo master and designed much of the 
 ![image](https://github.com/user-attachments/assets/a2ff696c-f957-4000-ab83-a0de5c5fbe6c)
   4. As the team member charged with overseeing the integration and implementing the overall testbench, I also had to briefly edit (ie. added a newline at the end of the module, change bit size) or declare/rename certain variables in other modules (program_counter.sv, registerfile.sv, rom.sv...)
   5. Wrote the original doit.sh file, with less complete folder structure than the current doit.sh script we use, taken from the files provided for lab 4
+
 ![image](https://github.com/user-attachments/assets/e049cbc5-ca44-4278-9b77-3e26f173d2c1)
-  6. Copied in the verify.cpp (now discarded), mux_tb.cpp, testbench.h, base_testbench.h and compile.sh provided to us in our group repo
-  7. Created some assembly files such as counter.s, xor.s and or.s, as well as creating a expected value comment for comparison's sake
+  7. Copied in the verify.cpp (now discarded), mux_tb.cpp, testbench.h, base_testbench.h and compile.sh provided to us in our group repo
+  8. Created some assembly files such as counter.s, xor.s and or.s, as well as creating a expected value comment for comparison's sake
 ![image](https://github.com/user-attachments/assets/0858de9a-0b5e-4ac9-98c3-3e1236e0516b)
 ![image](https://github.com/user-attachments/assets/3c76ca27-abcf-4528-909e-a5d998053b2e)
 ![image](https://github.com/user-attachments/assets/034db0ea-da4a-46e0-a513-f7eecdba49b7)
+
+## Single Cycle
+
+- As data memory member:
+  1. Chose a little-endian storage
+![WhatsApp Image 2024-12-01 at 17 30 10_e1c02a71](https://github.com/user-attachments/assets/8456204a-eab3-4911-8076-8c556e6c0885)
+
 
 
 
