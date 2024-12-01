@@ -23,6 +23,6 @@ I was in charge of designing the **ROM**, **Sign_extension**, and worked with El
 - Worked as a team debugging the testbenches
 - Started progress with the logbook.
 
-## 30/11/2024
+### 30/11/2024
 - Worked remotely with the team via Microsoft teams and finalised the debugging
 - Finished up Lab4
