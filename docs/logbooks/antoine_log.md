@@ -53,13 +53,13 @@ I also took on the responsability of being repo master and designed much of the 
 
 As repo master:
 
-    - Took charge of many commits and amendments including updating the team logbook and the README file
+    1. Took charge of many commits and amendments including updating the team logbook and the README file
     
-    - Added screenshots of gtkwave, code snippets as proof of work
+    2. Added screenshots of gtkwave, code snippets as proof of work
     
-    - Created and deleted the relevant branches
+    3. Created and deleted the relevant branches
     
-    - Use of markdown for the team contribution table and other instructions such as the quick start and general requirements (ie. file locations and package downloads)
+    4. Use of markdown for the team contribution table and other instructions such as the quick start and general requirements (ie. file locations and package downloads)
     
         
 ![image](https://github.com/user-attachments/assets/442a02df-affa-46ca-8fcc-8b6df01b47a7)
