@@ -34,6 +34,6 @@ I also helped out in designing the **control unit** and its respective testbench
 
 
 ### 30/11/24
-Worked with Ahmed to fix the top testbench to write to gtkwave to simulate our counter: ![https://github.com/aa6dcc/RISC-V-Team2/commit/edc939dadaaca6523c7ef921765ea0f2ed3c03f0](GTK wave fix, loaded ROM via compile.sh added)
+Worked with Ahmed to fix the top testbench to write to gtkwave to simulate our counter: [https://github.com/aa6dcc/RISC-V-Team2/commit/edc939dadaaca6523c7ef921765ea0f2ed3c03f0](GTK wave fix, loaded ROM via compile.sh added)
 Completed a new instr_mem.sv and respective testbench to be able to directly use complie.sh to compile the assembly file into hex and load into instruction memory (replacing rom.sv in this case)
     
