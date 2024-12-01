@@ -72,6 +72,7 @@ I also took on the responsability of being repo master and designed much of the 
   5. Wrote the original doit.sh file, with less complete folder structure than the current doit.sh script we use, taken from the files provided for lab 4
 
 ![image](https://github.com/user-attachments/assets/e049cbc5-ca44-4278-9b77-3e26f173d2c1)
+
   7. Copied in the verify.cpp (now discarded), mux_tb.cpp, testbench.h, base_testbench.h and compile.sh provided to us in our group repo
   8. Created some assembly files such as counter.s, xor.s and or.s, as well as creating a expected value comment for comparison's sake
 ![image](https://github.com/user-attachments/assets/0858de9a-0b5e-4ac9-98c3-3e1236e0516b)
