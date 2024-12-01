@@ -7,7 +7,7 @@ For lab 4, I was in charge of the doit.sh file, as well as the integration and o
 For the rest of the project, I was in charge of designing the **ALU unit**, as well as testbenching my own modules, and then working as a team on pipelining, hazard control, cache memory and branch prediction.
 I also took on the responsability of being repo master and designed much of the repo.
 
-## Timetable details
+## Chronological work
 
 ### 14/11/2024
     - Got familiar with the top level design of RISC V, understanding the different units
@@ -42,3 +42,22 @@ I also took on the responsability of being repo master and designed much of the 
 
 ### 30/11/2024
     - Assisted in debugging the top testbench
+
+
+
+
+
+## Work by section
+
+### Lab 4
+    - As repo master:
+        - Took charge of many commits and amendments including updating the team logbook and the README file
+        - Added screenshots of gtkwave, code snippets as proof of work
+        - Created and deleted the relevant branches
+        - Use of markdown for the team contribution table and other instructions such as the quick start and general requirements (ie. file locations and package downloads)
+        ![image](https://github.com/user-attachments/assets/442a02df-affa-46ca-8fcc-8b6df01b47a7)
+        ![image](https://github.com/user-attachments/assets/7bae7f4a-f05d-4009-9a1e-99ed009b12e8)
+        ![image](https://github.com/user-attachments/assets/f0755cf0-d159-40f8-bcd4-fb85fc4b7e59)
+
+
+
