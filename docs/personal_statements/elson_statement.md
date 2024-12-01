@@ -24,6 +24,7 @@ I was responsible for `alu.sv`, 'controlunit.sv`, `registerfile.sv`, and `mux.sv
 - Gained technical skills whilst integrating the different modules, writing testbenches for each of them, debugging each module
 - Learnt to use Git and Linux
 - Understanding the RISCV microarchitecture and pseudoinstructions
+- Learnt to navigate GTKwave effectively for debugging
 
 
 ## Mistakes I made

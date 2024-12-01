@@ -37,3 +37,6 @@ I also helped out in designing the **control unit** and its respective testbench
     - Worked with Ahmed to fix the top testbench to write to gtkwave to simulate our counter
     - Completed a new instr_mem.sv and respective testbench to be able to directly use complie.sh to compile the assembly file into hex and load into instruction memory (replacing rom.sv in this case)
     
+### 01/12/24
+    - Worked on the foundation of the f1_lights.sv and the respective testbench 
+    - Met up as a team to allocate new tasks and plan forward
