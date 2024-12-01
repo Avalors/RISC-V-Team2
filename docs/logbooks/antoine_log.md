@@ -49,17 +49,18 @@ I also took on the responsability of being repo master and designed much of the 
 
 ## Work by section
 
-### Lab 4
+## Lab 4
     - As repo master:
         - Took charge of many commits and amendments including updating the team logbook and the README file
         - Added screenshots of gtkwave, code snippets as proof of work
         - Created and deleted the relevant branches
         - Use of markdown for the team contribution table and other instructions such as the quick start and general requirements (ie. file locations and package downloads)
-        ![image](https://github.com/user-attachments/assets/442a02df-affa-46ca-8fcc-8b6df01b47a7)
         
-        ![image](https://github.com/user-attachments/assets/7bae7f4a-f05d-4009-9a1e-99ed009b12e8)
+![image](https://github.com/user-attachments/assets/442a02df-affa-46ca-8fcc-8b6df01b47a7)
         
-        ![image](https://github.com/user-attachments/assets/f0755cf0-d159-40f8-bcd4-fb85fc4b7e59)
+![image](https://github.com/user-attachments/assets/7bae7f4a-f05d-4009-9a1e-99ed009b12e8)
+        
+![image](https://github.com/user-attachments/assets/f0755cf0-d159-40f8-bcd4-fb85fc4b7e59)
         
 
 
