@@ -39,3 +39,6 @@ I also took on the responsability of being repo master and designed much of the 
     - Deleted pointless branch from our repo
     - Went over the instructions to go from lab 4 to the actual project
     - Split roles for hazard control, pipelining, cache, data memory
+
+### 30/11/2024
+    - Assisted in debugging the top testbench
