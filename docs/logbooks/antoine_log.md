@@ -82,10 +82,70 @@ I also took on the responsability of being repo master and designed much of the 
 ## Single Cycle
 
 - As data memory member:
-  1. Chose a little-endian storage
+  1. Chose a little-endian storage and implemented it using pseudo-instructions
 ![WhatsApp Image 2024-12-01 at 17 30 10_e1c02a71](https://github.com/user-attachments/assets/8456204a-eab3-4911-8076-8c556e6c0885)
 ![WhatsApp Image 2024-12-01 at 17 37 17_c6b1f882](https://github.com/user-attachments/assets/c0bbc31c-7c97-4c37-af00-50db77d61f35)
+![image](https://github.com/user-attachments/assets/2ff1aff3-a766-4517-a26b-f9536dd0bb9a)
+  2. Created the data memory module and set it to 20 bits
+![image](https://github.com/user-attachments/assets/03a2cb35-f02b-4283-bab7-491124b0516b)
+ 
+  3. Here we initialise it to 4, 8-bit arrays
+![image](https://github.com/user-attachments/assets/c253fee4-26cc-48c4-9710-c71e12a0a7ed)
 
+    always_comb begin
+        case(AddrMode)
+        
+        // load byte
+        3'b000:begin
+            temp = {24{array[A][7]},array[A]};
+        end
+        
+        // load half
+        3'b001:begin
+            temp = {{16{array[A+1][7]}}, array[A+1], array[A]};
+        end
+
+        // load word
+        3'b010:begin
+            temp = {array[A+3], array[A+2], array[A+1], array[A]};
+        end
+
+        // load byte unsigned
+        3'b011:begin
+            temp = {24'b0, array[A]};
+        end
+
+        // load half unsigned
+        3'b100:begin
+            temp = {16'b0, array[A+1], array[A]};
+        end
+
+        // store byte
+        3'b101:begin
+            array[A] = WD[7:0];
+        end
+        
+        // store half
+        3'b110:begin
+            array[A] = WD[7:0];
+            array[A+1] = WD[15:8];
+        end
+
+        // store word
+        3'b111:begin
+            array[A] = WD[7:0]; // stores the least significant byte
+            array[A+1] = WD[15:8];
+            array[A+2] = WD[23:16];
+            array[A+3] = WD[32:24]; // stores the most significant byte
+        end
+
+        endcase
+    end
+
+
+    assign RD = temp; 
+
+    In the code above, we created a temp variable which allows us to implement 8 different instructions (store byte, load byte... defined as above by concatenation or using byte-by-byte little endian assignment) and is then assigned to RD
 
 
 
