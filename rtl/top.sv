@@ -13,7 +13,7 @@ module top (
     logic EQ;                             // Equality output from ALU
     logic [31:0] RD2, WD3;                // Register file read/write data
     logic RegWrite, ALUsrc, PCsrc;        // Control signals
-    logic [1:0] ImmSrc;                   // 2-bit Immediate source signal
+    logic [2:0] ImmSrc;                   // 2-bit Immediate source signal
     logic [2:0] ALUctrl;                  // ALU control signal
 
     // Program Counter

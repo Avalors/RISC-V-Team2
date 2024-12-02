@@ -11,10 +11,9 @@ protected:
     }
 };
 
-TEST_F(SignExtensionTestbench, ImmSrc00Test) {
-    // Test for ImmSrc = 2'b00
-    top->instr = 0xFFF00013;  // Example instruction: 0xFFF represents a negative immediate
-    top->ImmSrc = 0b00;
+TEST_F(SignExtensionTestbench, ImmSrc000Test) {
+    top->instr = 0xFFF00013;  // Example I-type instruction: 0xFFF represents a negative immediate
+    top->ImmSrc = 0b000;
 
     top->eval();
 
@@ -22,10 +21,9 @@ TEST_F(SignExtensionTestbench, ImmSrc00Test) {
     EXPECT_EQ(top->ImmOp, 0xFFFFFFFF);
 }
 
-TEST_F(SignExtensionTestbench, ImmSrc01Test) {
-    // Test for ImmSrc = 2'b01
-    top->instr = 0xFE000FA3;  // Example instruction
-    top->ImmSrc = 0b01;
+TEST_F(SignExtensionTestbench, ImmSrc001Test) {
+    top->instr = 0xFE000FA3;  // Example S-type instruction
+    top->ImmSrc = 0b001;
 
     top->eval();
 
@@ -33,15 +31,34 @@ TEST_F(SignExtensionTestbench, ImmSrc01Test) {
     EXPECT_EQ(top->ImmOp, 0xFFFFFFFF);
 }
 
-TEST_F(SignExtensionTestbench, ImmSrc10Test) {
-    // Test for ImmSrc = 2'b10
-    top->ImmSrc = 0b10; //sign extension for branch instructions
+TEST_F(SignExtensionTestbench, ImmSrc010Test) {
+    top->ImmSrc = 0b010; 
     top->instr = 0xFE420AE3;  // Example branch instruction beq x4, x4, L7
 
     top->eval();    
 
     // Expected output: Sign-extended instruction for B-type immediate
     EXPECT_EQ(top->ImmOp, 0xFFFFFFF4);  // expected PC offset to enable branch
+}
+
+TEST_F(SignExtensionTestbench, ImmSrc011Test) {
+    top->ImmSrc = 0b011;  
+    top->instr = 0xFFFFF4B7;  // Example U-type instruction: lui s1 (x9) <constant> | constant = 1048575 (0xFFFFF)
+
+    top->eval();    
+
+    // Expected output: Sign-extended instruction for B-type immediate
+    EXPECT_EQ(top->ImmOp, 0xFFFFF000);  // expected PC offset to enable branch
+}
+
+TEST_F(SignExtensionTestbench, ImmSrc100Test) {
+    top->ImmSrc = 0b100;  
+    top->instr = 0xFEDFF0EF;  // Example J-type instruction: JAL ra (x1) <label> | PC relative offset = -20
+
+    top->eval();    
+
+    // Expected output: Sign-extended instruction for B-type immediate
+    EXPECT_EQ(top->ImmOp, 0xFFFFFFEC);  // expected PC offset to enable branch
 }
 
 int main(int argc, char **argv) {

@@ -5,7 +5,7 @@ module controlunit #(
     input logic                 EQ,     // Equality flag (for branch comparison)
     output logic [2:0]          ALUctrl, // ALU control signal
     output logic                ALUsrc,  // ALU source (1 for immediate, 0 for register)
-    output logic [1:0]          ImmSrc,  // Immediate source selection
+    output logic [2:0]          ImmSrc,  // Immediate source selection
     output logic                PCsrc,   // Program counter source (for branches and jumps)
     output logic                RegWrite // Register write enable
 );
@@ -23,7 +23,7 @@ module controlunit #(
         // Default values
         ALUctrl = 3'b000;
         ALUsrc = 1'b0;
-        ImmSrc = 2'b00;
+        ImmSrc = 3'b000;
         PCsrc = 1'b0;
         RegWrite = 1'b0;
 
@@ -52,7 +52,7 @@ module controlunit #(
                 endcase
                 RegWrite = 1'b1;
                 ALUsrc = 1'b1;
-                ImmSrc = 2'b00;
+                ImmSrc = 3'b000;
             end
 
             // Load (I-Type)
@@ -60,20 +60,20 @@ module controlunit #(
                 ALUctrl = 3'b000; // ADD for address calculation
                 RegWrite = 1'b1;
                 ALUsrc = 1'b1;
-                ImmSrc = 2'b00;
+                ImmSrc = 3'b000;
             end
 
             // Store (S-Type)
             7'b0100011: begin 
                 ALUctrl = 3'b000; // ADD for address calculation
                 ALUsrc = 1'b0; // Uses rd2
-                ImmSrc = 2'b01; // S-Type immediate
+                ImmSrc = 3'b001; // S-Type immediate
             end
 
             // Branch (B-Type)
             7'b1100011: begin 
                 ALUctrl = 3'b001; // SUB for comparison
-                ImmSrc = 2'b10; // B-Type immediate
+                ImmSrc = 3'b010; // B-Type immediate
                 case (funct3)
                     3'b000: PCsrc = EQ ? 1'b1 : 1'b0; // BEQ
                     3'b001: PCsrc = EQ ? 1'b0 : 1'b1; // BNE
@@ -86,6 +86,7 @@ module controlunit #(
                 PCsrc = 1'b1;
                 RegWrite = 1'b1;
                 ALUsrc = 1'b1;
+                ImmSrc = 3'b100;
             end
 
             // JALR (I-Type)
@@ -93,18 +94,21 @@ module controlunit #(
                 PCsrc = 1'b1;
                 RegWrite = 1'b1;
                 ALUsrc = 1'b1;
+                ImmSrc = 3'b000;
             end
 
             // LUI (Load Upper Immediate)
             7'b0110111: begin 
                 RegWrite = 1'b1;
                 ALUsrc = 1'b1;
+                ImmSrc = 3'b011;
             end
 
             // AUIPC (Add Upper Immediate to PC)
             7'b0010111: begin 
                 RegWrite = 1'b1;
                 ALUsrc = 1'b1;
+                ImmSrc = 3'b011;
             end
 
             // I-Type (ecall, ebreak)
@@ -121,7 +125,7 @@ module controlunit #(
             default: begin
                 ALUctrl = 3'b000;
                 ALUsrc = 1'b0;
-                ImmSrc = 2'b00;
+                ImmSrc = 3'b000;
                 PCsrc = 1'b0;
                 RegWrite = 1'b0;
             end
