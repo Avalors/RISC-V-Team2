@@ -89,6 +89,13 @@ and the last few cycles resemble this:
   - Created a new branch for single cycle, and the README for the rtl folder
   - Allocated roles for the next few days, from the f1 assembly file, to amending the sign extension or implementing the data memory
 
+## Team meetup (02/12)
+  - Ahmed fixed the sign extension module and testbench, then amended the top file accordingly
+  - Ahmed and Antoine worked on implementing the data memory module as well as the data memory test (little_endian.s)
+  - Ahmed and Antoine had to add a AddrMode signal, which also had to be added to the control unit module
+  - Elson worked on the f1 lights module and testbench
+  - The next objective is to implement the data memory and pdf testbench 
+
 
 
 
