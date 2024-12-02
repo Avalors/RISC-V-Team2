@@ -147,7 +147,7 @@ I also took on the responsability of being repo master and designed much of the 
 
     assign RD = temp; 
 
-    In the code above, we created a temp variable which allows us to implement 8 different instructions (store byte, load byte... defined as above by concatenation or using byte-by-byte little endian assignment) and is then assigned to RD
+In the code above, we created a temp variable which allows us to implement 8 different instructions (store byte, load byte... defined as above by concatenation or using byte-by-byte little endian assignment) and is then assigned to RD
 
 
 
