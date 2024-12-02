@@ -8,6 +8,7 @@ module controlunit #(
     output logic [2:0]          ImmSrc,  // Immediate source selection
     output logic                PCsrc,   // Program counter source (for branches and jumps)
     output logic                RegWrite // Register write enable
+    output logic [2:0]          AddrMode // sets the instruction for data memory          
 );
 
     // Extract instruction fields
@@ -26,6 +27,7 @@ module controlunit #(
         ImmSrc = 3'b000;
         PCsrc = 1'b0;
         RegWrite = 1'b0;
+        AddrMode = 3'b000;
 
         case (op)
             // R-Type
@@ -61,6 +63,16 @@ module controlunit #(
                 RegWrite = 1'b1;
                 ALUsrc = 1'b1;
                 ImmSrc = 3'b000;
+
+                //For data_mem
+                case(funct3)
+                3'b000: AddrMode = 3'b000;
+                3'b001: AddrMode = 3'b001;
+                3'b010: AddrMode = 3'b010;
+                3'b100: AddrMode = 3'b011;
+                3'b101: AddrMode = 3'b100;
+                default: AddrMode = 3'b000;
+                endcase
             end
 
             // Store (S-Type)
@@ -68,6 +80,14 @@ module controlunit #(
                 ALUctrl = 3'b000; // ADD for address calculation
                 ALUsrc = 1'b0; // Uses rd2
                 ImmSrc = 3'b001; // S-Type immediate
+                
+                //For data_mem
+                case(funct3)
+                3'b000: AddrMode = 3'b101;
+                3'b001: AddrMode = 3'b110;
+                3'b010: AddrMode = 3'b111;
+                default: AddrMode = 3'b101;
+                endcase
             end
 
             // Branch (B-Type)
@@ -128,6 +148,7 @@ module controlunit #(
                 ImmSrc = 3'b000;
                 PCsrc = 1'b0;
                 RegWrite = 1'b0;
+                AddrMode = 3'b000;
             end
         endcase
     end
