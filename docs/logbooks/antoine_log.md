@@ -90,7 +90,9 @@ I also took on the responsability of being repo master and designed much of the 
 ![image](https://github.com/user-attachments/assets/03a2cb35-f02b-4283-bab7-491124b0516b)
  
   3. Here we initialise it to 4, 8-bit arrays
+ 
 ![image](https://github.com/user-attachments/assets/c253fee4-26cc-48c4-9710-c71e12a0a7ed)
+
 
     always_comb begin
         case(AddrMode)
