@@ -12,7 +12,7 @@ module signextension #(
             3'b001: ImmOp = {{20{instr[31]}}, instr[31:25], instr[11:7]};                           //S type instruction
             3'b010: ImmOp = {{20{instr[31]}}, instr[7], instr[30:25], instr[11:8], 1'b0};           //B type instruction
             3'b011: ImmOp = {instr[31:12], 12'b0};                                                  //U type instruction
-            3'b100: ImmOp = {{12{instr[31]}}, instr[31], instr[19:12], instr[20],instr[30:21],1'b0};//J type instruction
+            3'b100: ImmOp = {{12{instr[31]}}, instr[19:12], instr[20],instr[30:21],1'b0};           //J type instruction
             default: ImmOp = {{20{instr[31]}}, instr[31:20]};
         // Sign extend the immediate value
         endcase
