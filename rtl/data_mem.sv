@@ -47,12 +47,10 @@ module data_mem #(
             temp = {24'b0, array[A]};
         end
 
-
         // load half unsigned
         3'b100:begin
             temp = {16'b0, array[A+1], array[A]};
         end
-
 
         // store byte
         3'b101:begin
@@ -64,7 +62,6 @@ module data_mem #(
             array[A] = WD[7:0];
             array[A+1] = WD[15:8];
         end
-
 
         // store word
         3'b111:begin
