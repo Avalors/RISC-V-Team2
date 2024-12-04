@@ -1,7 +1,7 @@
 # Jihwan Shin's Logbook
 
 ## Role
-I was in charge of designing the **ROM**, **Sign_extension**, and worked with Elson on the **Control unit**, as well as testbenching my own modules. We then worked as a team on pipelining, cache memory, and branch prediction.
+I was in charge of designing the **ROM(Instruction Memory Prototype, not actual one we use)**, and worked with Elson on the **Control_unit** and Ahmed on the **Sign_extension**, as well as testbenching my own modules. We then worked as a team on pipelining, cache memory, and branch prediction.
 
 ## Timetable details
 
@@ -20,9 +20,18 @@ I was in charge of designing the **ROM**, **Sign_extension**, and worked with El
 
 ### 27/11/2024
 - Met up with the group and did revision on each module
+- Worked with Ahmed on the sign extension and added the Store and Branch instructions.
 - Worked as a team debugging the testbenches
 - Started progress with the logbook.
 
 ### 30/11/2024
-- Worked remotely with the team via Microsoft teams and finalised the debugging
+- Worked remotely via Microsoft teams and finalised the debugging
 - Finished up Lab4
+
+### 1/12/2024
+- Worked remotely via Microsoft teams and assigned roles up until/before the pipelining part
+- Started work on the pdf program/testbench
+
+### 4/12 2024
+- Finished up pdf testbench
+- Worked with group in-person to finalise data memory module.
