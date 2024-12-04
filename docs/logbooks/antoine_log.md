@@ -148,6 +148,13 @@ I also took on the responsability of being repo master and designed much of the 
     assign RD = temp; 
 
 In the code above, we created a temp variable which allows us to implement 8 different instructions (store byte, load byte... defined as above by concatenation or using byte-by-byte little endian assignment) and is then assigned to RD
+  4. Worked on the first version of data memory testbench, integrated within the top_tb.cpp program.
+
+The idea here was that I would try to test each instruction implemented in the data_mem.sv module by running simulations and comparing the output to the expected value. The next step would've been to use gtkwave to see what instructions should be running on what clock cycle and then amend the code according to that (as all the tests would be within a large for loop). This would imply making many if statements ie. (if == 2) where i corresponds to the clock cycle to make sure the module and testbench are synchronised
+
+![image](https://github.com/user-attachments/assets/bf7f44da-1227-4b0f-b79c-28fa33e469e3)
+![image](https://github.com/user-attachments/assets/fcb718d3-44ee-47e3-94d1-d0a515cdf405)
+
 
 
 
