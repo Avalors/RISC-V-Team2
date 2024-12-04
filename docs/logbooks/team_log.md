@@ -96,6 +96,13 @@ and the last few cycles resemble this:
   - Elson worked on the f1 lights module and testbench
   - The next objective is to implement the data memory and pdf testbench 
 
+## Team meetup (04/12)
+  - We met today to debug the pdf testbench, the data memory testbench (included in the top testbench), instruction memory testbench too
+  - We used gtkwave to verify the correct values were appearing
+  - We're also running tests on the f1 assembly file and testbench
+
+![IMG_4482](https://github.com/user-attachments/assets/131e9d23-55db-48a8-94be-37f7cd7227ad)
+
 
 
 
