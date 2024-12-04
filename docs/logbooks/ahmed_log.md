@@ -2,11 +2,12 @@
 
 ## Role
 
-I was in charge of designing the **Control unit**, as well as testbenching my own modules, and then working as a team on pipelining, cache memory and branch prediction.
-I also worked on the **program counter** in lab 4 and helped Jihwan change his **instruction ROM** module. 
+I was in charge of designing the **program counter**, as well as testbenching my own modules, and then working as a team on pipelining, cache memory and branch prediction.
+I also worked on the **instruction ROM**, **sign extension**, **Data memmory** instructions respectively.
 
 ## Timetable details
 
+##
 ### 14/11/2024
     - Got familiar with the top level design of RISC V, understanding the different units
     - Created a first draft program counter.sv file based on the slides.
@@ -36,3 +37,8 @@ I also worked on the **program counter** in lab 4 and helped Jihwan change his *
 
 ### 30/11/2024
     - worked with elson to resolve GTK wave issue, deleted verify.cpp and used it purpose in top_tb.cpp test bench.
+
+## Single-Cycle:
+### 02/12/2024
+    -Added J and U type instruction sign exention functionality (changed: signextension.sv, controlunit.sv and top.sv)
+    -Worked with antoine on implementing data_mem.sv file.

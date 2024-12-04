@@ -7,8 +7,9 @@ module controlunit #(
     output logic                ALUsrc,  // ALU source (1 for immediate, 0 for register)
     output logic [2:0]          ImmSrc,  // Immediate source selection
     output logic                PCsrc,   // Program counter source (for branches and jumps)
-    output logic                RegWrite // Register write enable
-    output logic [2:0]          AddrMode // sets the instruction for data memory          
+    output logic                RegWrite, // Register write enable            
+    output logic [2:0]          AddrMode, // sets the instruction for data memory
+    output logic                ResultSrc// control signal for output mux         
 );
 
     // Extract instruction fields
@@ -28,6 +29,7 @@ module controlunit #(
         PCsrc = 1'b0;
         RegWrite = 1'b0;
         AddrMode = 3'b000;
+        ResultSrc = 1'b0;
 
         case (op)
             // R-Type
@@ -63,6 +65,7 @@ module controlunit #(
                 RegWrite = 1'b1;
                 ALUsrc = 1'b1;
                 ImmSrc = 3'b000;
+                ResultSrc = 1'b1; //result is switched to dataMem read from ALUout
 
                 //For data_mem
                 case(funct3)
@@ -149,6 +152,7 @@ module controlunit #(
                 PCsrc = 1'b0;
                 RegWrite = 1'b0;
                 AddrMode = 3'b000;
+                ResultSrc = 1'b0;
             end
         endcase
     end

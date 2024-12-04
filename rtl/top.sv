@@ -15,6 +15,11 @@ module top (
     logic RegWrite, ALUsrc, PCsrc;        // Control signals
     logic [2:0] ImmSrc;                   // 2-bit Immediate source signal
     logic [2:0] ALUctrl;                  // ALU control signal
+    logic [2:0] AddrMode;                 // DataMemory control signal
+    logic [31:0] ReadData;                // DataMemory output
+    logic ResultSrc;                      // result mux control signal
+    logic [31:0] Result;                  // 32 bit result signal
+    
 
     // Program Counter
     program_counter #(.WIDTH(32)) PC_Reg (
@@ -93,11 +98,29 @@ module top (
         .ALUsrc(ALUsrc),
         .ImmSrc(ImmSrc),
         .PCsrc(PCsrc),
-        .ALUctrl(ALUctrl)
+        .ALUctrl(ALUctrl),
+        .AddrMode(AddrMode),
+        .ResultSrc(ResultSrc)
+    );
+    
+    //Data memory
+    data_mem DataMemory (
+        .AddrMode(AddrMode),
+        .A(ALUout),
+        .WD(RD2),
+        .RD(ReadData)
     );
 
-    // Write back
-    assign WD3 = ALUout;
+    //Result mux
+    always_comb begin
+        case(ResultSrc)
+        1'b0: Result = ALUout;
+        1'b1: Result = ReadData;
+        endcase
+    end
+
+    // Write back result/output of CPU
+    assign WD3 = Result;
 
 endmodule
 /* verilator lint_on SYNCASYNCNET */
