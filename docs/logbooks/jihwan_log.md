@@ -32,6 +32,6 @@ I was in charge of designing the **ROM(Instruction Memory Prototype, not actual 
 - Worked remotely via Microsoft teams and assigned roles up until/before the pipelining part
 - Started work on the pdf program/testbench
 
-### 4/12 2024
+### 4/12/2024
 - Finished up pdf testbench
 - Worked with group in-person to finalise data memory module.
