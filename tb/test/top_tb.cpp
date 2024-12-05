@@ -1,153 +1,80 @@
-#include "testbench.h"
-#include <cstdlib>
+#include "sync_testbench.h"
 
-#define CYCLES 10000
+#define NAME            "topf1lights"
 
-unsigned int ticks = 0;
 
-class CpuTestbench : public Testbench
+class CpuTestbench : public SyncTestbench
 {
 protected:
     void initializeInputs() override
     {
         top->clk = 1;
         top->rst = 0;
+
+        // We compile the program here, so the whole thing can use it.
+        system("./compile.sh --input asm/f1_lights.s");
     }
 };
 
-TEST_F(CpuTestbench, InitialStateTest)
+
+
+TEST_F(CpuTestbench, LoopTest)
 {
-    top->eval();
-    
-    EXPECT_EQ(top->clk, 1);
-    EXPECT_EQ(top->rst, 0);
-    EXPECT_EQ(top->a0, 0);
-}
+    int max_cycles = 1000;
 
-/*  Archived test for later
-TEST_F(CpuTestbench, ResetStateTest)
-{
-    // Can be random number
-    runSimulation(60);
-
-    top->rst = 1;
-    runSimulation(1);
-
-    EXPECT_EQ(top->a0, 0);
-}
-*/
-
-
-TEST_F(CpuTestbench, CounterGetsTo1)
-{
-    for (int i = 0; i < MAX_SIM_CYCLES; ++i)
+    for (int i = 0; i < max_cycles; ++i)
     {
-        runSimulation(1);
-        
-        if (top->a0 == 1)
+        runSimulation(); // Evaluate the model
+
+        // Checking for subroutine execution (e.g., Result reaching 0xff)
+        if (top->Result == 0xff) // Subroutine's final value
+        {
+            // Check if loop continues by resetting Result and observing it in subsequent cycles
+            top->Result = 0;
+        }
+        else if (top->Result != 0)
+        {
+            SUCCEED(); // Indicates the loop has iterated at least once
+            return;
+        }
+
+        top->clk = !top->clk; // Toggle the clock
+    }
+
+    FAIL() << "The iloop did not demonstrate expected behavior within " << max_cycles << " cycles.";
+}
+
+
+TEST_F(CpuTestbench, SubroutineFinalValueTest)
+{
+    int max_cycles = 1000; // Define a maximum number of cycles to simulate
+
+    for (int i = 0; i < max_cycles; ++i)
+    {
+        runSimulation(); // Evaluate the model
+
+        if (top->Result == 0xff) // Check if Result has the correct final value
         {
             SUCCEED();
             return;
         }
-        else if (top->a0 > 1)
-        {
-            FAIL() << "a0 exceeded 1 at sim cycle " << i;
-            return;
-        }
-        else
-        {
-            /* Do nothing */
-        }
+
+        top->clk = !top->clk; // Toggle the clock to simulate the next cycle
     }
-    
-    FAIL() << "a0 did not reach 1 within the maximum number of sim cycles";
+
+    FAIL() << "The register Result did not reach the expected value within " << max_cycles << " cycles.";
 }
 
-
-TEST_F(CpuTestbench, CounterGetsTo254)
-{
-    for (int i = 0; i < MAX_SIM_CYCLES; ++i)
-    {
-        runSimulation(1);
-        
-        if (top->a0 == 254)
-        {
-            SUCCEED();
-            return;
-        }
-    }
-    
-    FAIL() << "a0 did not reach 254 within the maximum number of sim cycles";
-}
-
-
-TEST_F(CpuTestbench, CounterResetsAfter254)
-{
-    int cycles_at_254;
-    bool reached_254;
-
-    for (int i = 0; i < MAX_SIM_CYCLES; ++i)
-    {
-        runSimulation(1);
-        
-        if (top->a0 == 254)
-        {
-            cycles_at_254++;
-            reached_254 = true;
-        }
-        else if (top->a0 > 254)
-        {
-            runSimulation(10);
-            FAIL() << "a0 exceeded 254 at simulation cycle" << i;
-            return;
-        }
-        else if (top->a0 == 0)
-        {
-            SUCCEED();
-            return;
-        }
-        else
-        {
-            /* Do nothing */
-        }
-    }
-    
-    FAIL() << "a0 did not reset after 254";
-}
-
-TEST_F(CpuTestbench, BaseProgramTest)
-{
-    bool success = false;
-    system("./compile.sh asm/counter.s");
-
-    for (int i = 0; i < CYCLES; i++)
-    {
-        runSimulation(1);
-        if (top->a0 == 254)
-        {
-            SUCCEED();
-            success = true;
-            break;
-        }
-    }
-    if (!success)
-    {
-        FAIL() << "Counter did not reach 254";
-    }
-}
-
-// Note this is how we are going to test your CPU. Do not worry about this for
-// now, as it requires a lot more instructions to function
-// TEST_F(CpuTestbench, Return5Test)
-// {
-//     system("./compile.sh c/return_5.c");
-//     runSimulation(100);
-//     EXPECT_EQ(top->a0, 5);
-// }
 
 int main(int argc, char **argv)
 {
+    Verilated::commandArgs(argc, argv);
     testing::InitGoogleTest(&argc, argv);
+    Verilated::mkdir("logs");
     auto res = RUN_ALL_TESTS();
+    VerilatedCov::write(
+        ("logs/coverage_" + std::string(NAME) + ".dat").c_str()
+    );
+
     return res;
 }

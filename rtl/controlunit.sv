@@ -81,7 +81,7 @@ module controlunit #(
             // Store (S-Type)
             7'b0100011: begin 
                 ALUctrl = 3'b000; // ADD for address calculation
-                ALUsrc = 1'b0; // Uses rd2
+                ALUsrc = 1'b1; // Uses rd2
                 ImmSrc = 3'b001; // S-Type immediate
                 
                 //For data_mem

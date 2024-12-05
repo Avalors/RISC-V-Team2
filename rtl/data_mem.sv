@@ -15,12 +15,17 @@ module data_mem #(
     logic [MEM_WIDTH-1:0] array [2**ADDR_REAL_WIDTH-1:0];
     logic [ADDR_WIDTH-1:0] temp;
 
-
     //sets all bytes in memory to 8'b0
     initial begin
         for(int i = 0; i < (1 << ADDR_REAL_WIDTH) - 1; i++) begin
             array[i] =   8'b0;
         end
+        
+
+        //loads data.hex into array of data memory
+        $display("Loading program into data memory...");
+        $readmemh("../rtl/data.hex", array);
+
     end
 
     //load instructions
@@ -46,12 +51,12 @@ module data_mem #(
         3'b100:begin
             temp = {16'b0, array[A+1], array[A]};
         end
-        default: temp = {{24{array[A][7]}},array[A]}; //default case is load byte
+        default: temp = {array[A+3], array[A+2], array[A+1], array[A]}; //default case is load word
         endcase
     end
 
 
-    //store instructions
+    //store instructions 
     always_comb begin
         if(AddrMode == 3'b101)begin
             array[A] = WD[7:0];
