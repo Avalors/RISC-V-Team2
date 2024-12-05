@@ -108,7 +108,11 @@ and the last few cycles resemble this:
 
 ![WhatsApp Image 2024-12-05 at 12 44 28_d4c94fb7](https://github.com/user-attachments/assets/f7c1c6ea-b557-4c85-9163-8a8124b108ff)
 
-  - We then ran some tests using the pdf testbench and f1 lights
+  - We then ran some tests using the pdf testbench (as well as creating a file to plot the different distributions) and f1 lights, which we had to amend
+  - f1_lights had some issues which needed amending, and forced us to consider how to randomly generate numbers
+
+![IMG_4488](https://github.com/user-attachments/assets/7676f42a-3b97-456e-b2af-5446f02c6ca2)
+
 
 
 
