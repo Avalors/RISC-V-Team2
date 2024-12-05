@@ -103,7 +103,12 @@ and the last few cycles resemble this:
 
 ![IMG_4482](https://github.com/user-attachments/assets/131e9d23-55db-48a8-94be-37f7cd7227ad)
 
+## Team meetup (05/12)
+  - We ran a fully functional data memory for the first time, hence concluding single cycle
 
+![WhatsApp Image 2024-12-05 at 12 44 28_d4c94fb7](https://github.com/user-attachments/assets/f7c1c6ea-b557-4c85-9163-8a8124b108ff)
+
+  - We then ran some tests using the pdf testbench and f1 lights
 
 
 
