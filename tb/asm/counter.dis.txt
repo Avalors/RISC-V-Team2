@@ -9,6 +9,6 @@ Disassembly of section .data:
    4:	00000513          	li	a0,0
    8:	00000593          	li	a1,0
    c:	00058513          	mv	a0,a1
-  10:	00158593          	addi	a1,a1,1
+  10:	00158593          	add	a1,a1,1
   14:	fe659ce3          	bne	a1,t1,0xc
   18:	fe0318e3          	bnez	t1,0x8
