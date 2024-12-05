@@ -35,6 +35,7 @@ module data_mem #(
         3'b000:begin
             temp = {{24{array[A][7]}},array[A]};
         end
+        
         // load half
         3'b001:begin
             temp = {{16{array[A+1][7]}}, array[A+1], array[A]};
