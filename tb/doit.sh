@@ -18,7 +18,7 @@ fails=0
 # Handle terminal arguments
 if [[ $# -eq 0 ]]; then
     # If no arguments provided, run all tests
-    files=(${TEST_FOLDER}/*.cpp)
+    files=(${TEST_FOLDER}/*_tb.cpp)
 else
     # If arguments provided, use them as input files
     files=("$@")
@@ -58,8 +58,10 @@ for file in "${files[@]}"; do
     # Check if the test succeeded or not
     if [ $? -eq 0 ]; then
         ((passes++))
+        echo "Current ${passes}"
     else
         ((fails++))
+        echo "${fails}"
     fi
 done
 

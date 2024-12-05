@@ -2,7 +2,7 @@
 module top (
     input logic clk,          // Clock signal
     input logic rst,          // Reset signal
-    output logic [31:0] a0    // Contents of register a0 (output)
+    output logic [31:0] Result    // Contents of result (output)
 );
 
     // Internal Signals
@@ -11,16 +11,14 @@ module top (
     logic [31:0] ImmOp;                   // Sign-extended immediate value
     logic [31:0] ALUop1, ALUop2, ALUout;  // ALU operands and result
     logic EQ;                             // Equality output from ALU
-    logic [31:0] RD2, WD3;                // Register file read/write data
+    logic [31:0] RD2;                // Register file read/write data
     logic RegWrite, ALUsrc, PCsrc;        // Control signals
     logic [2:0] ImmSrc;                   // 2-bit Immediate source signal
     logic [2:0] ALUctrl;                  // ALU control signal
     logic [2:0] AddrMode;                 // DataMemory control signal
     logic [31:0] ReadData;                // DataMemory output
     logic ResultSrc;                      // result mux control signal
-    logic [31:0] Result;                  // 32 bit result signal
     
-
     // Program Counter
     program_counter #(.WIDTH(32)) PC_Reg (
         .clk(clk),
@@ -67,10 +65,9 @@ module top (
         .AD1(instr[19:15]),
         .AD2(instr[24:20]),
         .AD3(instr[11:7]),
-        .WD3(WD3),
+        .WD3(Result),
         .RD1(ALUop1),
-        .RD2(RD2),
-        .a0(a0)
+        .RD2(RD2)
     );
 
     // ALU Operand MUX
@@ -118,9 +115,6 @@ module top (
         1'b1: Result = ReadData;
         endcase
     end
-
-    // Write back result/output of CPU
-    assign WD3 = Result;
 
 endmodule
 /* verilator lint_on SYNCASYNCNET */
