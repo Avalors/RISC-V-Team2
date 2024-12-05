@@ -11,7 +11,7 @@ module top (
     logic [31:0] ImmOp;                   // Sign-extended immediate value
     logic [31:0] ALUop1, ALUop2, ALUout;  // ALU operands and result
     logic EQ;                             // Equality output from ALU
-    logic [31:0] RD2, WD3;                // Register file read/write data
+    logic [31:0] RD2;                // Register file read/write data
     logic RegWrite, ALUsrc, PCsrc;        // Control signals
     logic [2:0] ImmSrc;                   // 2-bit Immediate source signal
     logic [2:0] ALUctrl;                  // ALU control signal
@@ -65,7 +65,7 @@ module top (
         .AD1(instr[19:15]),
         .AD2(instr[24:20]),
         .AD3(instr[11:7]),
-        .WD3(WD3),
+        .WD3(Result),
         .RD1(ALUop1),
         .RD2(RD2)
     );
@@ -115,9 +115,6 @@ module top (
         1'b1: Result = ReadData;
         endcase
     end
-
-    // Write back result/output of CPU
-    assign WD3 = Result;
 
 endmodule
 /* verilator lint_on SYNCASYNCNET */
