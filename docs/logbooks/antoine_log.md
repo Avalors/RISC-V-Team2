@@ -4,7 +4,7 @@
 
 For lab 4, I was in charge of the doit.sh file, as well as the integration and overall testbenching (top.sv and top_tb.cpp). I also added some assembly files (xor.s, or.s, counter.s) and copied files from the lab 4 instructions (verify.cpp, mux_tb.cpp, compile.sh).
 
-For the rest of the project, I was in charge of designing the **ALU unit**, as well as testbenching my own modules, and then working as a team on pipelining, hazard control, cache memory and branch prediction.
+For the rest of the project, I got to familiarise myself with the ALU unit, as well as testbenching my own modules, and then working as a team on data memory and the pdf testbench. 
 I also took on the responsability of being repo master and designed much of the repo.
 
 ## Chronological work
@@ -43,9 +43,22 @@ I also took on the responsability of being repo master and designed much of the 
 ### 30/11/2024
     - Assisted in debugging the top testbench
 
+### 01/12/2024
+    - First fully functional lab 4
 
+### 02/12/2024
+    - Started working on the single cycle, created the respective branch
+    - Started working on the data memory with Ahmed
 
+### 03/12/2024
+    - Started working on the data memory testbench
 
+### 04/12/2024
+    - Edited the data memory and data memory testbench
+
+### 05/12/2024
+    - Started working on the pdf testbench, imported files from the project brief
+    - Added comments to the ALU.sv module
 
 # Work by section
 
@@ -148,6 +161,18 @@ I also took on the responsability of being repo master and designed much of the 
     assign RD = temp; 
 
 In the code above, we created a temp variable which allows us to implement 8 different instructions (store byte, load byte... defined as above by concatenation or using byte-by-byte little endian assignment) and is then assigned to RD
+  4. Worked on the first version of data memory testbench, integrated within the top_tb.cpp program.
+
+The idea here was that I would try to test each instruction implemented in the data_mem.sv module by running simulations and comparing the output to the expected value. The next step would've been to use gtkwave to see what instructions should be running on what clock cycle and then amend the code according to that (as all the tests would be within a large for loop). This would imply making many if statements ie. (if == 2) where i corresponds to the clock cycle to make sure the module and testbench are synchronised
+
+![image](https://github.com/user-attachments/assets/bf7f44da-1227-4b0f-b79c-28fa33e469e3)
+![image](https://github.com/user-attachments/assets/fcb718d3-44ee-47e3-94d1-d0a515cdf405)
+
+  5. Started working on the pdf testbench
+
+Created a data folder within tb and added triangle.mem, gaussian.mem and noisy.mem
+
+Then did some debugging and testing on the pdf testbench before creating a Python code to visualise it 
 
 
 

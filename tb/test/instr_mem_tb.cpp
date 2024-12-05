@@ -18,7 +18,6 @@ protected:
 TEST_F(InstrMemTestbench, InstructionExistsTest)
 {   
     system("./compile.sh --input asm/counter.s");
-    
     top->eval();
    
     std::cout << "top->instr (hex): " 

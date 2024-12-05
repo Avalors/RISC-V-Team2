@@ -3,7 +3,6 @@
 # Usage: ./compile.sh <file.s>
 
 # Default vars
-input_file="program.s"
 output_file="../rtl/program.hex"
 
 

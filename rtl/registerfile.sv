@@ -8,7 +8,6 @@ module registerfile (
     input  logic [31:0] WD3,     // Write data
     output logic [31:0] RD1,     // Read data 1
     output logic [31:0] RD2,     // Read data 2
-    output logic [31:0] a0       // a0 output for verification
 );
 
     logic [31:0] registers [31:0];
@@ -34,8 +33,5 @@ module registerfile (
     // Asynchronous read
     assign RD1 = (AD1 == 5'b0) ? 32'h0 : registers[AD1];
     assign RD2 = (AD2 == 5'b0) ? 32'h0 : registers[AD2];
-    
-    // Connect a0 (x10) output
-    assign a0 = registers[10];
 
 endmodule

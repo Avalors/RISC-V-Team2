@@ -98,7 +98,7 @@ TEST_F(ControlunitTestbench, ALUsrcTest)
     
     for (int opcode : { 
         OPCODE_I1, OPCODE_I2, OPCODE_I3, OPCODE_I4, 
-        OPCODE_U1, OPCODE_U2, OPCODE_J 
+        OPCODE_U1, OPCODE_U2, OPCODE_J, OPCODE_S
     }) {
         top->instr = OPCODE_R;
         top->eval();
@@ -109,7 +109,7 @@ TEST_F(ControlunitTestbench, ALUsrcTest)
         EXPECT_EQ(top->ALUsrc, 1) << "Opcode: " << std::bitset<7>(opcode);
     }
 
-    for (int opcode : { OPCODE_R, OPCODE_S, OPCODE_B }) 
+    for (int opcode : { OPCODE_R, OPCODE_B }) 
     {
         top->instr = OPCODE_I1;
         top->eval();

@@ -18,7 +18,6 @@ protected:
 
         // output logic [WIDTH - 1:0] RD1,
         // output logic [WIDTH - 1:0] RD2,
-        // output logic [WIDTH - 1:0] a0
     }
 };
 
@@ -70,26 +69,10 @@ TEST_F(RegfileTestbench, AllRegsFunctionTest)
 }
 
 
-TEST_F(RegfileTestbench, a0FunctionTest)
-{
-    int randomNumber = 0x12345678;
-
-    // Modify a0 (x10)
-    top->AD3 = 10;
-    top->WD3 = randomNumber;
-    top->WE3 = 1;
-
-    runSimulation(1);
-    
-    EXPECT_EQ(top->a0, randomNumber);
-}
-
-
 TEST_F(RegfileTestbench, asyncReadTest)
 {
     int randomNumber = 0x12345678;
 
-    // Modify a0 (x10)
     top->AD3 = 10;
     top->WD3 = randomNumber;
     top->WE3 = 1;
