@@ -27,12 +27,12 @@ TEST_F(CpuTestbench, LoopTest)
         runSimulation(); // Evaluate the model
 
         // Checking for subroutine execution (e.g., Result reaching 0xff)
-        if (top->Result == 0xff) // Subroutine's final value
+        if (top->a0 == 0xff) // Subroutine's final value
         {
             // Check if loop continues by resetting Result and observing it in subsequent cycles
-            top->Result = 0;
+            top->a0 = 0;
         }
-        else if (top->Result != 0)
+        else if (top->a0 != 0)
         {
             SUCCEED(); // Indicates the loop has iterated at least once
             return;
@@ -53,7 +53,7 @@ TEST_F(CpuTestbench, SubroutineFinalValueTest)
     {
         runSimulation(); // Evaluate the model
 
-        if (top->Result == 0xff) // Check if Result has the correct final value
+        if (top->a0 == 0xff) // Check if Result has the correct final value
         {
             SUCCEED();
             return;
