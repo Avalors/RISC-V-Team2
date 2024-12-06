@@ -58,10 +58,9 @@ for file in "${files[@]}"; do
     # Check if the test succeeded or not
     if [ $? -eq 0 ]; then
         ((passes++))
-        echo "Current ${passes}"
+        echo echo "Current: ${passes}"
     else
         ((fails++))
-        echo "${fails}"
     fi
 done
 

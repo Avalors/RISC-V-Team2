@@ -5,9 +5,9 @@ a.bin:     file format binary
 Disassembly of section .data:
 
 0000000000000000 <.data>:
-   0:	000023b7          	lui	t2,0x2
-   4:	0003a403          	lw	s0,0(t2) # 0x2000
-   8:	00c000ef          	jal	ra,0x14
+   0:	0040006f          	j	0x4
+   4:	010000ef          	jal	ra,0x14
+   8:	00000513          	li	a0,0
    c:	ff9ff06f          	j	0x4
   10:	00008067          	ret
   14:	00100513          	li	a0,1
@@ -17,4 +17,6 @@ Disassembly of section .data:
   24:	01f00513          	li	a0,31
   28:	03f00513          	li	a0,63
   2c:	07f00513          	li	a0,127
-  30:	00008067          	ret
+  30:	0ff00513          	li	a0,255
+  34:	00000513          	li	a0,0
+  38:	00008067          	ret

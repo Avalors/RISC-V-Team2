@@ -40,3 +40,12 @@ I also helped out in designing the **control unit** and its respective testbench
 ### 01/12/24
 - Worked on the foundation of the f1_lights.sv and the respective testbench: [F1Lights asm code and respective testbench](https://github.com/aa6dcc/RISC-V-Team2/commit/0a6c948daec468a1f3c2d683eaa48e9bb5bda528) 
 - Met up as a team to allocate new tasks and plan forward
+
+### 04/12/24
+- Continued the debugging to fully transition from completed lab4 to data memory integration to start single cycle
+
+### 05/12/24
+- Worked on debugging the datamem.sv, changing the registerfile.sv, controlunit.sv, top.sv accordingly from the transition of module in lab4 to Single Cyclce using the VSCode Liveshare: [Datamem.sv and testbench fixed](https://github.com/aa6dcc/RISC-V-Team2/commit/5debf7447b5a606f5964e8accc61fbf4fd76eb6e)
+
+### 06/12/24
+- Fixed the f1lights.sv and connected to vbuddy to test the light simulation: [Completed F1Lights verification and Vbuddy simulation](https://github.com/aa6dcc/RISC-V-Team2/commit/1a246636d7341bde9bddb56b764e818dfad377fd)

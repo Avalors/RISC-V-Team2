@@ -68,7 +68,8 @@ module top (
         .AD3(instr[11:7]),
         .WD3(Result),
         .RD1(ALUop1),
-        .RD2(RD2)
+        .RD2(RD2),
+        .a0(a0)
     );
 
     // ALU Operand MUX
