@@ -6,7 +6,7 @@ Disassembly of section .data:
 
 0000000000000000 <.data>:
    0:	0040006f          	j	0x4
-   4:	010000ef          	jal	0x14
+   4:	010000ef          	jal	ra,0x14
    8:	00000513          	li	a0,0
    c:	ff9ff06f          	j	0x4
   10:	00008067          	ret

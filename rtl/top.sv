@@ -2,7 +2,6 @@
 module top (
     input logic clk,          // Clock signal
     input logic rst,          // Reset signal
-    output logic [31:0] Result,    // Contents of result (output)
     output logic [31:0] a0
 );
 
@@ -19,6 +18,7 @@ module top (
     logic [2:0] AddrMode;                 // DataMemory control signal
     logic [31:0] ReadData;                // DataMemory output
     logic ResultSrc;                      // result mux control signal
+    logic [31:0] Result;
     
     // Program Counter
     program_counter #(.WIDTH(32)) PC_Reg (
