@@ -73,7 +73,9 @@ For wsl users, some packages may need to be installed, which can be found in [Ba
 Note: The following evidence was collected from running `tag v0.4.0`, the 
 `direct-mapped cache` version of our code.
 
-- If you want to check our [`testbenches`](tb/) 
+- If you want to check our [`testbenches`](tb/)
+- Here is a video of the f1_lights running:
+https://github.com/aa6dcc/RISC-V-Team2/blob/pipeline/images/IMG_4495.MOV
 
 
 ## Team Contribution
