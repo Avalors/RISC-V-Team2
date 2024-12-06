@@ -1,0 +1,39 @@
+
+a.bin:     file format binary
+
+
+Disassembly of section .data:
+
+0000000000000000 <.data>:
+   0:	010000ef          	jal	0x10
+   4:	020000ef          	jal	0x24
+   8:	050000ef          	jal	0x58
+   c:	06c0006f          	j	0x78
+  10:	10000593          	li	a1,256
+  14:	fff58593          	add	a1,a1,-1
+  18:	10058023          	sb	zero,256(a1)
+  1c:	fe059ce3          	bnez	a1,0x14
+  20:	00008067          	ret
+  24:	000105b7          	lui	a1,0x10
+  28:	00000613          	li	a2,0
+  2c:	10000693          	li	a3,256
+  30:	0c800713          	li	a4,200
+  34:	00c587b3          	add	a5,a1,a2
+  38:	0007c283          	lbu	t0,0(a5)
+  3c:	00d28833          	add	a6,t0,a3
+  40:	00084303          	lbu	t1,0(a6)
+  44:	00130313          	add	t1,t1,1
+  48:	00680023          	sb	t1,0(a6)
+  4c:	00160613          	add	a2,a2,1
+  50:	fee312e3          	bne	t1,a4,0x34
+  54:	00008067          	ret
+  58:	00000493          	li	s1,0
+  5c:	00000593          	li	a1,0
+  60:	0ff00613          	li	a2,255
+  64:	1005c503          	lbu	a0,256(a1) # 0x10100
+  68:	00a484b3          	add	s1,s1,a0
+  6c:	00158593          	add	a1,a1,1
+  70:	fec59ae3          	bne	a1,a2,0x64
+  74:	00008067          	ret
+  78:	00048513          	mv	a0,s1
+  7c:	00051063          	bnez	a0,0x7c

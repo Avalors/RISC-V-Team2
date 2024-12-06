@@ -2,7 +2,8 @@
 module top (
     input logic clk,          // Clock signal
     input logic rst,          // Reset signal
-    output logic [31:0] Result    // Contents of result (output)
+    output logic [31:0] Result,    // Contents of result (output)
+    output logic [31:0] a0
 );
 
     // Internal Signals
@@ -67,7 +68,8 @@ module top (
         .AD3(instr[11:7]),
         .WD3(Result),
         .RD1(ALUop1),
-        .RD2(RD2)
+        .RD2(RD2),
+        .a0(a0)
     );
 
     // ALU Operand MUX
