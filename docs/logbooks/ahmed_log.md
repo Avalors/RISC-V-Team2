@@ -42,3 +42,4 @@ I also worked on the **instruction ROM**, **sign extension**, **Data memmory** i
 ### 02/12/2024
     -Added J and U type instruction sign exention functionality (changed: signextension.sv, controlunit.sv and top.sv)
     -Worked with antoine on implementing data_mem.sv file.
+
