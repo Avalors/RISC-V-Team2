@@ -29,7 +29,7 @@ I also worked on the **instruction ROM**, **sign extension**, **Data memmory** i
 
 
 ### 28/11/2024
-    -Wrote and tested Program Counter test bench fully functional
+    -Wrote and tested Program Counter test bench and determined as fully functional
 
 ### 29/11/2024
     -changed PC and instruction memory to byte sized addressing 
@@ -42,3 +42,11 @@ I also worked on the **instruction ROM**, **sign extension**, **Data memmory** i
 ### 02/12/2024
     -Added J and U type instruction sign exention functionality (changed: signextension.sv, controlunit.sv and top.sv)
     -Worked with antoine on implementing data_mem.sv file.
+
+### 03/12/2024
+    -integrate data_mem.sv with top.sv file with new output mux.
+
+### 05/12/2024
+    -debugg and test SingleCycle CPU by testing data_mem.sv using module verification.
+    -deleted a0 signal and replaced with Result signal (output of mux) for the output signal of the top.sv file.
+
