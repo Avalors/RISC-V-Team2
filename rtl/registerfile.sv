@@ -7,7 +7,7 @@ module registerfile (
     input  logic [4:0]  AD3,     // Write register address
     input  logic [31:0] WD3,     // Write data
     output logic [31:0] RD1,     // Read data 1
-    output logic [31:0] RD2,     // Read data 2
+    output logic [31:0] RD2     // Read data 2
 );
 
     logic [31:0] registers [31:0];
