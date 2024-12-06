@@ -60,6 +60,10 @@ I also took on the responsability of being repo master and designed much of the 
     - Started working on the pdf testbench, imported files from the project brief
     - Added comments to the ALU.sv module
 
+## 06/12/2024
+    - Had to work on some admin tasks (updating the README, merging branches)
+    - Worked on the plotting the pdf script in Python
+
 # Work by section
 
 ## Lab 4
