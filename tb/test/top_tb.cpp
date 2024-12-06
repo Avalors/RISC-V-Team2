@@ -1,9 +1,10 @@
-#include "sync_testbench.h"
-#include "vbuddy.cpp"
-#include <iostream>
-#include <cstdlib>
+//Completed
 
-#define NAME            "top-pdf"
+#include "sync_testbench.h"
+
+#define NAME            "top-f1lights"
+#include "vbuddy.cpp"
+
 
 class CpuTestbench : public SyncTestbench
 {
@@ -13,46 +14,37 @@ protected:
         top->clk = 1;
         top->rst = 0;
 
-        // We compile the program here, so the whole thing can use it.
-        system("./compile.sh --input asm/pdf.s --output ../rtl/program.hex");
+        system("./compile.sh --input asm/f1_lights.s --output ../rtl/program.hex");
+
     }
 };
 
 
-TEST_F(CpuTestbench, InitialStateTest)
+
+TEST_F(CpuTestbench, RunvBuddy)
 {
+    int max_cycles = 15;
+
     // Initialise VBuddy
     //-------------------------------------------------------------------------
     if (vbdOpen() != 1)
     {
         SUCCEED();
     }
-    vbdHeader("PDF plotting");
+    vbdHeader("F1-Lights");
     //-------------------------------------------------------------------------
-    
-    int plot = 0;
 
-    for (int i = 0; i < 1'000'000; ++i)
+    for (int i = 4; i < max_cycles; ++i)
     {
-        runSimulation(1);
-
-        if (plot == false && top->Result != 0)
-        {
-            plot = 1;
-        }
-        if (plot && (int)top->Result >= 0)
-        {
-            vbdPlot(top->Result, 0, 255);
-            plot++;
-        }
-        if (plot > 256)
-        {
-            break;
-        }
+        // Mask to get 8 bits
+        vbdBar(top->Result & 0xFF);
+        runSimulation();
+        sleep(1);
     }
 
     SUCCEED();
 }
+
 
 int main(int argc, char **argv)
 {
@@ -61,5 +53,9 @@ int main(int argc, char **argv)
     Verilated::mkdir("logs");
     auto res = RUN_ALL_TESTS();
     
+    // VerilatedCov::write(
+    //     ("logs/coverage_" + std::string(NAME) + ".dat").c_str()
+    // );
+
     return res;
 }
