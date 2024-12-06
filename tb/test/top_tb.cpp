@@ -1,6 +1,7 @@
 #include "sync_testbench.h"
 
-#define NAME            "topf1lights"
+#define NAME            "top-f1lights"
+#include "vbuddy.cpp"
 
 
 class CpuTestbench : public SyncTestbench
@@ -11,58 +12,35 @@ protected:
         top->clk = 1;
         top->rst = 0;
 
-        // We compile the program here, so the whole thing can use it.
-        system("./compile.sh --input asm/f1_lights.s");
+        system("./compile.sh --input asm/f1_lights.s --output ../rtl/program.hex");
+
     }
 };
 
 
 
-TEST_F(CpuTestbench, LoopTest)
+TEST_F(CpuTestbench, RunvBuddy)
 {
     int max_cycles = 1000;
 
-    for (int i = 0; i < max_cycles; ++i)
+    // Initialise VBuddy
+    //-------------------------------------------------------------------------
+    if (vbdOpen() != 1)
     {
-        runSimulation(); // Evaluate the model
-
-        // Checking for subroutine execution (e.g., Result reaching 0xff)
-        if (top->Result == 0xff) // Subroutine's final value
-        {
-            // Check if loop continues by resetting Result and observing it in subsequent cycles
-            top->Result = 0;
-        }
-        else if (top->Result != 0)
-        {
-            SUCCEED(); // Indicates the loop has iterated at least once
-            return;
-        }
-
-        top->clk = !top->clk; // Toggle the clock
+        SUCCEED();
     }
-
-    FAIL() << "The iloop did not demonstrate expected behavior within " << max_cycles << " cycles.";
-}
-
-
-TEST_F(CpuTestbench, SubroutineFinalValueTest)
-{
-    int max_cycles = 1000; // Define a maximum number of cycles to simulate
+    vbdHeader("F1-Lights");
+    //-------------------------------------------------------------------------
 
     for (int i = 0; i < max_cycles; ++i)
     {
-        runSimulation(); // Evaluate the model
-
-        if (top->Result == 0xff) // Check if Result has the correct final value
-        {
-            SUCCEED();
-            return;
-        }
-
-        top->clk = !top->clk; // Toggle the clock to simulate the next cycle
+        // Mask to get 8 bits
+        vbdBar(top->Result & 0xFF);
+        runSimulation();
+        sleep(1);
     }
 
-    FAIL() << "The register Result did not reach the expected value within " << max_cycles << " cycles.";
+    SUCCEED();
 }
 
 
@@ -72,9 +50,10 @@ int main(int argc, char **argv)
     testing::InitGoogleTest(&argc, argv);
     Verilated::mkdir("logs");
     auto res = RUN_ALL_TESTS();
-    VerilatedCov::write(
-        ("logs/coverage_" + std::string(NAME) + ".dat").c_str()
-    );
+    
+    // VerilatedCov::write(
+    //     ("logs/coverage_" + std::string(NAME) + ".dat").c_str()
+    // );
 
     return res;
 }

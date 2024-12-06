@@ -172,7 +172,14 @@ The idea here was that I would try to test each instruction implemented in the d
 
 Created a data folder within tb and added triangle.mem, gaussian.mem and noisy.mem
 
-Then did some debugging and testing on the pdf testbench before creating a Python code to visualise it 
+Then did some debugging, testing, trying to sync and implement within the top file, on the pdf testbench before creating a Python code to visualise it (analyse.py)
+
+  6. Worked on debugging the f1_lights module and testbench using gtkwave and Vbuddy
+
+I wondered how to implement a random number generator in assembly and thought about implementing an LCG (Linear Congruential Generator)
+
+![image](https://github.com/user-attachments/assets/4d0b7136-3de7-4fd8-86dd-f14590a3d52b)
+
 
 
 
