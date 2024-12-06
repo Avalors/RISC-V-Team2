@@ -23,7 +23,7 @@ protected:
 
 TEST_F(CpuTestbench, RunvBuddy)
 {
-    int max_cycles = 15;
+    int max_cycles = 10000;
 
     // Initialise VBuddy
     //-------------------------------------------------------------------------
@@ -34,10 +34,10 @@ TEST_F(CpuTestbench, RunvBuddy)
     vbdHeader("F1-Lights");
     //-------------------------------------------------------------------------
 
-    for (int i = 4; i < max_cycles; ++i)
+    for (int i = 0; i < max_cycles; ++i)
     {
         // Mask to get 8 bits
-        vbdBar(top->Result & 0xFF);
+        vbdBar(top->a0 & 0xFF);
         runSimulation();
         sleep(1);
     }
