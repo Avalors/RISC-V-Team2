@@ -113,7 +113,10 @@ and the last few cycles resemble this:
 
 ![IMG_4488](https://github.com/user-attachments/assets/7676f42a-3b97-456e-b2af-5446f02c6ca2)
 
-
+## Team meetup (06/12)
+  - Debugging session
+  - Updated the README
+  - Started thinking about how to implement the pipelining at the next stage
 
 
 
