@@ -102,6 +102,7 @@ module top (
     
     //Data memory
     data_mem DataMemory (
+        .clk(clk),
         .AddrMode(AddrMode),
         .A(ALUout),
         .WD(RD2),
