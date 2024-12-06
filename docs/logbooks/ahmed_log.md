@@ -43,3 +43,6 @@ I also worked on the **instruction ROM**, **sign extension**, **Data memmory** i
     -Added J and U type instruction sign exention functionality (changed: signextension.sv, controlunit.sv and top.sv)
     -Worked with antoine on implementing data_mem.sv file.
 
+### 05/12/2024
+    -debugg and test SingleCycle CPU by testing data_mem.sv using module verification.
+    -deleted a0 signal and replaced with Result signal (output of mux) for the output signal of the top.sv file.
