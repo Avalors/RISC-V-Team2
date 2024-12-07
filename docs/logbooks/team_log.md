@@ -113,6 +113,17 @@ and the last few cycles resemble this:
 
 ![IMG_4488](https://github.com/user-attachments/assets/7676f42a-3b97-456e-b2af-5446f02c6ca2)
 
+## Team meetup (06/12)
+  - Debugging session
+  - Updated the README
+  - Started thinking about how to implement the pipelining at the next stage
+
+![IMG_4494](https://github.com/user-attachments/assets/f4e1a226-f472-4e1b-81ad-f74eda5a4290)
+
+## Team meetup (07/12)
+  - Had a quick call to see at what stage we all were
+  - Split the roles for the pipeline stage
+
 
 
 
