@@ -73,8 +73,14 @@ For wsl users, some packages may need to be installed, which can be found in [Ba
 Note: The following evidence was collected from running `tag v0.4.0`, the 
 `direct-mapped cache` version of our code.
 
-- If you want to check our [`testbenches`](tb/) 
+- If you want to check our [`testbenches`](tb/)
+- Here is a proof of our PDF testbench being fully functional, as it outputs the following graphs using plotly:
 
+![WhatsApp Image 2024-12-06 at 20 26 17_3822e0e1](https://github.com/user-attachments/assets/9058539d-87ef-4f9b-a326-ce6913300366)
+
+- Below is a video of the f1_lights script running on our Vbuddy:
+
+https://github.com/user-attachments/assets/3a9902b6-17c5-452a-83fd-2f2c5dc52e22
 
 ## Team Contribution
 
