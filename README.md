@@ -97,7 +97,7 @@ https://github.com/user-attachments/assets/3a9902b6-17c5-452a-83fd-2f2c5dc52e22
 |              | Sign Extend                   |                    |                  |                          |x               |
 |              | Testbench                     |   x                 |                |                          |                  |
 |              | Doit.sh                       |   x                |      x           |                          |                  |
-| Single Cycle | Data Memory                   |                    |                  |                         |                  |
+| Single Cycle | Data Memory                   |   x                |    x             |    x                    |                  |
 |              | Program Counter               |                    |                  |   x                      |                  |
 |              | ALU                           |   x                |                  |                          |                  |
 |              | Register File                 |                    |    x             |                          |                  |
