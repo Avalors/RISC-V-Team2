@@ -7,6 +7,7 @@ We are team 2 (H.A.D.E.S), each with distinct roles for the coursework (we switc
   - Antoine Divet: ALU & testing own modules
   - Jihwan Shin: integration and testbenching
 
+We used three different branches (one for lab4, one for single cycle, one for pipelining) to explicitly show the evolution of our work.
 
 We will do pipelining, hazard control, cache and branch prediction as a team
 
@@ -73,7 +74,15 @@ For wsl users, some packages may need to be installed, which can be found in [Ba
 Note: The following evidence was collected from running `tag v0.4.0`, the 
 `direct-mapped cache` version of our code.
 
-- If you want to check our [`testbenches`](tb/) 
+- If you want to check our [`testbenches`](tb/)
+- Here is a proof of our PDF testbench being fully functional, as it outputs the following graphs using plotly:
+
+![WhatsApp Image 2024-12-06 at 20 26 17_3822e0e1](https://github.com/user-attachments/assets/9058539d-87ef-4f9b-a326-ce6913300366)
+
+- Below is a video of the f1_lights script running on our Vbuddy:
+
+https://github.com/user-attachments/assets/2d5fab74-0c4f-42d6-81e2-061014974476
+
 
 
 ## Team Contribution
@@ -90,7 +99,8 @@ Note: The following evidence was collected from running `tag v0.4.0`, the
 |              | Control Unit                  |                    |                  |  x                        | x               |
 |              | Sign Extend                   |                    |                  |                          |x               |
 |              | Testbench                     |   x                 |                |                          |                  |
-| Single Cycle | Data Memory                   |                    |                  |                         |                  |
+|              | Doit.sh                       |   x                |      x           |                          |                  |
+| Single Cycle | Data Memory                   |   x                |    x             |    x                    |                  |
 |              | Program Counter               |                    |                  |   x                      |                  |
 |              | ALU                           |   x                |                  |                          |                  |
 |              | Register File                 |                    |    x             |                          |                  |
