@@ -7,6 +7,7 @@ We are team 2 (H.A.D.E.S), each with distinct roles for the coursework (we switc
   - Antoine Divet: ALU & testing own modules
   - Jihwan Shin: integration and testbenching
 
+We used three different branches (one for lab4, one for single cycle, one for pipelining) to explicitly show the evolution of our work.
 
 We will do pipelining, hazard control, cache and branch prediction as a team
 
@@ -78,9 +79,12 @@ Note: The following evidence was collected from running `tag v0.4.0`, the
 
 ![WhatsApp Image 2024-12-06 at 20 26 17_3822e0e1](https://github.com/user-attachments/assets/9058539d-87ef-4f9b-a326-ce6913300366)
 
-- Below is a video of the f1_lights script running on our Vbuddy:
+- Below are videos of the f1_lights script running on our Vbuddy:
 
-https://github.com/user-attachments/assets/3a9902b6-17c5-452a-83fd-2f2c5dc52e22
+https://github.com/user-attachments/assets/2d5fab74-0c4f-42d6-81e2-061014974476
+
+https://github.com/user-attachments/assets/9c8ab023-abfc-4bbc-b051-39e5a309ecaa
+
 
 ## Team Contribution
 
