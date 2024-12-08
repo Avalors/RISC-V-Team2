@@ -49,3 +49,8 @@ I also helped out in designing the **control unit** and its respective testbench
 
 ### 06/12/24
 - Fixed the f1lights.sv and connected to vbuddy to test the light simulation: [Completed F1Lights verification and Vbuddy simulation](https://github.com/aa6dcc/RISC-V-Team2/commit/1a246636d7341bde9bddb56b764e818dfad377fd)
+
+### 08/12/24
+-  Tested the pdf testbenches on Vbuddy for all the .mem files and cleaned up the files a bit [PDF fully tested with data/.mem files](https://github.com/aa6dcc/RISC-V-Team2/commit/bd1db301e6254e29d24291ed513287c550939ff7)
+-  Implemented the pipelining and got started on the hazard unit [Pipelining implemented and started the hazard unit](https://github.com/aa6dcc/RISC-V-Team2/commit/34617373aca98c16134c2862ff86bcb8c228c509)
+
