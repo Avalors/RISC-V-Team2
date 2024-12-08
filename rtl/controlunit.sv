@@ -1,15 +1,16 @@
 module controlunit #(
     parameter DATA_WIDTH = 32
 ) (
-    input logic [DATA_WIDTH-1:0] instr,  // Instruction input
-    input logic                 EQ,     // Equality flag (for branch comparison)
-    output logic [2:0]          ALUctrl, // ALU control signal
-    output logic                ALUsrc,  // ALU source (1 for immediate, 0 for register)
-    output logic [2:0]          ImmSrc,  // Immediate source selection
-    output logic                PCsrc,   // Program counter source (for branches and jumps)
-    output logic                RegWrite, // Register write enable            
-    output logic [2:0]          AddrMode, // sets the instruction for data memory
-    output logic                ResultSrc// control signal for output mux         
+    input logic [DATA_WIDTH-1:0] instr,   // Instruction input
+    input logic                 EQ,       // Equality flag (for branch comparison)
+    output logic [2:0]          ALUctrl,  // ALU control signal
+    output logic                ALUsrc,   // ALU source (1 for immediate, 0 for register)
+    output logic [2:0]          ImmSrc,   // Immediate source selection
+    output logic [1:0]          PCsrc,    // Program counter source (for branches and jumps)
+    output logic                RegWrite,  // Register write enable            
+    output logic [2:0]          AddrMode,  // sets the instruction for data memory
+    output logic                ResultSrc, // control signal for output mux
+    output logic                WD3Src     // control unit signal for write port for register allowing Jump instruction implementation       
 );
 
     // Extract instruction fields
@@ -26,10 +27,11 @@ module controlunit #(
         ALUctrl = 3'b000;
         ALUsrc = 1'b0;
         ImmSrc = 3'b000;
-        PCsrc = 1'b0;
+        PCsrc = 2'b00;
         RegWrite = 1'b0;
         AddrMode = 3'b000;
         ResultSrc = 1'b0;
+        WD3Src = 1'b0;
 
         case (op)
             // R-Type
@@ -98,26 +100,38 @@ module controlunit #(
                 ALUctrl = 3'b001; // SUB for comparison
                 ImmSrc = 3'b010; // B-Type immediate
                 case (funct3)
-                    3'b000: PCsrc = EQ ? 1'b1 : 1'b0; // BEQ
-                    3'b001: PCsrc = EQ ? 1'b0 : 1'b1; // BNE
-                    default: PCsrc = 1'b0;
+                    3'b000: PCsrc = EQ ? 2'b01 : 2'b00; // BEQ
+                    3'b001: PCsrc = EQ ? 2'b00 : 2'b01; // BNE
+                    default: PCsrc = 2'b00;
                 endcase
             end
 
             // J-Type (JAL)
             7'b1101111: begin 
-                PCsrc = 1'b1;
+                PCsrc = 2'b01;
                 RegWrite = 1'b1;
                 ALUsrc = 1'b1;
                 ImmSrc = 3'b100;
+                WD3Src = 1'b1;
             end
 
             // JALR (I-Type)
             7'b1100111: begin 
-                PCsrc = 1'b1;
-                RegWrite = 1'b1;
+                PCsrc = 2'b10;
                 ALUsrc = 1'b1;
                 ImmSrc = 3'b000;
+                ResultSrc = 1'b0;
+                WD3Src = 1'b1;
+
+
+                //for ret instructions Rd = 5'b00000 -> to prevent overwriting zero
+                if(instr[11:7] == 5'b00000) begin
+                    RegWrite = 1'b0;
+                end
+                else begin
+                    RegWrite = 1'b1; // for normal JALR instructions allows writing to regfile
+                end
+                
             end
 
             // LUI (Load Upper Immediate)
@@ -149,10 +163,11 @@ module controlunit #(
                 ALUctrl = 3'b000;
                 ALUsrc = 1'b0;
                 ImmSrc = 3'b000;
-                PCsrc = 1'b0;
+                PCsrc = 2'b00;
                 RegWrite = 1'b0;
                 AddrMode = 3'b000;
                 ResultSrc = 1'b0;
+                WD3Src = 1'b0;
             end
         endcase
     end

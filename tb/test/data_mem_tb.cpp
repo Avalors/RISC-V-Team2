@@ -89,7 +89,7 @@ TEST_F(DataMembench, AddrMode111Test) {
     top->AddrMode = 0b111;
     top->A = 16;
     top->WD = 0x12345678;
-    top->runSimulation(1);
+    runSimulation(1);
 
     EXPECT_EQ(top->RD, 0x12345678);
 }
