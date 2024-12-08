@@ -120,6 +120,12 @@ and the last few cycles resemble this:
 
 ![IMG_4494](https://github.com/user-attachments/assets/f4e1a226-f472-4e1b-81ad-f74eda5a4290)
 
+## Team meetup (07/12)
+  - Had a quick call to see at what stage we all were
+  - Split the roles for the pipeline stage
+
+
+
 
 
 

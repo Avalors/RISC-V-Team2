@@ -1,14 +1,14 @@
-#include "base_testbench.h"
+#include "sync_testbench.h"
 #include <verilated_cov.h>
 #include <gtest/gtest.h>
 
 
 #define NAME            "data_mem"
 
-class DataMembench : public BaseTestbench {
+class DataMembench : public SyncTestbench {
 protected:
     void initializeInputs() override {
-        top->WD = 0;
+        top->clk = 1;
     }
 };
 
@@ -68,7 +68,8 @@ TEST_F(DataMembench, AddrMode101Test) {
     top->AddrMode = 0b101;
     top->A = 8;
     top->WD = 0x00000078;
-    top->eval();
+    runSimulation(1);
+
 
     EXPECT_EQ(top->RD, 0x00000078);
 }
@@ -78,8 +79,8 @@ TEST_F(DataMembench, AddrMode110Test) {
     top->AddrMode = 0b110;
     top->A = 12;
     top->WD = 0x00005678;
-    top->eval();
-
+    runSimulation(1);
+    
     EXPECT_EQ(top->RD, 0x00005678);
 }
 
@@ -88,7 +89,7 @@ TEST_F(DataMembench, AddrMode111Test) {
     top->AddrMode = 0b111;
     top->A = 16;
     top->WD = 0x12345678;
-    top->eval();
+    top->runSimulation(1);
 
     EXPECT_EQ(top->RD, 0x12345678);
 }

@@ -3,7 +3,7 @@
 ## Role
 
 I was in charge of designing the **program counter**, as well as testbenching my own modules, and then working as a team on pipelining, cache memory and branch prediction.
-I also worked on the **instruction ROM**, **sign extension**, **Data memmory** instructions respectively.
+I also worked on the **instruction ROM**, **sign extension**, **Data memmory** modules respectively.
 
 ## Timetable details
 

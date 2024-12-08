@@ -2,7 +2,7 @@
 module top (
     input logic clk,          // Clock signal
     input logic rst,          // Reset signal
-    output logic [31:0] a0
+    output logic [31:0] a0    // Contents of result (output)
 );
 
     // Internal Signals
@@ -18,7 +18,7 @@ module top (
     logic [2:0] AddrMode;                 // DataMemory control signal
     logic [31:0] ReadData;                // DataMemory output
     logic ResultSrc;                      // result mux control signal
-    logic [31:0] Result;
+    logic [31:0] Result;                  // result of output mux
     
     // Program Counter
     program_counter #(.WIDTH(32)) PC_Reg (
@@ -104,6 +104,7 @@ module top (
     
     //Data memory
     data_mem DataMemory (
+        .clk(clk),
         .AddrMode(AddrMode),
         .A(ALUout),
         .WD(RD2),

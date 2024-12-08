@@ -37,4 +37,6 @@ module registerfile (
     assign RD1 = (AD1 == 5'b0) ? 32'h0 : registers[AD1];
     assign RD2 = (AD2 == 5'b0) ? 32'h0 : registers[AD2];
 
+    assign a0 = registers[10];
+
 endmodule
