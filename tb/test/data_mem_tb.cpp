@@ -13,6 +13,16 @@ class DataMembench : public SyncTestbench {
 protected:
     void initializeInputs() override {
         top->clk = 1;
+
+        //stores word instructions
+        top->AddrMode = 0b111;
+        top->A = 0;
+        top->WD = 0x12345678;
+        runSimulation(1);
+        top->AddrMode = 0b111;
+        top->A = 4;
+        top->WD = 0xFF886543;
+        runSimulation(1);
     }
 };
 
