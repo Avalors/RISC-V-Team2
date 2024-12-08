@@ -2,6 +2,10 @@
 #include <verilated_cov.h>
 #include <gtest/gtest.h>
 
+/*KEYNOTE: LOAD instructions depend on storing data: 0x12345678 and 0xFF88654 into data_memory locations
+mem[3:0] = 0x12345678 and mem[7:4] = 0xFF886543, it will fail otherwise.
+Whilst running other tests that require loading instructions into datamem failures are expected.
+so dont worry */
 
 #define NAME            "data_mem"
 

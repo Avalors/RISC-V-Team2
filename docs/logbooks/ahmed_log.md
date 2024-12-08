@@ -50,3 +50,12 @@ I also worked on the **instruction ROM**, **sign extension**, **Data memmory** m
     -debugg and test SingleCycle CPU by testing data_mem.sv using module verification.
     -deleted a0 signal and replaced with Result signal (output of mux) for the output signal of the top.sv file.
 
+### 06/12/2024
+    - merged pipeline branch changes onto single-cycle branch
+    - added clk signal for store instructions for data_mem.sv.
+
+### 08/12/2024
+    - Added JALR, RET functionality
+    - Resolved J-type instruction WD3 write issues, ensuring PC + 4 is stored in RD when a J-type
+    instruction is being exeucted.
+    -Tested pdf on Vbuddy with the team.
