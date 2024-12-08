@@ -4,8 +4,6 @@
 
 #define NAME            "top-pdf"
 
-
-
 class CpuTestbench : public SyncTestbench
 {
 protected:
@@ -20,11 +18,9 @@ protected:
 };
 
 
-
 TEST_F(CpuTestbench, Runprogrammetest)
 {
     int max_cycles = 10000;
-
     for (int i = 0; i < max_cycles; ++i)
     {
         runSimulation(1);
