@@ -11,20 +11,23 @@ module top (
     logic [31:0] ImmOp;                   // Sign-extended immediate value
     logic [31:0] ALUop1, ALUop2, ALUout;  // ALU operands and result
     logic EQ;                             // Equality output from ALU
-    logic [31:0] RD2;                // Register file read/write data
-    logic RegWrite, ALUsrc, PCsrc;        // Control signals
+    logic [31:0] RD2, WD3;                // Register file read/write data
+    logic RegWrite, ALUsrc;               // Control signals
+    logic [1:0] PCsrc;                    // PC mux controls signal
     logic [2:0] ImmSrc;                   // 2-bit Immediate source signal
     logic [2:0] ALUctrl;                  // ALU control signal
     logic [2:0] AddrMode;                 // DataMemory control signal
     logic [31:0] ReadData;                // DataMemory output
     logic ResultSrc;                      // result mux control signal
     logic [31:0] Result;                  // result of output mux
+    logic WD3Src;                         // control signal for Write port input to allow for jumps
     
     // Program Counter
     program_counter #(.WIDTH(32)) PC_Reg (
         .clk(clk),
         .rst(rst),
         .PCsrc(PCsrc),
+        .Result(Result), //JALR PC value
         .ImmOp(ImmOp),
         .PC(PC)
     );
@@ -58,6 +61,14 @@ module top (
         .ImmOp(ImmOp)
     );
 
+    //WD3 Mux to implement Ra = PC + 4 for jump instructions
+    always_comb begin
+        case(WD3Src)
+            1'b0: WD3 = Result;
+            1'b1: WD3 = PC + 32'd4;
+        endcase
+    end
+
     // Register File with reset
     registerfile RegFile (
         .clk(clk),
@@ -66,7 +77,7 @@ module top (
         .AD1(instr[19:15]),
         .AD2(instr[24:20]),
         .AD3(instr[11:7]),
-        .WD3(Result),
+        .WD3(WD3),
         .RD1(ALUop1),
         .RD2(RD2),
         .a0(a0)
@@ -99,7 +110,8 @@ module top (
         .PCsrc(PCsrc),
         .ALUctrl(ALUctrl),
         .AddrMode(AddrMode),
-        .ResultSrc(ResultSrc)
+        .ResultSrc(ResultSrc),
+        .WD3Src(WD3Src)
     );
     
     //Data memory

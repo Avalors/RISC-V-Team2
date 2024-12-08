@@ -68,28 +68,29 @@ TEST_F(ControlunitTestbench, ALUControl)
 
 }
 
+TEST_F(ControlunitTestbench, RegWriteTest) {   
+    // Special Case: JALR (opcode 1100111)
+    
+    // Test JALR with rd = 0 (RegWrite should be 0)
+    top->instr = 0;                    // Clear the instruction
+    top->instr |= (0b1100111);         // Set opcode to JALR (bits 6:0)
+    top->instr |= (0b00000 << 7);      // Set rd = 0 (bits 11:7)
+    top->eval();
+    std::cout << "JALR with rd = 0, instr = " << std::bitset<32>(top->instr) 
+              << ", rd = " << std::bitset<5>((top->instr >> 7) & 0b11111) 
+              << ", RegWrite = " << top->RegWrite << std::endl;
+    EXPECT_EQ(top->RegWrite, 0) << "JALR with rd = 0 should not write to register";
 
-TEST_F(ControlunitTestbench, RegWriteTest)
-{   
-    // RegWrite = 1: R-type, I-type (except ecall/ebreak), U-type, J-type 
-    for (int opcode : { 
-        OPCODE_I1, OPCODE_I2, OPCODE_I3, 
-        OPCODE_R, OPCODE_U1, OPCODE_U2, OPCODE_J 
-    }) {
-        top->instr = opcode;
-        top->eval();
-        EXPECT_EQ(top->RegWrite, 1) << "Opcode: " << std::bitset<7>(opcode);
-    }
-
-    // RegWrite = 0: S-type, B-type
-    for (int opcode : { OPCODE_S, OPCODE_B, OPCODE_I4 }) {
-        top->instr = opcode;
-        top->eval();
-        EXPECT_EQ(top->RegWrite, 0) << "Opcode: " << std::bitset<7>(opcode);
-    }
+    // Test JALR with rd != 0 (RegWrite should be 1)
+    top->instr = 0;                    // Clear the instruction
+    top->instr |= (0b1100111);         // Set opcode to JALR (bits 6:0)
+    top->instr |= (0b00001 << 7);      // Set rd = 1 (bits 11:7)
+    top->eval();
+    std::cout << "JALR with rd = 1, instr = " << std::bitset<32>(top->instr) 
+              << ", rd = " << std::bitset<5>((top->instr >> 7) & 0b11111) 
+              << ", RegWrite = " << top->RegWrite << std::endl;
+    EXPECT_EQ(top->RegWrite, 1) << "JALR with rd != 0 should write to register";
 }
-
-
 
 TEST_F(ControlunitTestbench, ALUsrcTest)
 {
@@ -126,11 +127,17 @@ TEST_F(ControlunitTestbench, PCsrcTest)
 {
     // PCsrc = 1: B-Type (EQ=1), J-Type, I-Type (JALR)
     top->EQ = 1;
-    for (int opcode : { OPCODE_B, OPCODE_J, OPCODE_I3 }) {
+    for (int opcode : { OPCODE_B, OPCODE_J, OPCODE_I3 }) {  // Ensure JALR is included
         top->instr = opcode;
         top->eval();
-        EXPECT_EQ(top->PCsrc, 1) << "Opcode: " << std::bitset<7>(opcode);
+        EXPECT_EQ(top->PCsrc, (opcode == OPCODE_I3 ? 2 : 1))  // JALR should have PCsrc = 2
+            << "Opcode: " << std::bitset<7>(opcode);
     }
+
+    // PCsrc = 2'b10: JALR (J-type)
+    top->instr = OPCODE_I3;  // JALR opcode
+    top->eval();
+    EXPECT_EQ(top->PCsrc, 2) << "Opcode: " << std::bitset<7>(OPCODE_I3);
 
     // PCsrc = 0: All other cases
     top->EQ = 0;

@@ -2,9 +2,7 @@
 
 #include "sync_testbench.h"
 
-#define NAME            "top-f1lights"
-#include "vbuddy.cpp"
-
+#define NAME            "top-pdf"
 
 class CpuTestbench : public SyncTestbench
 {
@@ -14,32 +12,18 @@ protected:
         top->clk = 1;
         top->rst = 0;
 
-        system("./compile.sh --input asm/f1_lights.s --output ../rtl/program.hex");
+        system("./compile.sh --input asm/pdf.s --output ../rtl/program.hex");
 
     }
 };
 
 
-
-TEST_F(CpuTestbench, RunvBuddy)
+TEST_F(CpuTestbench, Runprogrammetest)
 {
     int max_cycles = 10000;
-
-    // Initialise VBuddy
-    //-------------------------------------------------------------------------
-    if (vbdOpen() != 1)
-    {
-        SUCCEED();
-    }
-    vbdHeader("F1-Lights");
-    //-------------------------------------------------------------------------
-
     for (int i = 0; i < max_cycles; ++i)
     {
-        // Mask to get 8 bits
-        vbdBar(top->a0 & 0xFF);
-        runSimulation();
-        sleep(1);
+        runSimulation(1);
     }
 
     SUCCEED();
