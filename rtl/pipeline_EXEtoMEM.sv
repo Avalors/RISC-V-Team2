@@ -16,10 +16,12 @@ module pipeline_EXEtoMEM #(
     input logic [1:0] ResultSrcE,
     input logic MemWriteE,
     input logic [2:0] AddrModeE,
+    input logic WD3SrcE,
     output logic RegWriteM,
     output logic [1:0] ResultSrcM,
     output logic MemWriteM,
-    output logic [2:0] AddrModeM
+    output logic [2:0] AddrModeM,
+    output logic WD3SrcM
 );
 
 always_ff @ (posedge clk) begin
@@ -28,6 +30,7 @@ always_ff @ (posedge clk) begin
     ResultSrcM <= ResultSrcE;
     MemWriteM <= MemWriteE;
     AddrModeM <= AddrModeE;
+    WRDSrcM <= WRDSrcE;
 
     //Data path
     ALUResultM <= ALUResultE;

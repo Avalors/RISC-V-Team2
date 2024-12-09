@@ -14,14 +14,17 @@ module pipeline_MEMtoWB #(
     //Control Unit
     input logic RegWriteM,
     input logic [1:0] ResultSrcM,
+    input logic WD3SrcM,
     output logic RegWriteW,
-    output logic [1:0] ResultSrcW
+    output logic [1:0] ResultSrcW' 
+    output logic WD3SrcW  
 );
 
 always_ff @ (posedge clk) begin
     //Control Unit
     ResultSrcW <= ResultSrcM;
     RegWriteW <= RegWriteM;
+    WD3SrcW <= WD3SrcM;
 
     //Data path
     ALUResultW <= ALUResultM;

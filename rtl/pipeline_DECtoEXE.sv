@@ -27,6 +27,7 @@ module pipeline_DECtoEXE #(
     input logic [2:0] PcSrcD,
     input logic [3:0] ALUctrlD,
     input logic  ALUsrcD,
+    input logic WD3SrcD,
     input logic [2:0] AddrModeD,
     output logic RegWriteE,
     output logic [1:0] ResultSrcE,
@@ -35,7 +36,8 @@ module pipeline_DECtoEXE #(
     output logic [2:0] PcSrcE,
     output logic [3:0] ALUctrlE,
     output logic [2:0] AddrModeE,
-    output logic ALUsrcE
+    output logic ALUsrcE,
+    output logic WD3SrcE
 );
 
 always_ff @ (posedge clk) begin
@@ -45,6 +47,7 @@ always_ff @ (posedge clk) begin
     ALUctrlE <= ALUctrlD;
     ALUsrcE <= ALUsrcD;
     AddrModeE <= AddrModeD;
+    WD3SrcE <= WD3SrcD;
 
     //Data path
     RD1E <= RD1D;

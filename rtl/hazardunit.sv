@@ -20,7 +20,7 @@ module hazard_unit (
     always_comb begin
 
     if (branch) begin
-        flush = 1'b1; //Flush if there is a branch (from PC signal)
+        flush = 1'b1; //Flush if there is a branch 
     end
 
     end
