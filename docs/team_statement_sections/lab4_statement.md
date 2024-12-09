@@ -49,8 +49,11 @@ There were several design flaws, such as naming convention (notably in the top f
 
 For example, for the program counter, we initially created the program counter and instruction memory were implemented via word-addressing instead of byte size addressing, meaning each memory location in the instruction memory was 32 bits instead of 8 bits. This meant that our program counter increased by 1 instead of 4 for typical instructions (excluding branch and jump instructions). This meant that when running the assembled RISC-V machine code, the PC-relative offset immediate values did not align with the correct memory addresses. 
 
-![Operands from Memory](https://github.com/user-attachments/assets/3acb27ca-b7b6-44c3-a5dc-05e1a264600a)
+Below is a screenshot of the program counter module, and we can see we had previously made the error of implementing a 32'd1 increment instead of a 32'd4 increment.
 
+![Program Counter](https://github.com/user-attachments/assets/93c5fed3-2aa0-465d-9272-29a6752c33fa)
+
+![Operands from Memory](https://github.com/user-attachments/assets/3acb27ca-b7b6-44c3-a5dc-05e1a264600a)
 
 We were able to implement the addi and branch instruction. 
 
