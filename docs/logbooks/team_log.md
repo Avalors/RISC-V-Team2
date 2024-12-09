@@ -128,7 +128,10 @@ and the last few cycles resemble this:
   - Made amendments to the control unit and fully debugged the PDF and the f1_lights
   - Started working on implementing pipelining modules
 
-
+## Team meetup (09/12)
+  - Worked on implementing a high-level diagram
+  - Wrote the team statements for each branch
+  - Worked on the pipeline
 
 
 
