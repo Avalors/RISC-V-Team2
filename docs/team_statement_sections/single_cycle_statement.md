@@ -57,6 +57,8 @@ We then used the testbench to verify the control unit was fully operational.
 
 ![image](https://github.com/user-attachments/assets/0d7ddafa-8087-400c-a0f3-3e7f58d04050)
 
+## Simulation and testing
+
 The 'compile.sh' and 'doit.sh' scripts help compile and assemble C and ASM tests in the testbench. 
 
 We tested our integrated single cycle processor using Vbuddy, by running 'f1_lights.s' but also by running the PDF on it for several signals: sine, triangle, noise, Gaussian.
