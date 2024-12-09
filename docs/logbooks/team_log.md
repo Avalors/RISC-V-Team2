@@ -124,9 +124,14 @@ and the last few cycles resemble this:
   - Had a quick call to see at what stage we all were
   - Split the roles for the pipeline stage
 
+## Team meetup (08/12)
+  - Made amendments to the control unit and fully debugged the PDF and the f1_lights
+  - Started working on implementing pipelining modules
 
-
-
+## Team meetup (09/12)
+  - Worked on implementing a high-level diagram
+  - Wrote the team statements for each branch
+  - Worked on the pipeline
 
 
 
