@@ -47,6 +47,11 @@ Design Principles of a RISC-V architecture:
 We spent a lot of time debugging the top module and top testbench, as well as the control unit, register file, sign extension, instruction memory and their respective testbenches. 
 There were several design flaws, such as naming convention (notably in the top file), inconsistencies within the MUX... which were amended later on. Miscommunication was an issue, which led to some instructions being incompatible. 
 
+For example, for the program counter, we initially created the program counter and instruction memory were implemented via word-addressing instead of byte size addressing, meaning each memory location in the instruction memory was 32 bits instead of 8 bits. This meant that our program counter increased by 1 instead of 4 for typical instructions (excluding branch and jump instructions). This meant that when running the assembled RISC-V machine code, the PC-relative offset immediate values did not align with the correct memory addresses. 
+
+![Operands from Memory](https://github.com/user-attachments/assets/3acb27ca-b7b6-44c3-a5dc-05e1a264600a)
+
+
 We were able to implement the addi and branch instruction. 
 
 ![Instruction Types](https://github.com/user-attachments/assets/297298bf-9fd5-42e5-8007-7df514ce0fcc)
