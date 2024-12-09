@@ -23,6 +23,20 @@ It also gave us the opportunity to organise ourselves as a team, use Github and 
 
 ![Testbench Overview](https://github.com/user-attachments/assets/57dc35f4-578b-4bbb-a87e-00c7a827d6f8)
 
+Here is an example of us using GTKwave: in this example we implemented the 'counter.s' file
+
+This is from the 'waveform.vcd' file:
+
+![counter.s](https://github.com/user-attachments/assets/39848ab4-8169-477f-9469-af8755b5c086)
+
+Here is the assembly code for the 'counter.s' file:
+
+![Assembly code](https://github.com/user-attachments/assets/f3b2b88a-0625-46e2-b4ad-63669f191057)
+
+And here is the ALU.sv file as an example of a SystemVerilog module we wrote:
+
+![ALU.sv module](https://github.com/user-attachments/assets/b395bc30-f076-4a54-9df1-80aa53566b9c)
+
 ## Design Specifications
 
 Design Principles of a RISC-V architecture:
