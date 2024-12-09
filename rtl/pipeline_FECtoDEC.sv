@@ -1,12 +1,14 @@
 module pipeline_FECtoDEC #(
     parameter WIDTH = 32
 )(
-    input [WIDTH-1:0] PCF,
-    input [WIDTH-1:0] instrF,
-    input [WIDTH-1:0] PCPlus4F,
-    output [WIDTH-1:0] PCD,
-    output [WIDTH-1:0] instrD,
-    output [WIDTH-1:0] PCPlus4D
+    input logic clk,
+    input logic flush,
+    input logic [WIDTH-1:0] PCF,
+    input logic [WIDTH-1:0] instrF,
+    input logic [WIDTH-1:0] PCPlus4F,
+    output logic [WIDTH-1:0] PCD,
+    output logic [WIDTH-1:0] instrD,
+    output logic [WIDTH-1:0] PCPlus4D
 );
 
 always_ff @ (posedge clk) begin
@@ -15,6 +17,9 @@ always_ff @ (posedge clk) begin
     PCD <= PCF;
     PCPlus4D <= PCPlus4F;
 
+    if (flush) begin
+        instrD <= 0; // nop
+    end
 end
 
 endmodule

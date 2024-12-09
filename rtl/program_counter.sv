@@ -3,6 +3,7 @@ module program_counter #(
 )(
     input  logic                 clk,
     input  logic                 rst,
+    input logic                  stall,
     input  logic [1:0]           PCsrc,
     input  logic [31:0]          ImmOp,
     input  logic [31:0]          Result,
@@ -10,15 +11,17 @@ module program_counter #(
 );
 
     always_ff @(posedge clk) begin
-        if (rst) begin
-            PC <= 32'h0;
-        end else begin
-            if (PCsrc == 2'b01) 
-                PC <= PC + ImmOp;  // Branch/Jump
-            else if(PCsrc == 2'b10)
-                PC <= Result;      // JALR
-            else
-                PC <= PC + 32'd4;  // Normal increment
+        if (!stall) begin
+            if (rst) begin
+                PC <= 32'h0;
+            end else begin
+                if (PCsrc == 2'b01) 
+                    PC <= PC + ImmOp;  // Branch/Jump
+                else if(PCsrc == 2'b10)
+                    PC <= Result;      // JALR
+                else
+                    PC <= PC + 32'd4;  // Normal increment
+            end
         end
     end
 

@@ -19,9 +19,22 @@ module hazard_unit (
 
     always_comb begin
 
-    if (branch) begin
-        flush = 1'b1; //Flush if there is a branch 
-    end
+        //Forwarding
+
+
+
+        //Stall
+        if (MemReadE && ((RdE == Rs1D) || (RdE == Rs2D))) begin
+            stall = 1'b1;
+        end
+        else begin 
+            stall = 1'b0;
+        end
+
+        //Branch
+        if (branch) begin
+            flush = 1'b1; //Flush if there is a branch 
+        end
 
     end
 
