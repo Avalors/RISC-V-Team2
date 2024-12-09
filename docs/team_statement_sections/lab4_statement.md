@@ -16,7 +16,6 @@ We got to understand the different levels of abstraction in a computer and how a
 
 ![High Level Overview of a Computer System](https://github.com/user-attachments/assets/ac46564b-2f08-4d5f-9366-01b8b84be491)
 
-
 It made us get a taste for how the different units within the CPU interact, what their purpose is, and how to test or integrate them together. 
 It also gave us the opportunity to organise ourselves as a team, use Github and Markdown, try different operating systems (ie. Linux) and keep track of our progress using logbooks (via Obsidian). 
 
@@ -30,3 +29,17 @@ Design Principles of a RISC-V architecture:
   - Simplicity favours regularity
   - Make the common case fast
   - Smaller is faster
+
+We spent a lot of time debugging the top module and top testbench, as well as the control unit, register file, sign extension, instruction memory and their respective testbenches. 
+There were several design flaws, such as naming convention (notably in the top file), inconsistencies within the MUX... which were amended later on. Miscommunication was an issue, which led to some instructions being incompatible. 
+
+We were able to implement the addi and branch instruction. 
+
+![Instruction Types](https://github.com/user-attachments/assets/297298bf-9fd5-42e5-8007-7df514ce0fcc)
+
+![RISC-V Registers](https://github.com/user-attachments/assets/f6b2c419-63cc-44b9-b68d-f509c2982879)
+
+![High-level Overview](https://github.com/user-attachments/assets/8c942b88-2f9f-4259-bb80-25b50c1babb9)
+
+
+
