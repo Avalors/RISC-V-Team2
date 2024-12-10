@@ -54,3 +54,7 @@ I also helped out in designing the **control unit** and its respective testbench
 -  Tested the pdf testbenches on Vbuddy for all the .mem files and cleaned up the files a bit [PDF fully tested with data/.mem files](https://github.com/aa6dcc/RISC-V-Team2/commit/bd1db301e6254e29d24291ed513287c550939ff7)
 -  Implemented the pipelining and got started on the hazard unit [Pipelining implemented and started the hazard unit](https://github.com/aa6dcc/RISC-V-Team2/commit/34617373aca98c16134c2862ff86bcb8c228c509)
 
+### 09/12/24
+- Implemented all the instructions in RV32I with so far R-type verification completed: [Added all R-type instr and verification, added the rest of I, J, U, B in controlunit](https://github.com/aa6dcc/RISC-V-Team2/commit/5eccb99f8b08752ab7b98ed65e42157b3a14a190)
+- Updated the pipelining modules and new top file for port mapping in pipeline foundation: [Updated modules for pipelining and created new top.sv](https://github.com/aa6dcc/RISC-V-Team2/commit/c4fcc43db2e728a50420522396d9964f21007a58)
+
