@@ -72,6 +72,11 @@ I also took on the responsability of being repo master and designed much of the 
     - Wrote team statements for the lab4 and Single-cycle sections
     - Started working on cache: created the cache branch and a draft for cache
 
+## 10/12/2024
+    - Finished the cache module
+    - Wrote two test cache cases in assembly
+    - Sat with Elson to see how to implement the cache in the top file
+
 # Work by section
 
 ## Lab 4
