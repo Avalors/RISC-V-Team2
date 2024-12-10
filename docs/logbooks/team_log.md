@@ -138,5 +138,8 @@ and the last few cycles resemble this:
   - Pipelining done
   - Cache done, debugged and integrated
 
+Planning the week out:
+
+![IMG_4506](https://github.com/user-attachments/assets/7e8a9971-efcc-4d83-81d5-2d3cb69a4b93)
 
 
