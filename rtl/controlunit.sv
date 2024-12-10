@@ -2,7 +2,6 @@ module controlunit #(
     parameter DATA_WIDTH = 32
 ) (
     input logic [DATA_WIDTH-1:0] instr,   // Instruction input
-    input logic                 stall,
     output logic [2:0]          ALUctrl,  // ALU control signal
     output logic                ALUsrc,   // ALU source (1 for immediate, 0 for register)
     output logic [2:0]          ImmSrc,   // Immediate source selection
@@ -183,9 +182,5 @@ module controlunit #(
                 Jump = 2'b00;
             end
         endcase
-
-        if (stall) begin
-            RegWrite = 0;
-        end
     end
 endmodule

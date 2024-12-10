@@ -139,6 +139,7 @@ module top_pipeline #(
     pipeline_FECtoDEC pipeline_FECtoDEC (
         .clk(clk),
         .flush(flush),
+        .stall(stall),
         .instrF(instrF),
         .PCF(PCF),
         .PCPlus4F(PCPlus4F),
@@ -162,7 +163,6 @@ module top_pipeline #(
         .WD3Src(WD3SrcD),
         .branch(branchD),
         .Jump(JumpD)
-        //.stall() missing signal keep in mind
     );
 
     //Completed
@@ -197,8 +197,8 @@ module top_pipeline #(
     //Completed
     pipeline_DECtoEXE pipeline_DECtoEXE (
         .clk(clk),
-        //.flush(flush),
-        //.LWflush(stall),    // LW is proprogated via stall. It will flush.
+        .stall(stall),
+        .flush(flush),
         .RD1D(RD1D),
         .RD2D(RD2D),
         .PCD(PCD),
@@ -264,6 +264,30 @@ module top_pipeline #(
         end
     end
 
+    //forwarding mux logic
+
+    //RD1 mux
+    always_comb begin
+        case(forwardAE)
+        2'b00: SrcAE = RD1E;
+        2'b01: SrcAE = ALUResultM;
+        2'b10: SrcAE = WD3W;
+        default: SrcAE = RD1E;
+        endcase
+    end
+
+    
+    //RD2 mux
+    always_comb begin
+        case(forwardAE)
+        2'b00: WriteDataE = RD2E;
+        2'b01: WriteDataE = ALUResultM;
+        2'b10: WriteDataE = WD3W;
+        default: WriteDataE = RD2E;
+        endcase
+    end
+
+
     //Completed
     mux #(WIDTH) ALUOperandMux (
         .in0(WriteDataE),
@@ -284,8 +308,9 @@ module top_pipeline #(
     );
 
     //Completed
-    pipeline_EXEtoMEM pipeline_EXtoMEM (
+    pipeline_EXEtoMEM pipeline_EXEtoMEM (
         .clk(clk),
+        .stall(stall),
         .ALUResultE(ALUResultE),
         .WriteDataE(WriteDataE),
         .RdE(RdE),
@@ -348,14 +373,11 @@ module top_pipeline #(
     hazard_unit hazard_unit (
         .Rs1E(Rs1E),
         .Rs2E(Rs2E),
-        .Rs1D(Rs1D),
-        .Rs2D(Rs2D),
-        .RdE(RdE),
         .RdM(RdM),
         .RdW(RdW),
-        .RegWriteM(RegWriteM),
-        .RegWriteW(RegWriteW),
-        .branch(branch),
+        .RegWriteM(RegWriteM), //not sure how these fit in yet
+        .RegWriteW(RegWriteW), //not sure how these fit in yet
+        .AddrModeM(AddrModeM),
         .flushE(flushE),
 
         .forwardAE(forwardAE),

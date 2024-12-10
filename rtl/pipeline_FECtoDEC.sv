@@ -3,6 +3,7 @@ module pipeline_FECtoDEC #(
 )(
     input logic clk,
     input logic flush,
+    input logic stall,
     //Fetch stage
     input logic [WIDTH-1:0] PCF,
     input logic [WIDTH-1:0] instrF,
@@ -14,14 +15,21 @@ module pipeline_FECtoDEC #(
 );
 
 always_ff @ (posedge clk) begin
-    //Control Unit - (TODO: implement flush instr for assignment)
-    instrD <= instrF;
-    PCD <= PCF;
-    PCPlus4D <= PCPlus4F;
 
-    if (flush) begin
-        instrD <= 0; // nop
+    if(!stall)begin
+        if(!flush)begin
+            instrD <= instrF;
+            PCD <= PCF;
+            PCPlus4D <= PCPlus4F;
+        end
+        else begin
+            instrD <= 32'h00000013;
+            PCD <= 32'd0; //doesnt matter
+            PCPlus4D <= 32'd0; //doesnt matter
+        end
     end
+
+
 end
 
 endmodule

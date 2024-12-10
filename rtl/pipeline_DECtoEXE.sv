@@ -2,6 +2,8 @@ module pipeline_DECtoEXE #(
     parameter WIDTH = 32
 )(
     input logic     clk,
+    input logic     stall,
+    input logic     flush,
     //Data path
     // Decode Stage
     input logic [WIDTH-1:0] RD1D,
@@ -46,25 +48,53 @@ module pipeline_DECtoEXE #(
 );
 
 always_ff @ (posedge clk) begin
-    //Control Unit - (TODO: implement flush instr)
-    RegWriteE <= RegWriteD;
-    ResultSrcE <= ResultSrcD;
-    ALUctrlE <= ALUctrlD;
-    AddrModeE <= AddrModeD;
-    ALUsrcE <= ALUsrcD;
-    WD3SrcE <= WD3SrcD;
-    branchE <= branchD;
-    JumpE <= JumpD;
 
-    //Data path
-    RD1E <= RD1D;
-    RD2E <= RD2D;
-    PCE <= PCD;
-    Rs1E <= Rs1D;
-    Rs2E <= Rs2D;
-    RdE <= RdD;
-    ExtImmE <= ExtImmD;
-    PCPlus4E <= PCPlus4D
+    if(!stall) begin
+        if(!flush) begin
+            //control path
+            RegWriteE <= RegWriteD;
+            ResultSrcE <= ResultSrcD;
+            ALUctrlE <= ALUctrlD;
+            AddrModeE <= AddrModeD;
+            ALUsrcE <= ALUsrcD;
+            WD3SrcE <= WD3SrcD;
+            branchE <= branchD;
+            JumpE <= JumpD;
+
+            //Data path
+            RD1E <= RD1D;
+            RD2E <= RD2D;
+            PCE <= PCD;
+            Rs1E <= Rs1D;
+            Rs2E <= Rs2D;
+            RdE <= RdD;
+            ExtImmE <= ExtImmD;
+            PCPlus4E <= PCPlus4D
+        end
+        else begin
+            //control path
+            RegWriteE <= 1'b1;
+            ResultSrcE <= 1'b0;
+            ALUctrlE <= 3'b000;
+            AddrModeE <= 3'b000;
+            ALUsrcE <= 1'b1;
+            WD3SrcE <= 1'b0;
+            branchE <= 2'b00;
+            JumpE <= 2'b00;
+
+            //Data path
+            RD1E <= 32'd0;
+            RD2E <= 32'd0;
+            PCE <= 32'd0;
+            Rs1E <= 5'b0;
+            Rs2E <= 5'b0;
+            RdE <= 5'b0;
+            ExtImmE <= 32'd0;
+            PCPlus4E <= 32'd0;
+        end
+    end
+
+    
 
 end
 

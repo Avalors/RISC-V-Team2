@@ -5,6 +5,7 @@ module pipeline_EXEtoMEM #(
     
     //Execute stage
     input logic     clk,
+    input logic     stall,
     input logic [WIDTH-1:0] ALUResultE,
     input logic [WIDTH-1:0] WriteDataE,
     input logic [WIDTH-1:0] PCPlus4E, //for writeback (JALR mux)
@@ -31,17 +32,32 @@ module pipeline_EXEtoMEM #(
 );
 
 always_ff @ (posedge clk) begin
-    //Control Unit
-    RegWriteM <= RegWriteE;
-    ResultSrcM <= ResultSrcE;
-    AddrModeM <= AddrModeE;
-    WD3SrcM <= WD3SrcE;
+    if(!stall) begin
+        //Control Unit
+        RegWriteM <= RegWriteE;
+        ResultSrcM <= ResultSrcE;
+        AddrModeM <= AddrModeE;
+        WD3SrcM <= WD3SrcE;
 
-    //Data path
-    ALUResultM <= ALUResultE;
-    WriteDataM <= WriteDataE;
-    PCPlus4M <= PCPlus4E;
-    RdM <= RdE;
+        //Data path
+        ALUResultM <= ALUResultE;
+        WriteDataM <= WriteDataE;
+        PCPlus4M <= PCPlus4E;
+        RdM <= RdE;
+    end
+    else begin //loads NOP signals
+        //Control Unit
+        RegWriteM <= 1'b1;
+        ResultSrcM <= 1'b0;
+        AddrModeM <= 3'b000;
+        WD3SrcM <= 1'b0;
+
+        //Data path
+        ALUResultM <= 32'd0;
+        WriteDataM <= 32'd0;
+        PCPlus4M <= 32'd0; //could be a problem 
+        RdM <= 5'b0;
+    end
 end
 
 endmodule
