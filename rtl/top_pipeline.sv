@@ -6,7 +6,6 @@ module top_pipeline #(
     output logic [WIDTH-1:0] a0
 );
     // Program counter
-    logic [2:0] PCsrcD;
     logic [2:0] PCsrcE;
 
     logic [WIDTH-1:0] ImmExtD;
@@ -68,16 +67,9 @@ module top_pipeline #(
     logic [2:0] AddrModeE;
     logic [2:0] AddrModeM;
 
-    logic MemWriteD;
-    logic MemWriteE;
-    logic MemWriteM;
-    
-    logic MemReadD;
-    logic MemReadE;
-
     logic [WIDTH-1:0] WriteDataE;
     logic [WIDTH-1:0] WriteDataM;
-    
+
     logic [WIDTH-1:0] ReadDataM;
     logic [WIDTH-1:0] ReadDataW;
 
@@ -90,28 +82,45 @@ module top_pipeline #(
     logic [2:0] ImmSrcD;
 
     // Result
-    logic [1:0] ResultSrcD;
-    logic [1:0] ResultSrcE;
-    logic [1:0] ResultSrcM;
-    logic [1:0] ResultSrcW;
+    logic ResultSrcD;
+    logic ResultSrcE;
+    logic ResultSrcM;
+    logic ResultSrcW;
     logic [WIDTH-1:0] ResultW;
+
+    // Branch
+    logic [1:0] branchD;
+    logic [1:0] branchE;
+
+    // Jump
+    logic [1:0] JumpD;
+    logic [1:0] JumpE;
 
     // Hazard Unit
     logic [1:0] forwardAE;
     logic [1:0] forwardBE;
     logic stall;
-    logic flush;
-    logic branch;
+
+    //flush relatead signals
+    logic flush; //universal flush signal
+    logic flushE;//flush trigger signal from execute stage
+    logic BranchCondE; //output of branch mux
+
+    //UNIQUE INTERNAL TOP SIGNAL
+    logic [WIDTH-1:0] WD3W;
 
     // Pipeline Stage 1 - Fetch (FEC)
     
-    //Completed - halfway
+    //Completed 
     assign PCPlus4F = PCF + 4;    
     program_counter program_counter_inst (
         .clk(clk),
         .rst(rst),
         .stall(stall),
-
+        .PCsrc(PCsrcE),
+        .ImmOP(ImmExtE),
+        .PCE(PCE),
+        .Result(ALUResultE), //JALR and RET instructions
         .PC(PCF)
     );
 
@@ -126,7 +135,7 @@ module top_pipeline #(
         .instr(instrF)
     );
 
-    //Completed
+    //*
     pipeline_FECtoDEC pipeline_FECtoDEC (
         .clk(clk),
         .flush(flush),
@@ -144,17 +153,16 @@ module top_pipeline #(
     //Completed
     controlunit controlunit (
         .instr(instrD),
-        .EQ(EQ),
         .AddrMode(AddrModeD),
         .RegWrite(RegWriteD),
-        .MemWrite(MemWriteD),
-        .MemRead(MemReadD),
         .ALUctrl(ALUctrlD),
         .ALUsrc(ALUsrcD),
         .ImmSrc(ImmSrcD),
-        .PCsrc(PCsrcD),
         .ResultSrc(ResultSrcD),
-        .WD3Src(WD3SrcD)
+        .WD3Src(WD3SrcD),
+        .branch(branchD),
+        .Jump(JumpD)
+        //.stall() missing signal keep in mind
     );
 
     //Completed
@@ -177,9 +185,9 @@ module top_pipeline #(
         .rst(rst),
         .AD1(Rs1D),
         .AD2(Rs2D),
-        .AD3(RdD),
+        .AD3(RdW),
         .WE3(RegWriteW),
-        .WD3(ResultW),
+        .WD3(WD3W),
 
         .RD1(RD1D),
         .RD2(RD2D),
@@ -211,26 +219,50 @@ module top_pipeline #(
 
         .RegWriteD(RegWriteD),
         .ResultSrcD(ResultSrcD),
-        .MemWriteD(MemWriteD),
-        .MemReadD(MemReadD),
         .AddrModeD(AddrModeD),
-        .PCsrcD(PCsrcD),
         .ALUctrlD(ALUctrlD),
         .ALUsrcD(ALUsrcD),
         .WD3SrcD(WD3SrcD),
+        .branchD(branchD),
+        .JumpD(JumpD),
 
         .RegWriteE(RegWriteE),
         .ResultSrcE(ResultSrcE),
-        .MemWriteE(MemWriteE),
-        .MemReadE(MemReadE),
         .AddrModeE(AddrModeE),
-        .PCsrcE(PCsrcE),
         .ALUctrlE(ALUctrlE),
         .ALUsrcE(ALUsrcE),
-        .WD3SrcE(WD3SrcE)
+        .WD3SrcE(WD3SrcE),
+        .branchE(branchE),
+        .jumpE(jumpE)
     );
 
     // Pipeline Stage 3 - Execute (EXE)
+
+    
+    //flush conditional logic
+    always_comb begin
+        case(branchE[1])
+            1'b1: BranchCondE = ZeroE ^~ branchE[0];  //XNOR to get is branch is satisfied
+            1'b0: BranchCondE = 0;
+        endcase
+
+        flushE = BranchCondE | JumpE[1];
+    end
+
+    //PCsrcE logic
+    always_comb begin
+        //JALR/RET PC value implementation
+        if(JumpE == 2'b11) begin
+            PCsrcE = 2'b10;
+        end
+        else if(JumpE == 2'b10 || branchE[1] == 1'b1)begin
+            PCsrcE = 2'b01;
+        end
+        //standard PC incrementation for normal instructions
+        else begin
+            PCsrcE = 2'b00;
+        end
+    end
 
     //Completed
     mux #(WIDTH) ALUOperandMux (
@@ -247,7 +279,7 @@ module top_pipeline #(
         .ALUop2(SrcBE),
         .ALUctrl(ALUctrlE),
 
-        .EQ(ZeroE),
+        .ZeroE(ZeroE),
         .Result(ALUResultE)
     );
 
@@ -283,11 +315,9 @@ module top_pipeline #(
     data_mem DataMemory (
         .clk(clk),
         .AddrMode(AddrModeM),
-        .A(ALUResultM),
+        .A(ALUResultM), //forwarded signal for non datamem instructions to execute stage Read outputs.
         .WD(WriteDataM),
-        //.WE(MemWriteM),
-
-        .RD(ReadDataM)
+        .RD(ReadDataM) 
     );
 
     //Completed
@@ -325,13 +355,32 @@ module top_pipeline #(
         .RdW(RdW),
         .RegWriteM(RegWriteM),
         .RegWriteW(RegWriteW),
-        .MemReadE(MemReadE),
         .branch(branch),
+        .flushE(flushE),
 
         .forwardAE(forwardAE),
         .forwardBE(forwardBE),
         .stall(stall),
         .flush(flush)
     );
+
+
+    //Register Write back logic (Muxes)
+
+    //ResultW Mux
+    always_comb begin
+        case(ResultSrcW)
+            1'b0: ResultW = ALUResultW;
+            1'b1: ResultW = ReadDataW;
+        endcase
+    end
+
+    //WD3 mux
+    always_comb begin
+        case(WD3SrcW)
+            1'b0: WD3W = ResultW;
+            1'b1: WD3W = PCplus4W;
+        endcase
+    end
 
 endmodule

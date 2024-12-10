@@ -7,6 +7,7 @@ module program_counter #(
     input  logic [1:0]           PCsrc,
     input  logic [31:0]          ImmOp,
     input  logic [31:0]          Result,
+    input  logic [WIDTH-1:0]     PCE,
     output logic [WIDTH-1:0]     PC
 );
 
@@ -16,11 +17,11 @@ module program_counter #(
                 PC <= 32'h0;
             end else begin
                 if (PCsrc == 2'b01) 
-                    PC <= PC + ImmOp;  // Branch/Jump
+                    PC <= PCE + ImmOp;  // Branch/Jump
                 else if(PCsrc == 2'b10)
-                    PC <= Result;      // JALR
+                    PC <= Result;      // JALR (pipeline: switch this to the output of the ALU)
                 else
-                    PC <= PC + 32'd4;  // Normal increment
+                    PC <= PCE + 32'd4;  // Normal increment
             end
         end
     end

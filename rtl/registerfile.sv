@@ -22,7 +22,7 @@ module registerfile (
     end
 
     // Synchronous write with reset
-    always_ff @(posedge clk) begin
+    always_ff @(negedge clk) begin
         if (rst) begin
             // Clear all registers on reset
             for (int i = 0; i < 32; i = i + 1)

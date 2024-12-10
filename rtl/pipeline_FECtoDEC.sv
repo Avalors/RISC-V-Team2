@@ -3,9 +3,11 @@ module pipeline_FECtoDEC #(
 )(
     input logic clk,
     input logic flush,
+    //Fetch stage
     input logic [WIDTH-1:0] PCF,
     input logic [WIDTH-1:0] instrF,
     input logic [WIDTH-1:0] PCPlus4F,
+    //Decode Stage
     output logic [WIDTH-1:0] PCD,
     output logic [WIDTH-1:0] instrD,
     output logic [WIDTH-1:0] PCPlus4D

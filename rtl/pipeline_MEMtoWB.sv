@@ -1,22 +1,28 @@
 module pipeline_MEMtoWB #(
     parameter WIDTH = 32
 )(
+    //data path
+    //Memory stage
     input logic     clk,
     input logic [WIDTH-1:0] ALUResultM,
-    input logic [WIDTH-1:0] RDDataMemM,
+    input logic [WIDTH-1:0] ReadDataM,
     input logic [WIDTH-1:0] PCPlus4M,
     input logic [4:0]       RdM,
+    //writeback stage
     output logic [WIDTH-1:0] ALUResultW,
     output logic [WIDTH-1:0] ReadDataW,
     output logic [WIDTH-1:0] PCPlus4W,
     output logic [4:0]       RdW,
 
-    //Control Unit
+    //Control path
+    
+    //Memory stage
     input logic RegWriteM,
-    input logic [1:0] ResultSrcM,
+    input logic ResultSrcM,
     input logic WD3SrcM,
+    //Writeback stage
     output logic RegWriteW,
-    output logic [1:0] ResultSrcW' 
+    output logic ResultSrcW, 
     output logic WD3SrcW  
 );
 

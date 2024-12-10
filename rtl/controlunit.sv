@@ -3,15 +3,12 @@ module controlunit #(
 ) (
     input logic [DATA_WIDTH-1:0] instr,   // Instruction input
     input logic                 stall,
-    input logic                 EQ,       // Equality flag (for branch comparison)
     output logic [2:0]          ALUctrl,  // ALU control signal
     output logic                ALUsrc,   // ALU source (1 for immediate, 0 for register)
     output logic [2:0]          ImmSrc,   // Immediate source selection
-    output logic [1:0]          PCsrc,    // Program counter source (for branches and jumps)
     output logic                RegWrite,  // Register write enable 
-    output logic                branch,     
-    output logic                MemWrite,
-    output logic                MemRead,      
+    output logic [1:0]          branch,    //2 bit branch signal: MSB for branch confirmation, LSB for branch type
+    output logic [1:0]          Jump,      //2 bit Jump signal: MSB for jump confirmation, LSB for Jump type
     output logic [2:0]          AddrMode,  // sets the instruction for data memory
     output logic                ResultSrc, // control signal for output mux
     output logic                WD3Src     // control unit signal for write port for register allowing Jump instruction implementation       
@@ -31,13 +28,12 @@ module controlunit #(
         ALUctrl = 3'b000;
         ALUsrc = 1'b0;
         ImmSrc = 3'b000;
-        PCsrc = 2'b00;
-        MemWrite = 1'b0;
-        MemRead = 1'b0;
         RegWrite = 1'b0;
         AddrMode = 3'b000;
         ResultSrc = 1'b0;
         WD3Src = 1'b0;
+        branch = 2'b00;
+        Jump =  2'b00;
 
         case (op)
             // R-Type
@@ -75,7 +71,6 @@ module controlunit #(
                 ALUsrc = 1'b1;
                 ImmSrc = 3'b000;
                 ResultSrc = 1'b1; //result is switched to dataMem read from ALUout
-                MemRead = 1'b1;
 
                 //For data_mem
                 case(funct3)
@@ -93,7 +88,6 @@ module controlunit #(
                 ALUctrl = 3'b000; // ADD for address calculation
                 ALUsrc = 1'b1; // Uses rd2
                 ImmSrc = 3'b001; // S-Type immediate
-                MemWrite = 1'b1;
                 
                 //For data_mem
                 case(funct3)
@@ -107,39 +101,37 @@ module controlunit #(
             // Branch (B-Type)
             7'b1100011: begin 
                 ALUctrl = 3'b001; // SUB for comparison
-                ImmSrc = 3'b010; // B-Type immediate
+                ImmSrc = 3'b010;  // B-Type immediate
+                // branch signal used for PCsrc and flush
                 case (funct3)
                     3'b000: begin // BEQ
-                        PCsrc = EQ ? 2'b01 : 2'b00;
-                        branch = 1'b1; // BEQ branch = 1
+                        branch = 2'b11; // BEQ branch = 1
                     end
                     3'b001: begin // BNE
-                        PCsrc = EQ ? 2'b00 : 2'b01;
-                        branch = 1'b0; // BNE branch = 0
+                        branch = 2'b10; // BNE branch = 0
                     end
                     default: begin
-                        PCsrc = 2'b00;
-                        branch = 1'b0; // Default branch = 0
+                        branch = 2'b11; // Default branch = 0
                     end
                 endcase
             end
 
             // J-Type (JAL)
             7'b1101111: begin 
-                PCsrc = 2'b01;
                 RegWrite = 1'b1;
                 ALUsrc = 1'b1;
                 ImmSrc = 3'b100;
                 WD3Src = 1'b1;
+                Jump = 2'b10;
             end
 
             // JALR (I-Type)
             7'b1100111: begin 
-                PCsrc = 2'b10;
                 ALUsrc = 1'b1;
                 ImmSrc = 3'b000;
                 ResultSrc = 1'b0;
                 WD3Src = 1'b1;
+                Jump = 2'b11;
 
 
                 //for ret instructions Rd = 5'b00000 -> to prevent overwriting zero
@@ -152,14 +144,14 @@ module controlunit #(
                 
             end
 
-            //NOTE: NOT fully implemented/used here
-
             // LUI (Load Upper Immediate)
             7'b0110111: begin 
                 RegWrite = 1'b1;
                 ALUsrc = 1'b1;
                 ImmSrc = 3'b011;
             end
+
+            //NOTE: NOT fully implemented/used here
 
             // AUIPC (Add Upper Immediate to PC)
             7'b0010111: begin 
@@ -183,19 +175,16 @@ module controlunit #(
                 ALUctrl = 3'b000;
                 ALUsrc = 1'b0;
                 ImmSrc = 3'b000;
-                PCsrc = 2'b00;
                 RegWrite = 1'b0;
                 AddrMode = 3'b000;
                 ResultSrc = 1'b0;
                 WD3Src = 1'b0;
-                MemRead = 1'b0;
-                MemWrite = 1'b0;
+                branch = 2'b00;
+                Jump = 2'b00;
             end
         endcase
 
         if (stall) begin
-            MemWrite = 0;
-            MemRead = 0;
             RegWrite = 0;
         end
     end
