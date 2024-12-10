@@ -60,12 +60,13 @@ module controlunit #(
                     3'b000: ALUctrl = 4'b0000; // ADDI
                     3'b110: ALUctrl = 4'b0011; // ORI
                     3'b111: ALUctrl = 4'b0010; // ANDI
-                    3'b010: ALUctrl = 4'b0101; // SLTI
                     3'b100: ALUctrl = 4'b0100; // XORI (assuming XOR immediate)
-                    3'b001: ALUctrl = 4'b0101; // SLLI (Shift Left Logical Immediate)
-                    3'b101: ALUctrl = 4'b0110; // SRLI (Shift Right Logical Immediate)
-                    3'b101: ALUctrl = 4'b0111; // SRAI (Shift Right Arithmetic Immediate)
-                    3'b010: ALUctrl = 4'b1000; // SLTIU (Set Less Than Immediate Unsigned)
+
+                    3'b001: ALUctrl = 4'b0101; // SLLI (Shift Left Logical Immediate)          
+                    3'b101:  ALUctrl = (funct7 == 7'b0100000) ? 4'b0111 : 4'b0110; // SRAI(ASR)/SRLI(LSR)
+
+                    3'b010: ALUctrl = 4'b1000; // SLTI
+                    3'b011: ALUctrl = 4'b1001; // SLTIU (Set Less Than Immediate Unsigned)
                     default: ALUctrl = 4'b0000;
                 endcase
                 RegWrite = 1'b1;
@@ -156,13 +157,15 @@ module controlunit #(
                 RegWrite = 1'b1;
                 ALUsrc = 1'b1;
                 ImmSrc = 3'b011;
+                ALUctrl = 4'b1010;
             end
 
             // AUIPC (Add Upper Immediate to PC)
             7'b0010111: begin 
                 RegWrite = 1'b1;
                 ALUsrc = 1'b1;
-                ImmSrc = 3'b011;
+                ALUctrl = 4'b0000;       
+                ImmSrc = 3'b011; 
             end
 
             // Environment-Type (ecall, ebreak)

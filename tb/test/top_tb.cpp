@@ -1,54 +1,58 @@
 #include "sync_testbench.h"
+#include "vbuddy.cpp"
+#include <iostream>
 #include <cstdlib>
 
-#define NAME            "top-instr"
+#define NAME            "top-pdf"
 
-
-class InstrTestbench : public SyncTestbench
+class CpuTestbench : public SyncTestbench
 {
 protected:
     void initializeInputs() override
     {
         top->clk = 1;
         top->rst = 0;
+
+        // We compile the program here, so the whole thing can use it.
+        system("./compile.sh --input asm/pdf.s --output ../rtl/program.hex");
     }
 };
 
-TEST_F(InstrTestbench, RTypeTest)
+
+TEST_F(CpuTestbench, InitialStateTest)
 {
-    // Compile the assembly code r-type.s
-    system("./compile.sh --input asm/01-R_type.s");
+    // Initialise VBuddy
+    //-------------------------------------------------------------------------
+    if (vbdOpen() != 1)
+    {
+        SUCCEED();
+    }
+    vbdHeader("PDF plotting");
+    //-------------------------------------------------------------------------
     
-    runSimulation(1000);
+    int plot = 0;
 
-    //value a0 = 150 is arbitrary value that I set to check all R-type instr
-    //All checks are done in the asm code itself and this "special" value 150 only seen if all are passed
-    EXPECT_EQ((int)top->a0, 150);
+    for (int i = 0; i < 1'000'000; ++i)
+    {
+        runSimulation(1);
+
+        if (plot == false && top->a0 != 0)
+        {
+            plot = 1;
+        }
+        if (plot && (int)top->a0 >= 0)
+        {
+            vbdPlot(top->a0, 0, 255);
+            plot++;
+        }
+        if (plot > 256)
+        {
+            break;
+        }
+    }
+
+    SUCCEED();
 }
-
-// TEST_F(InstrTestbench, ITypeArithTest)
-// {
-     // Compile the assembly code r-type.s
-//     system("./compile.sh --input asm/02-I_type_arith.s");
-    
-//     runSimulation(1000);
-
-        //value a0 = 150 is arbitrary value that I set to check all I-type instr
-        //All checks are done in the asm code itself and this "special" value 150 only seen if all are passed
-//     EXPECT_EQ((int)top->a0, 150);
-// }
-
-// TEST_F(InstrTestbench, ITypeLoadTest)
-// {
-     // Compile the assembly code r-type.s
-//     system("./compile.sh --input asm/03-I_type_load.s");
-    
-//     runSimulation(1000);
-
-     //value a0 = 150 is arbitrary value that I set to check all I-type instr
-     //All checks are done in the asm code itself and this "special" value 150 only seen if all are passed
-//     EXPECT_EQ((int)top->a0, 150);
-// }
 
 int main(int argc, char **argv)
 {
@@ -56,6 +60,6 @@ int main(int argc, char **argv)
     testing::InitGoogleTest(&argc, argv);
     Verilated::mkdir("logs");
     auto res = RUN_ALL_TESTS();
-
+    
     return res;
 }
