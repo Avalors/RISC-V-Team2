@@ -133,7 +133,10 @@ and the last few cycles resemble this:
   - Wrote the team statements for each branch
   - Worked on the pipeline
 
-
+## Team meetup (10/12)
+  - Final implementation of the instructions
+  - Pipelining done
+  - Cache done, debugged and integrated
 
 
 
