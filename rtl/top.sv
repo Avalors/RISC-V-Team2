@@ -15,7 +15,7 @@ module top (
     logic RegWrite, ALUsrc;               // Control signals
     logic [1:0] PCsrc;                    // PC mux controls signal
     logic [2:0] ImmSrc;                   // 2-bit Immediate source signal
-    logic [2:0] ALUctrl;                  // ALU control signal
+    logic [3:0] ALUctrl;                  // ALU control signal
     logic [2:0] AddrMode;                 // DataMemory control signal
     logic [31:0] ReadData;                // DataMemory output
     logic ResultSrc;                      // result mux control signal
