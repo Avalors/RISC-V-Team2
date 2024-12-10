@@ -1,15 +1,15 @@
 # RISC-V-RV32I-Processor
 
 This project was done as a team of 4.
-We are team 2 (H.A.D.E.S), each with distinct roles for the coursework (we switched roles after lab 4):
-  - Elson Tho: register file & testing own modules
-  - Ahmed Hamid: control unit & testing own modules
-  - Antoine Divet: ALU & testing own modules
-  - Jihwan Shin: integration and testbenching
+We are team 2 (H.A.D.E.S), each with distinct roles for the coursework (we had different roles for lab4, single cycle, pipelining, cache, branch prediction):
+  - Elson Tho: completing full RISC-V instruction set by editing the control unit, ALU & register file, instruction memory, testing & verification, MUX, pipelining, f1_lights, made the new top file for the pipeline branch
+  - Ahmed Hamid: program counter, sign extension, ROM, instruction memory, control unit, data memory (assembly, module & testbench), pipelining (forwarding, flushing, stalling; hazard unit), PDF
+  - Antoine Divet: top module and testbench, assembly instructions (xor, or, counter), doit script, data memory, cache, admin work (README, team statements, logbooks)
+  - Jihwan Shin: foundations of instruction memory, sign extension (I-type), PDF 
 
-We used three different branches (one for lab4, one for single cycle, one for pipelining) to explicitly show the evolution of our work.
+There was a lot of teamwork evolved, so despite some members focused on their own role, they also helped out others. 
 
-We will do pipelining, hazard control, cache and branch prediction as a team
+We used five different branches (one for lab4, one for single cycle, one for pipelining, one for cache and one for branch prediction) to explicitly show the evolution of our work.
 
 ## Team 2 Statement
 
@@ -52,7 +52,7 @@ For wsl users, some packages may need to be installed, which can be found in [Ba
 - The functions of `git` were fully utilised in this project
 - `Branches` were created for implementations of different features to avoid 
   conflict and pushing faulty / poorly written code to `main`
-- `Tags` were created for each completed version of the RV32I processor
+- A statement was made for the team but also after each section was successfully implemented
 
 ### Repo organisation 
 
@@ -70,9 +70,6 @@ For wsl users, some packages may need to be installed, which can be found in [Ba
   down in personal logbooks in [`docs/logbooks`](docs/logbooks/)
 
 ## Working Evidence
-
-Note: The following evidence was collected from running `tag v0.4.0`, the 
-`direct-mapped cache` version of our code.
 
 - If you want to check our [`testbenches`](tb/)
 - Here is a proof of our PDF testbench being fully functional, as it outputs the following graphs using plotly:
