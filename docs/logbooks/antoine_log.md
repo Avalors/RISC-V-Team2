@@ -64,6 +64,14 @@ I also took on the responsability of being repo master and designed much of the 
     - Had to work on some admin tasks (updating the README, merging branches)
     - Worked on the plotting the pdf script in Python
 
+## 08/12/2024
+    - Updated the README, added in graphs of the pdf script as well as Vbuddy videos
+
+## 09/12/2024
+    - Amended the README script
+    - Wrote team statements for the lab4 and Single-cycle sections
+    - Started working on cache: created the cache branch and a draft for cache
+
 # Work by section
 
 ## Lab 4
