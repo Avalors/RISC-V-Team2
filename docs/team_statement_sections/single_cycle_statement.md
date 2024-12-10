@@ -30,7 +30,7 @@ Here is how we initialised our data memory:
 
 ![Initialisation](https://github.com/user-attachments/assets/345b3dad-c85a-4342-9f1a-28cc72ed0b15)
 
-We can see the 3-bit AddrMode signal, and we can also see that ADDR_REAL_WIDTH is set to 20. 
+We can see the 3-bit AddrMode signal, and we can also see that ADDR_REAL_WIDTH is set to 20. We also opted for little-endian storage, meaning computer operations could be faster and simpler.
 
 Below, we can see the code section which reads the data.hex file found in the rtl folder:
 
@@ -47,6 +47,8 @@ Our logic was to associate 3-bit codes with a certain instruction, which we were
 ![image](https://github.com/user-attachments/assets/3f9d2fbe-04b3-4f94-8f1a-a88ce55be975)
 
 We spent a lot of time editing the control unit, specifically dealing with the RET and JALR instructions. 
+
+We struggled to run the PDF test: when using GTKwave, we realised the RET instruction wasn't working. By analysing the machine code, we realised it's a version of the JALR instruction, which we hadn't implemented yet. By adding additional control signals (we added an additional bit to PCSrc to allow feedback from the result signal to the program counter input MUX) and we later realised that our B and J type instructions were not storing return addresses in the register file. We resolved this by adding a MUX to the WD3 input which, using a WD3Src control signal, we enabled PC + 4 to be stored in the register file for our B and J type instructions. 
 
 ![image](https://github.com/user-attachments/assets/93437a5e-860b-4a46-8a74-2e71d3f5343f)
 
