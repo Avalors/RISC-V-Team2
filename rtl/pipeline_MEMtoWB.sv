@@ -34,9 +34,9 @@ always_ff @ (posedge clk) begin
 
     //Data path
     ALUResultW <= ALUResultM;
-    ReadDataW <= RDDataMemM;
+    ReadDataW <= ReadDataM;
     PCPlus4W <= PCPlus4M;
-    RdW <= RdM
+    RdW <= RdM;
 end
 
 endmodule

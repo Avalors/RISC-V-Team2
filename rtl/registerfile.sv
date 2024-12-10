@@ -13,8 +13,6 @@ module registerfile (
 
     logic [31:0] registers [31:0];
 
-    assign a0 = registers[10];
-
     // Initialize registers
     initial begin
         for (int i = 0; i < 32; i = i + 1)

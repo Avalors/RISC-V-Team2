@@ -29,7 +29,7 @@ module pipeline_DECtoEXE #(
     //Decode Stage
     input logic RegWriteD,
     input logic ResultSrcD,
-    input logic [3:0] ALUctrlD,
+    input logic [2:0] ALUctrlD,
     input logic  ALUsrcD,
     input logic WD3SrcD,
     input logic [2:0] AddrModeD,
@@ -39,7 +39,7 @@ module pipeline_DECtoEXE #(
     //Execute Stage
     output logic RegWriteE,
     output logic ResultSrcE,
-    output logic [3:0] ALUctrlE,
+    output logic [2:0] ALUctrlE,
     output logic [2:0] AddrModeE,
     output logic ALUsrcE,
     output logic WD3SrcE,
@@ -69,7 +69,7 @@ always_ff @ (posedge clk) begin
             Rs2E <= Rs2D;
             RdE <= RdD;
             ExtImmE <= ExtImmD;
-            PCPlus4E <= PCPlus4D
+            PCPlus4E <= PCPlus4D;
         end
         else begin
             //control path

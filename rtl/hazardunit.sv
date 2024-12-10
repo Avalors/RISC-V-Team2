@@ -1,10 +1,8 @@
-module hazard_unit (
+module hazardunit (
     input logic [4:0] Rs1E,
     input logic [4:0] Rs2E,
     input logic [4:0] RdM,
     input logic [4:0] RdW,
-    input logic RegWriteW,
-    input logic RegWriteM,
     input logic [2:0] AddrModeM,
     input logic flushE,
     output logic [1:0] forwardAE,
@@ -13,52 +11,51 @@ module hazard_unit (
     output logic flush
 );
 
+    //Forwarding
+
+    //Rs1 MUX forwarding
     always_comb begin
-
-        //Forwarding
-
-        //Rs1 MUX forwarding
-        always_comb begin
-            if(Rs1E == RdW)begin
-                if(Rs1E == RdM)begin
-                    forwardAE = 2'b01; // MEM TO EXE prioritisation
-                end
-                else begin
-                    forwardAE = 2'b10; // WR TO EXE
-                end
+        if(Rs1E == RdW)begin
+            if(Rs1E == RdM)begin
+                forwardAE = 2'b01; // MEM TO EXE prioritisation
             end
             else begin
-                if(Rs1E == RdM)begin
-                    forwardAE = 2'b01; // MEM TO EXE
-                end
-                else begin
-                    forwardAE = 2'b00; //Rd1E -> SrcAE 
-                end
+                forwardAE = 2'b10; // WR TO EXE
             end
         end
-
-        //Rs2 MUX forwarding
-        always_comb begin
-            if(Rs2E == RdW)begin
-                if(Rs2E == RdM)begin
-                    forwardBE = 2'b01; // MEM TO EXE prioritisation
-                end
-                else begin
-                    forwardBE = 2'b10; // WR TO EXE
-                end
+        else begin
+            if(Rs1E == RdM)begin
+                forwardAE = 2'b01; // MEM TO EXE
             end
             else begin
-                if(Rs2E == RdM)begin
-                    forwardBE = 2'b01; // MEM TO EXE
-                end
-                else begin
-                    forwardBE = 2'b00; //Rd2E -> SrcBE (assuming no immediate)
-                end
+                forwardAE = 2'b00; //Rd1E -> SrcAE 
             end
         end
+    end
 
+    //Rs2 MUX forwarding
+    always_comb begin
+        if(Rs2E == RdW)begin
+            if(Rs2E == RdM)begin
+                forwardBE = 2'b01; // MEM TO EXE prioritisation
+            end
+            else begin
+                forwardBE = 2'b10; // WR TO EXE
+            end
+        end
+        else begin
+            if(Rs2E == RdM)begin
+                forwardBE = 2'b01; // MEM TO EXE
+            end
+            else begin
+                forwardBE = 2'b00; //Rd2E -> SrcBE (assuming no immediate)
+            end
+        end
+    end
+
+    always_comb begin
         //Stall
-        if ((AddrModeM >= 3'b000  && AddrModeM <= 3'b100) && ((RdM == Rs1E) || (RdM == Rs2E))) begin
+        if (((AddrModeM == 3'b000) || (AddrModeM == 3'b001) || (AddrModeM == 3'b010) || (AddrModeM == 3'b011) || (AddrModeM == 3'b100)) && ((RdM == Rs1E) || (RdM == Rs2E))) begin
             stall = 1'b1;
         end
         else begin 

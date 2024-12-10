@@ -1,135 +1,404 @@
-/* verilator lint_off SYNCASYNCNET */
-module top (
-    input logic clk,          // Clock signal
-    input logic rst,          // Reset signal
-    output logic [31:0] a0    // Contents of result (output)
+module top #(
+    parameter WIDTH = 32
+)(
+    input logic clk,
+    input logic rst,
+    output logic [WIDTH-1:0] a0
 );
+    // Program counter
+    logic [1:0] PCsrcE;
 
-    // Internal Signals
-    logic [31:0] PC;                      // Program Counter
-    logic [31:0] instr;                   // Current instruction
-    logic [31:0] ImmOp;                   // Sign-extended immediate value
-    logic [31:0] ALUop1, ALUop2, ALUout;  // ALU operands and result
-    logic EQ;                             // Equality output from ALU
-    logic [31:0] RD2, WD3;                // Register file read/write data
-    logic RegWrite, ALUsrc;               // Control signals
-    logic [1:0] PCsrc;                    // PC mux controls signal
-    logic [2:0] ImmSrc;                   // 2-bit Immediate source signal
-    logic [2:0] ALUctrl;                  // ALU control signal
-    logic [2:0] AddrMode;                 // DataMemory control signal
-    logic [31:0] ReadData;                // DataMemory output
-    logic ResultSrc;                      // result mux control signal
-    logic [31:0] Result;                  // result of output mux
-    logic WD3Src;                         // control signal for Write port input to allow for jumps
+    logic [WIDTH-1:0] ImmExtD;
+    logic [WIDTH-1:0] ImmExtE;
+
+    logic [WIDTH-1:0] PCPlus4F;
+    logic [WIDTH-1:0] PCPlus4D;
+    logic [WIDTH-1:0] PCPlus4E;
+    logic [WIDTH-1:0] PCPlus4M;
+    logic [WIDTH-1:0] PCPlus4W;
+
+    // ALU    
+    logic [2:0] ALUctrlD;
+    logic [2:0] ALUctrlE;
     
-    // Program Counter
-    program_counter #(.WIDTH(32)) PC_Reg (
+    logic [WIDTH-1:0] SrcAE;
+    logic [WIDTH-1:0] SrcBE;
+    
+    logic ALUsrcD;
+    logic ALUsrcE;
+    
+    logic ZeroE;
+    
+    logic [WIDTH-1:0] PCF;
+    logic [WIDTH-1:0] PCD;
+    logic [WIDTH-1:0] PCE;
+    
+    logic [WIDTH-1:0] ALUResultE;
+    logic [WIDTH-1:0] ALUResultM;
+    logic [WIDTH-1:0] ALUResultW;
+
+    logic WD3SrcD;
+    logic WD3SrcE;
+    logic WD3SrcW;
+    logic WD3SrcM;
+
+    // Instruction Memory
+    logic [WIDTH-1:0] instrF;
+    logic [WIDTH-1:0] instrD;
+
+    // Regfile
+    logic [4:0] Rs1D;
+    logic [4:0] Rs1E;
+    logic [4:0] Rs2D;
+    logic [4:0] Rs2E;
+
+    logic [4:0] RdD;
+    logic [4:0] RdE;
+    logic [4:0] RdM;
+    logic [4:0] RdW;
+
+    logic [WIDTH-1:0] RD1D;
+    logic [WIDTH-1:0] RD1E;
+    logic [WIDTH-1:0] RD2D;
+    logic [WIDTH-1:0] RD2E;
+
+    // Data memory
+    logic [2:0] AddrModeD;
+    logic [2:0] AddrModeE;
+    logic [2:0] AddrModeM;
+
+    logic [WIDTH-1:0] WriteDataE;
+    logic [WIDTH-1:0] WriteDataM;
+
+    logic [WIDTH-1:0] ReadDataM;
+    logic [WIDTH-1:0] ReadDataW;
+
+    logic RegWriteD;
+    logic RegWriteE;
+    logic RegWriteM;
+    logic RegWriteW;
+
+    // Sign Extend
+    logic [2:0] ImmSrcD;
+
+    // Result
+    logic ResultSrcD;
+    logic ResultSrcE;
+    logic ResultSrcM;
+    logic ResultSrcW;
+    logic [WIDTH-1:0] ResultW;
+
+    // Branch
+    logic [1:0] branchD;
+    logic [1:0] branchE;
+
+    // Jump
+    logic [1:0] JumpD;
+    logic [1:0] JumpE;
+
+    // Hazard Unit
+    logic [1:0] forwardAE;
+    logic [1:0] forwardBE;
+    logic stall;
+
+    //flush relatead signals
+    logic flush; //universal flush signal
+    logic flushE;//flush trigger signal from execute stage
+    logic BranchCondE; //output of branch mux
+
+    //UNIQUE INTERNAL TOP SIGNAL
+    logic [WIDTH-1:0] WD3W;
+
+    // Pipeline Stage 1 - Fetch (FEC)
+    
+    //Completed 
+    assign PCPlus4F = PCF + 4;    
+    program_counter program_counter_inst (
         .clk(clk),
         .rst(rst),
-        .PCsrc(PCsrc),
-        .Result(Result), //JALR PC value
-        .ImmOp(ImmOp),
-        .PC(PC)
+        .stall(stall),
+        .PCsrc(PCsrcE),
+        .ImmOp(ImmExtE),
+        .PCE(PCE),
+        .Result(ALUResultE), //JALR and RET instructions
+        .PC(PCF)
     );
 
-    // Instruction Memory (asynchronous read)
-    /*rom #(
-        .ADDRESS_WIDTH(32),
-        .DATA_WIDTH(8)
-    ) InstructionMemory (
-        .addr(PC),
-        .instr(instr)
-    );*/
-
-    // Instruction Memory 2.0 
+    //Completed
     instr_mem #(
         .ADDRESS_WIDTH(32),
         .ADDRESS_REAL_WIDTH(12),
         .DATA_WIDTH(8),
         .DATA_OUT_WIDTH(32)
     ) InstructionMemory (
-        .addr(PC),
-        .instr(instr)
+        .addr(PCF),
+        .instr(instrF)
     );
 
-    // Sign Extension Unit
+    //*
+    pipeline_FECtoDEC pipeline_FECtoDEC (
+        .clk(clk),
+        .flush(flush),
+        .stall(stall),
+        .instrF(instrF),
+        .PCF(PCF),
+        .PCPlus4F(PCPlus4F),
+
+        .instrD(instrD),
+        .PCD(PCD),
+        .PCPlus4D(PCPlus4D)
+    );
+
+    // Pipeline Stage 2 - Decode (DEC)
+
+    //Completed
+    controlunit controlunit (
+        .instr(instrD),
+        .AddrMode(AddrModeD),
+        .RegWrite(RegWriteD),
+        .ALUctrl(ALUctrlD),
+        .ALUsrc(ALUsrcD),
+        .ImmSrc(ImmSrcD),
+        .ResultSrc(ResultSrcD),
+        .WD3Src(WD3SrcD),
+        .branch(branchD),
+        .Jump(JumpD)
+    );
+
+    //Completed
     signextension #(
         .DATA_WIDTH(32)
     ) SignExtender (
-        .instr(instr),
-        .ImmSrc(ImmSrc),
-        .ImmOp(ImmOp)
+        .instr(instrD),
+        .ImmSrc(ImmSrcD),
+
+        .ImmOp(ImmExtD)
     );
 
-    //WD3 Mux to implement Ra = PC + 4 for jump instructions
-    always_comb begin
-        case(WD3Src)
-            1'b0: WD3 = Result;
-            1'b1: WD3 = PC + 32'd4;
-        endcase
-    end
-
-    // Register File with reset
+    assign Rs1D = instrD[19:15];
+    assign Rs2D = instrD[24:20];
+    assign RdD = instrD[11:7];
+    
+    //Completed
     registerfile RegFile (
         .clk(clk),
         .rst(rst),
-        .WE3(RegWrite),
-        .AD1(instr[19:15]),
-        .AD2(instr[24:20]),
-        .AD3(instr[11:7]),
-        .WD3(WD3),
-        .RD1(ALUop1),
-        .RD2(RD2),
+        .AD1(Rs1D),
+        .AD2(Rs2D),
+        .AD3(RdW),
+        .WE3(RegWriteW),
+        .WD3(WD3W),
+
+        .RD1(RD1D),
+        .RD2(RD2D),
         .a0(a0)
     );
 
-    // ALU Operand MUX
-    mux #(.DATA_WIDTH(32)) ALUOperandMux (
-        .in0(RD2),
-        .in1(ImmOp),
-        .sel(ALUsrc),
-        .out(ALUop2)
+    //Completed
+    pipeline_DECtoEXE pipeline_DECtoEXE (
+        .clk(clk),
+        .stall(stall),
+        .flush(flush),
+        .RD1D(RD1D),
+        .RD2D(RD2D),
+        .PCD(PCD),
+        .Rs1D(Rs1D),
+        .Rs2D(Rs2D),
+        .RdD(RdD),
+        .ExtImmD(ImmExtD),
+        .PCPlus4D(PCPlus4D),
+
+        .RD1E(RD1E),
+        .RD2E(RD2E),
+        .PCE(PCE),
+        .Rs1E(Rs1E),
+        .Rs2E(Rs2E),
+        .RdE(RdE),
+        .ExtImmE(ImmExtE),
+        .PCPlus4E(PCPlus4E),
+
+        .RegWriteD(RegWriteD),
+        .ResultSrcD(ResultSrcD),
+        .AddrModeD(AddrModeD),
+        .ALUctrlD(ALUctrlD),
+        .ALUsrcD(ALUsrcD),
+        .WD3SrcD(WD3SrcD),
+        .branchD(branchD),
+        .JumpD(JumpD),
+
+        .RegWriteE(RegWriteE),
+        .ResultSrcE(ResultSrcE),
+        .AddrModeE(AddrModeE),
+        .ALUctrlE(ALUctrlE),
+        .ALUsrcE(ALUsrcE),
+        .WD3SrcE(WD3SrcE),
+        .branchE(branchE),
+        .JumpE(JumpE)
     );
 
-    // ALU
-    alu ArithmeticLogicUnit (
-        .ALUop1(ALUop1),
-        .ALUop2(ALUop2),
-        .ALUctrl(ALUctrl),
-        .Result(ALUout),
-        .EQ(EQ)
-    );
+    // Pipeline Stage 3 - Execute (EXE)
 
-    // Control Unit
-    controlunit controlunit (
-        .instr(instr),
-        .EQ(EQ),
-        .RegWrite(RegWrite),
-        .ALUsrc(ALUsrc),
-        .ImmSrc(ImmSrc),
-        .PCsrc(PCsrc),
-        .ALUctrl(ALUctrl),
-        .AddrMode(AddrMode),
-        .ResultSrc(ResultSrc),
-        .WD3Src(WD3Src)
-    );
     
-    //Data memory
+    //flush conditional logic
+    always_comb begin
+        case(branchE[1])
+            1'b1: BranchCondE = ZeroE ^~ branchE[0];  //XNOR to get is branch is satisfied
+            1'b0: BranchCondE = 0;
+        endcase
+
+        flushE = BranchCondE | JumpE[1];
+    end
+
+    //PCsrcE logic
+    always_comb begin
+        //JALR/RET PC value implementation
+        if(JumpE == 2'b11) begin
+            PCsrcE = 2'b10;
+        end
+        else if(JumpE == 2'b10 || branchE[1] == 1'b1)begin
+            PCsrcE = 2'b01;
+        end
+        //standard PC incrementation for normal instructions
+        else begin
+            PCsrcE = 2'b00;
+        end
+    end
+
+    //forwarding mux logic
+
+    //RD1 mux
+    always_comb begin
+        case(forwardAE)
+        2'b00: SrcAE = RD1E;
+        2'b01: SrcAE = ALUResultM;
+        2'b10: SrcAE = WD3W;
+        default: SrcAE = RD1E;
+        endcase
+    end
+
+    
+    //RD2 mux
+    always_comb begin
+        case(forwardBE)
+        2'b00: WriteDataE = RD2E;
+        2'b01: WriteDataE = ALUResultM;
+        2'b10: WriteDataE = WD3W;
+        default: WriteDataE = RD2E;
+        endcase
+    end
+
+
+    //Completed
+    mux #(WIDTH) ALUOperandMux (
+        .in0(WriteDataE),
+        .in1(ImmExtE),
+        .sel(ALUsrcE),
+
+        .out(SrcBE)
+    );
+
+    //Completed
+    alu ArithmeticLogicUnit (
+        .ALUop1(SrcAE),
+        .ALUop2(SrcBE),
+        .ALUctrl(ALUctrlE),
+
+        .ZeroE(ZeroE),
+        .Result(ALUResultE)
+    );
+
+    //Completed
+    pipeline_EXEtoMEM pipeline_EXEtoMEM (
+        .clk(clk),
+        .stall(stall),
+        .ALUResultE(ALUResultE),
+        .WriteDataE(WriteDataE),
+        .RdE(RdE),
+        .PCPlus4E(PCPlus4E),
+
+        .ALUResultM(ALUResultM),
+        .WriteDataM(WriteDataM),
+        .RdM(RdM),
+        .PCPlus4M(PCPlus4M),
+
+        .RegWriteE(RegWriteE),
+        .ResultSrcE(ResultSrcE),
+        .AddrModeE(AddrModeE),
+        .WD3SrcE(WD3SrcE),
+
+        .RegWriteM(RegWriteM),
+        .ResultSrcM(ResultSrcM),
+        .AddrModeM(AddrModeM),
+        .WD3SrcM(WD3SrcM)
+    );
+
+    // Pipeline Stage 4 - Memory (MEM)
+
+   //Completed 
     data_mem DataMemory (
         .clk(clk),
-        .AddrMode(AddrMode),
-        .A(ALUout),
-        .WD(RD2),
-        .RD(ReadData)
+        .AddrMode(AddrModeM),
+        .A(ALUResultM), //forwarded signal for non datamem instructions to execute stage Read outputs.
+        .WD(WriteDataM),
+        .RD(ReadDataM) 
     );
 
-    //Result mux
+    //Completed
+    pipeline_MEMtoWB pipeline_MEMtoWB (
+        .clk(clk),
+        .ALUResultM(ALUResultM),
+        .ReadDataM(ReadDataM),
+        .RdM(RdM),
+        .PCPlus4M(PCPlus4M),
+
+        .ALUResultW(ALUResultW),
+        .ReadDataW(ReadDataW),
+        .RdW(RdW),
+        .PCPlus4W(PCPlus4W),
+
+        .RegWriteM(RegWriteM),
+        .ResultSrcM(ResultSrcM),
+        .WD3SrcM(WD3SrcM),
+
+        .RegWriteW(RegWriteW),
+        .ResultSrcW(ResultSrcW),
+        .WD3SrcW(WD3SrcW)
+    );
+
+    // Pipeline Stage 5 - Writeback (WB)
+
+    // Hazard Unit
+    hazardunit hazard_unit (
+        .Rs1E(Rs1E),
+        .Rs2E(Rs2E),
+        .RdM(RdM),
+        .RdW(RdW),
+        .AddrModeM(AddrModeM),
+        .flushE(flushE),
+
+        .forwardAE(forwardAE),
+        .forwardBE(forwardBE),
+        .stall(stall),
+        .flush(flush)
+    );
+
+
+    //Register Write back logic (Muxes)
+
+    //ResultW Mux
     always_comb begin
-        case(ResultSrc)
-        1'b0: Result = ALUout;
-        1'b1: Result = ReadData;
+        case(ResultSrcW)
+            1'b0: ResultW = ALUResultW;
+            1'b1: ResultW = ReadDataW;
+        endcase
+    end
+
+    //WD3 mux
+    always_comb begin
+        case(WD3SrcW)
+            1'b0: WD3W = ResultW;
+            1'b1: WD3W = PCPlus4W;
         endcase
     end
 
 endmodule
-/* verilator lint_on SYNCASYNCNET */
