@@ -2,10 +2,10 @@
 
 This project was done as a team of 4.
 We are team 2 (H.A.D.E.S), each with distinct roles for the coursework (we switched roles after lab 4):
-  - Elson Tho: register file & testing own modules
-  - Ahmed Hamid: control unit & testing own modules
-  - Antoine Divet: ALU & testing own modules
-  - Jihwan Shin: integration and testbenching
+  - Elson Tho: completing full RISC-V instruction set by editing the control unit, ALU & register file, instruction memory, testing & verification, MUX, pipelining, f1_lights, made the new top file for the pipeline branch
+  - Ahmed Hamid: program counter, sign extension, ROM, instruction memory, control unit, data memory (assembly, module & testbench), pipelining (forwarding, flushing, stalling; hazard unit), PDF
+  - Antoine Divet: top module and testbench, basic assembly instructions (xor, or, counter), doit script, data memory, cache, admin work (README, team statements, logbooks)
+  - Jihwan Shin: foundations of instruction memory, sign extension, PDF testbench
 
 We used three different branches (one for lab4, one for single cycle, one for pipelining) to explicitly show the evolution of our work.
 
