@@ -27,11 +27,11 @@ module controlunit #(
         ALUctrl = 3'b000;
         ALUsrc = 1'b0;
         ImmSrc = 3'b000;
-        PCsrc = 2'b00;
+        PCsrc = 2'b00; // Adjusted PCsrc to include JALR instruction
         RegWrite = 1'b0;
         AddrMode = 3'b000;
         ResultSrc = 1'b0;
-        WD3Src = 1'b0;
+        WD3Src = 1'b0; // Included because of JAL, JALR instruction
 
         case (op)
             // R-Type
@@ -96,10 +96,11 @@ module controlunit #(
             end
 
             // Branch (B-Type)
-            7'b1100011: begin 
+            7'b1100011: begin
                 ALUctrl = 3'b001; // SUB for comparison
                 ImmSrc = 3'b010; // B-Type immediate
                 case (funct3)
+                    // Adjusted PCsrc to 2 bits due to addition of JALR instruction
                     3'b000: PCsrc = EQ ? 2'b01 : 2'b00; // BEQ
                     3'b001: PCsrc = EQ ? 2'b00 : 2'b01; // BNE
                     default: PCsrc = 2'b00;
@@ -107,7 +108,7 @@ module controlunit #(
             end
 
             // J-Type (JAL)
-            7'b1101111: begin 
+            7'b1101111: begin
                 PCsrc = 2'b01;
                 RegWrite = 1'b1;
                 ALUsrc = 1'b1;
@@ -115,8 +116,8 @@ module controlunit #(
                 WD3Src = 1'b1;
             end
 
-            // JALR (I-Type)
-            7'b1100111: begin 
+            // JALR (I-Type, not J-Type! Therefore ImmSrc = 000)
+            7'b1100111: begin
                 PCsrc = 2'b10;
                 ALUsrc = 1'b1;
                 ImmSrc = 3'b000;
@@ -124,7 +125,7 @@ module controlunit #(
                 WD3Src = 1'b1;
 
 
-                //for ret instructions Rd = 5'b00000 -> to prevent overwriting zero
+                //for ret instructions Rd = 5'b00000 -> to prevent overwriting zero register, which value has to always be 0.
                 if(instr[11:7] == 5'b00000) begin
                     RegWrite = 1'b0;
                 end
@@ -142,7 +143,7 @@ module controlunit #(
             end
 
             // AUIPC (Add Upper Immediate to PC)
-            7'b0010111: begin 
+            7'b0010111: begin
                 RegWrite = 1'b1;
                 ALUsrc = 1'b1;
                 ImmSrc = 3'b011;
