@@ -3,7 +3,7 @@ module hazardunit (
     input logic [4:0] Rs2E,
     input logic [4:0] RdM,
     input logic [4:0] RdW,
-    input logic [2:0] AddrModeM,
+    input logic [3:0] AddrModeM,
     input logic flushE,
     output logic [1:0] forwardAE,
     output logic [1:0] forwardBE,
@@ -55,7 +55,7 @@ module hazardunit (
 
     always_comb begin
         //Stall
-        if (((AddrModeM == 3'b000) || (AddrModeM == 3'b001) || (AddrModeM == 3'b010) || (AddrModeM == 3'b011) || (AddrModeM == 3'b100)) && ((RdM == Rs1E) || (RdM == Rs2E))) begin
+        if (((AddrModeM == 4'b0000) || (AddrModeM == 4'b0001) || (AddrModeM == 4'b0010) || (AddrModeM == 4'b0011) || (AddrModeM == 4'b0100)) && ((RdM == Rs1E) || (RdM == Rs2E))) begin
             stall = 1'b1;
         end
         else begin 

@@ -32,7 +32,7 @@ module pipeline_DECtoEXE #(
     input logic [2:0] ALUctrlD,
     input logic  ALUsrcD,
     input logic WD3SrcD,
-    input logic [2:0] AddrModeD,
+    input logic [3:0] AddrModeD,
     input logic [1:0] branchD,
     input logic [1:0] JumpD,
 
@@ -40,7 +40,7 @@ module pipeline_DECtoEXE #(
     output logic RegWriteE,
     output logic ResultSrcE,
     output logic [2:0] ALUctrlE,
-    output logic [2:0] AddrModeE,
+    output logic [3:0] AddrModeE,
     output logic ALUsrcE,
     output logic WD3SrcE,
     output logic [1:0] branchE,
@@ -76,7 +76,7 @@ always_ff @ (posedge clk) begin
             RegWriteE <= 1'b1;
             ResultSrcE <= 1'b0;
             ALUctrlE <= 3'b000;
-            AddrModeE <= 3'b000;
+            AddrModeE <= 4'b1000;
             ALUsrcE <= 1'b1;
             WD3SrcE <= 1'b0;
             branchE <= 2'b00;

@@ -6,7 +6,7 @@ module data_mem #(
 
 )(
         input  logic                    clk,
-        input  logic [2:0]              AddrMode, //determines type of datamem instruction
+        input  logic [3:0]              AddrMode, //determines type of datamem instruction
         input  logic [ADDR_WIDTH-1:0]   A, // address
         input  logic [DATA_WIDTH-1:0]   WD, // write data
         output logic [DATA_WIDTH-1:0]   RD // read data
@@ -32,24 +32,24 @@ module data_mem #(
     always_comb begin
         case(AddrMode)
         // load byte
-        3'b000:begin
+        4'b0000:begin
             temp = {{24{array[A][7]}},array[A]};
         end
         
         // load half
-        3'b001:begin
+        4'b0001:begin
             temp = {{16{array[A+1][7]}}, array[A+1], array[A]};
         end
         // load word
-        3'b010:begin
+        4'b0010:begin
             temp = {array[A+3], array[A+2], array[A+1], array[A]};
         end
         // load byte unsigned
-        3'b011:begin
+        4'b0011:begin
             temp = {24'b0, array[A]};
         end
         // load half unsigned
-        3'b100:begin
+        4'b0100:begin
             temp = {16'b0, array[A+1], array[A]};
         end
         default: temp = {array[A+3], array[A+2], array[A+1], array[A]}; //default case is load word
@@ -59,14 +59,14 @@ module data_mem #(
 
     //store instructions 
     always_ff @(posedge clk)begin
-        if(AddrMode == 3'b101)begin
+        if(AddrMode == 4'b0101)begin
             array[A] <= WD[7:0];
         end
-        else if(AddrMode == 3'b110)begin
+        else if(AddrMode == 4'b0110)begin
             array[A] <= WD[7:0];
             array[A+1] <= WD[15:8];
         end
-        else if(AddrMode == 3'b111)begin
+        else if(AddrMode == 4'b0111)begin
             array[A] <= WD[7:0]; // stores the least significant byte
             array[A+1] <= WD[15:8];
             array[A+2] <= WD[23:16];

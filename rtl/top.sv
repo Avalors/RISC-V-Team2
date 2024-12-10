@@ -63,9 +63,9 @@ module top #(
     logic [WIDTH-1:0] RD2E;
 
     // Data memory
-    logic [2:0] AddrModeD;
-    logic [2:0] AddrModeE;
-    logic [2:0] AddrModeM;
+    logic [3:0] AddrModeD;
+    logic [3:0] AddrModeE;
+    logic [3:0] AddrModeM;
 
     logic [WIDTH-1:0] WriteDataE;
     logic [WIDTH-1:0] WriteDataM;

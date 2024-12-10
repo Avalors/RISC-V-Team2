@@ -8,7 +8,7 @@ module controlunit #(
     output logic                RegWrite,  // Register write enable 
     output logic [1:0]          branch,    //2 bit branch signal: MSB for branch confirmation, LSB for branch type
     output logic [1:0]          Jump,      //2 bit Jump signal: MSB for jump confirmation, LSB for Jump type
-    output logic [2:0]          AddrMode,  // sets the instruction for data memory
+    output logic [3:0]          AddrMode,  // sets the instruction for data memory
     output logic                ResultSrc, // control signal for output mux
     output logic                WD3Src     // control unit signal for write port for register allowing Jump instruction implementation       
 );
@@ -28,7 +28,7 @@ module controlunit #(
         ALUsrc = 1'b0;
         ImmSrc = 3'b000;
         RegWrite = 1'b0;
-        AddrMode = 3'b000;
+        AddrMode = 4'b1000;
         ResultSrc = 1'b0;
         WD3Src = 1'b0;
         branch = 2'b00;
@@ -73,12 +73,12 @@ module controlunit #(
 
                 //For data_mem
                 case(funct3)
-                3'b000: AddrMode = 3'b000;
-                3'b001: AddrMode = 3'b001;
-                3'b010: AddrMode = 3'b010;
-                3'b100: AddrMode = 3'b011;
-                3'b101: AddrMode = 3'b100;
-                default: AddrMode = 3'b000;
+                3'b000: AddrMode = 4'b0000;
+                3'b001: AddrMode = 4'b0001;
+                3'b010: AddrMode = 4'b0010;
+                3'b100: AddrMode = 4'b0011;
+                3'b101: AddrMode = 4'b0100;
+                default: AddrMode = 4'b0000;
                 endcase
             end
 
@@ -90,10 +90,10 @@ module controlunit #(
                 
                 //For data_mem
                 case(funct3)
-                3'b000: AddrMode = 3'b101;
-                3'b001: AddrMode = 3'b110;
-                3'b010: AddrMode = 3'b111;
-                default: AddrMode = 3'b101;
+                3'b000: AddrMode = 4'b0101;
+                3'b001: AddrMode = 4'b0110;
+                3'b010: AddrMode = 4'b0111;
+                default: AddrMode = 4'b0101;
                 endcase
             end
 
@@ -175,7 +175,7 @@ module controlunit #(
                 ALUsrc = 1'b0;
                 ImmSrc = 3'b000;
                 RegWrite = 1'b0;
-                AddrMode = 3'b000;
+                AddrMode = 4'b1000;
                 ResultSrc = 1'b0;
                 WD3Src = 1'b0;
                 branch = 2'b00;

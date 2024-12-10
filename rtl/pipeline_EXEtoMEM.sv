@@ -22,12 +22,12 @@ module pipeline_EXEtoMEM #(
     //Execute stage
     input logic RegWriteE,          //for writeback (into regsiter)
     input logic ResultSrcE,         //for writeback (result mux either datamem or ALU output)     
-    input logic [2:0] AddrModeE,    //for datamem selelction
+    input logic [3:0] AddrModeE,    //for datamem selelction
     input logic WD3SrcE,            //for writeback
     // Memory stage
     output logic RegWriteM,
     output logic ResultSrcM,
-    output logic [2:0] AddrModeM,
+    output logic [3:0] AddrModeM,
     output logic WD3SrcM
 );
 
@@ -49,7 +49,7 @@ always_ff @ (posedge clk) begin
         //Control Unit
         RegWriteM <= 1'b1;
         ResultSrcM <= 1'b0;
-        AddrModeM <= 3'b000;
+        AddrModeM <= 4'b1000;
         WD3SrcM <= 1'b0;
 
         //Data path
