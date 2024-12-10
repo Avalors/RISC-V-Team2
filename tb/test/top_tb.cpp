@@ -1,34 +1,54 @@
-//Completed
-
 #include "sync_testbench.h"
+#include <cstdlib>
 
-#define NAME            "top-pdf"
+#define NAME            "top-instr"
 
-class CpuTestbench : public SyncTestbench
+
+class InstrTestbench : public SyncTestbench
 {
 protected:
     void initializeInputs() override
     {
         top->clk = 1;
         top->rst = 0;
-
-        system("./compile.sh --input asm/pdf.s --output ../rtl/program.hex");
-
     }
 };
 
-
-TEST_F(CpuTestbench, Runprogrammetest)
+TEST_F(InstrTestbench, RTypeTest)
 {
-    int max_cycles = 10000;
-    for (int i = 0; i < max_cycles; ++i)
-    {
-        runSimulation(1);
-    }
+    // Compile the assembly code r-type.s
+    system("./compile.sh --input asm/01-R_type.s");
+    
+    runSimulation(1000);
 
-    SUCCEED();
+    //value a0 = 150 is arbitrary value that I set to check all R-type instr
+    //All checks are done in the asm code itself and this "special" value 150 only seen if all are passed
+    EXPECT_EQ((int)top->a0, 150);
 }
 
+// TEST_F(InstrTestbench, ITypeArithTest)
+// {
+     // Compile the assembly code r-type.s
+//     system("./compile.sh --input asm/02-I_type_arith.s");
+    
+//     runSimulation(1000);
+
+        //value a0 = 150 is arbitrary value that I set to check all I-type instr
+        //All checks are done in the asm code itself and this "special" value 150 only seen if all are passed
+//     EXPECT_EQ((int)top->a0, 150);
+// }
+
+// TEST_F(InstrTestbench, ITypeLoadTest)
+// {
+     // Compile the assembly code r-type.s
+//     system("./compile.sh --input asm/03-I_type_load.s");
+    
+//     runSimulation(1000);
+
+     //value a0 = 150 is arbitrary value that I set to check all I-type instr
+     //All checks are done in the asm code itself and this "special" value 150 only seen if all are passed
+//     EXPECT_EQ((int)top->a0, 150);
+// }
 
 int main(int argc, char **argv)
 {
@@ -36,10 +56,6 @@ int main(int argc, char **argv)
     testing::InitGoogleTest(&argc, argv);
     Verilated::mkdir("logs");
     auto res = RUN_ALL_TESTS();
-    
-    // VerilatedCov::write(
-    //     ("logs/coverage_" + std::string(NAME) + ".dat").c_str()
-    // );
 
     return res;
 }
