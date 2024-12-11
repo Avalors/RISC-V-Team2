@@ -225,7 +225,7 @@ Originally started off with a 3-bit AddrMode signal, but later amended that to 4
 I used a reset signal for the testbenching to make sure the cache was empty which isn't used for the top level implementation. 
 I had some issues calculating the hit and miss ratios and implemented two different logics for read and write instructions.
 
-Read logic: 
+//Read logic: 
         case (AddrMode)
             3'b000: out = {{24{cache_mem[set].data[7]}}, cache_mem[set].data[7:0]};   // LB (signed byte)
             3'b001: out = {{16{cache_mem[set].data[15]}}, cache_mem[set].data[15:0]};  // LH (signed halfword)
@@ -235,7 +235,7 @@ Read logic:
             default: out = 32'b0;
         endcase
        
-Write logic:
+//Write logic:
     always_ff @(posedge clk or posedge reset) begin
         if (reset) begin
             // Reset all cache entries
