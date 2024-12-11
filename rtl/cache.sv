@@ -4,11 +4,13 @@ module cache #(
 )(
     input logic clk,
     input logic reset,
-    input logic [2:0] AddrMode, // determines operation type
+    input logic [3:0] AddrMode, // determines operation type 
     input logic [ADDR_WIDTH-1:0] A, // address
     input logic [DATA_WIDTH-1:0] WD, // write data
     output logic hit, // cache hit indicator
     output logic [DATA_WIDTH-1:0] out, // output data
+
+    // 62-bit total
 
     // performance counter outputs
     output logic [31:0] total_accesses,
@@ -86,9 +88,9 @@ module cache #(
         end else begin
             // Update performance counters
             // Only update performance counters for load/store operations
-            if (AddrMode == 3'b010 || AddrMode == 3'b111 || AddrMode == 3'b000 || AddrMode == 3'b001 || AddrMode == 3'b101 || AddrMode == 3'b110) begin
+            if (AddrMode == 4'b0010 || AddrMode == 4'b0111 || AddrMode == 4'b0000 || AddrMode == 4'b0001 || AddrMode == 4'b0101 || AddrMode == 4'b0110) begin
                 access_counter <= access_counter + 1;
-                if (hit_reg) begin
+                if (cache_mem[set].valid && cache_mem[set].tag == tag) begin
                     hit_counter <= hit_counter + 1; // Cache hit
                 end else begin
                     miss_counter <= miss_counter + 1; // Cache miss
@@ -101,7 +103,7 @@ module cache #(
 
             // Handle write operations
             case (AddrMode)
-                3'b101: begin // SB (store byte)
+                4'b0101: begin // SB (store byte)
                     case (byte_offset)
                         2'b00: cache_mem[set].data[7:0]   <= WD[7:0];
                         2'b01: cache_mem[set].data[15:8]  <= WD[7:0];
@@ -109,13 +111,13 @@ module cache #(
                         2'b11: cache_mem[set].data[31:24] <= WD[7:0];
                     endcase
                 end
-                3'b110: begin // SH (store halfword)
+                4'b0110: begin // SH (store halfword)
                     case (byte_offset[1]) // Upper or lower halfword
                         1'b0: cache_mem[set].data[15:0] <= WD[15:0];
                         1'b1: cache_mem[set].data[31:16] <= WD[15:0];
                     endcase
                 end
-                3'b111: begin // SW (store word)
+                4'b0111: begin // SW (store word)
                     cache_mem[set].data <= WD;
                 end
             endcase
