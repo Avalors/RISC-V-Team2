@@ -4,7 +4,7 @@
 
 For lab 4, I was in charge of the doit.sh file, as well as the integration and overall testbenching (top.sv and top_tb.cpp). I also added some assembly files (xor.s, or.s, counter.s) and copied files from the lab 4 instructions (verify.cpp, mux_tb.cpp, compile.sh).
 
-For the rest of the project, I got to familiarise myself with the ALU unit, as well as testbenching my own modules, and then working as a team on data memory and the pdf testbench. 
+For the rest of the project, I got to familiarise myself with the ALU unit, as well as testbenching my own modules, and then working as a team on data memory and the pdf testbench. I fully implemented the cache and started on the branch brediction too.
 I also took on the responsability of being repo master and designed much of the repo.
 
 ## Chronological work
@@ -64,6 +64,21 @@ I also took on the responsability of being repo master and designed much of the 
     - Had to work on some admin tasks (updating the README, merging branches)
     - Worked on the plotting the pdf script in Python
 
+## 08/12/2024
+    - Updated the README, added in graphs of the pdf script as well as Vbuddy videos
+
+## 09/12/2024
+    - Amended the README script
+    - Wrote team statements for the lab4 and Single-cycle sections
+    - Started working on cache: created the cache branch and a draft for cache
+
+## 10/12/2024
+    - Finished the cache module
+    - Wrote two test cache cases in assembly
+    - Sat with Elson to see how to implement the cache in the top file
+    - Updated the README
+    - Started branch prediction
+
 # Work by section
 
 ## Lab 4
@@ -87,6 +102,9 @@ I also took on the responsability of being repo master and designed much of the 
 ![image](https://github.com/user-attachments/assets/a2ff696c-f957-4000-ab83-a0de5c5fbe6c)
   4. As the team member charged with overseeing the integration and implementing the overall testbench, I also had to briefly edit (ie. added a newline at the end of the module, change bit size) or declare/rename certain variables in other modules (program_counter.sv, registerfile.sv, rom.sv...)
   5. Wrote the original doit.sh file, with less complete folder structure than the current doit.sh script we use, taken from the files provided for lab 4
+  6. Added comments to several modules, including the ALU
+  7. Fully designed the README
+  8. Copied several modules from the project brief to our repo
 
 ![image](https://github.com/user-attachments/assets/e049cbc5-ca44-4278-9b77-3e26f173d2c1)
 
@@ -106,7 +124,7 @@ I also took on the responsability of being repo master and designed much of the 
   2. Created the data memory module and set it to 20 bits
 ![image](https://github.com/user-attachments/assets/03a2cb35-f02b-4283-bab7-491124b0516b)
  
-  3. Here we initialise it to 4, 8-bit arrays
+  3. Here we initialise it to 4, 8-bit arrays within the data memory module:
  
 ![image](https://github.com/user-attachments/assets/c253fee4-26cc-48c4-9710-c71e12a0a7ed)
 
@@ -184,12 +202,21 @@ I wondered how to implement a random number generator in assembly and thought ab
 
 ![image](https://github.com/user-attachments/assets/4d0b7136-3de7-4fd8-86dd-f14590a3d52b)
 
+  7. Worked on implementing an analyse.py script using plotly to visualise the PDF
+
+## Cache & Branch Prediction
+
+  1. Fully implemented the one-way set associative cache
+  2. Fully implemented the two-way set associative cache using an LRU policy
+  3. Implemented two assembly test files in assembly for the cache
+  4. Kicked off the branch prediction, trying to implement a simple dynamic 2-bit branch prediction
+
+![image](https://github.com/user-attachments/assets/2372924e-5e68-40b9-8bc2-acaf7a683c8e)
 
 
 
 
 
         
-
 
 
