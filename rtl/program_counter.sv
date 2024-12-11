@@ -19,9 +19,9 @@ module program_counter #(
                 if (PCsrc == 2'b01) 
                     PC <= PCE + ImmOp;  // Branch/Jump
                 else if(PCsrc == 2'b10)
-                    PC <= Result;      // JALR (pipeline: switch this to the output of the ALU)
+                    PC <= Result;       // JALR (pipeline: switch this to the output of the ALU)
                 else
-                    PC <= PCE + 32'd4;  // Normal increment
+                    PC <= PC + 32'd4;   // Normal increment
             end
         end
     end

@@ -23,7 +23,10 @@ module pipeline_MEMtoWB #(
     //Writeback stage
     output logic RegWriteW,
     output logic ResultSrcW, 
-    output logic WD3SrcW  
+    output logic WD3SrcW,  
+
+    //hazard detection
+    input logic flush
 );
 
 always_ff @ (posedge clk) begin

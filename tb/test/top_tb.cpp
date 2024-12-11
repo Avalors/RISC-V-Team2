@@ -1,10 +1,9 @@
-//Completed
-
 #include "sync_testbench.h"
+#include "vbuddy.cpp"
+#include <iostream>
+#include <cstdlib>
 
 #define NAME            "top-pdf"
-
-
 
 class CpuTestbench : public SyncTestbench
 {
@@ -14,25 +13,46 @@ protected:
         top->clk = 1;
         top->rst = 0;
 
+        // We compile the program here, so the whole thing can use it.
         system("./compile.sh --input asm/pdf.s --output ../rtl/program.hex");
-
     }
 };
 
 
-
-TEST_F(CpuTestbench, Runprogrammetest)
+TEST_F(CpuTestbench, InitialStateTest)
 {
-    int max_cycles = 10000;
+    // Initialise VBuddy
+    //-------------------------------------------------------------------------
+    if (vbdOpen() != 1)
+    {
+        SUCCEED();
+    }
+    vbdHeader("PDF plotting pipeline");
+    //-------------------------------------------------------------------------
+    
+    int plot = 0;
 
-    for (int i = 0; i < max_cycles; ++i)
+    for (int i = 0; i < 1'000'000; ++i)
     {
         runSimulation(1);
+
+        if (plot == false && top->a0 != 0)
+        {
+            plot = 1;
+        }
+        if (plot && (int)top->a0 >= 0)
+        {
+            vbdPlot(top->a0, 0, 255);
+            plot++;
+        }
+        if (plot > 10000)
+        {
+            break;
+        }
     }
 
     SUCCEED();
 }
-
 
 int main(int argc, char **argv)
 {
@@ -41,9 +61,5 @@ int main(int argc, char **argv)
     Verilated::mkdir("logs");
     auto res = RUN_ALL_TESTS();
     
-    // VerilatedCov::write(
-    //     ("logs/coverage_" + std::string(NAME) + ".dat").c_str()
-    // );
-
     return res;
 }

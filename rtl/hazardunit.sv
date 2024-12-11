@@ -15,7 +15,7 @@ module hazardunit (
 
     //Rs1 MUX forwarding
     always_comb begin
-        if(Rs1E == RdW)begin
+        if((Rs1E == RdW) && (Rs1E != 5'd0))begin
             if(Rs1E == RdM)begin
                 forwardAE = 2'b01; // MEM TO EXE prioritisation
             end
@@ -24,7 +24,7 @@ module hazardunit (
             end
         end
         else begin
-            if(Rs1E == RdM)begin
+            if((Rs1E == RdM) && (Rs1E != 5'd0))begin
                 forwardAE = 2'b01; // MEM TO EXE
             end
             else begin
@@ -35,7 +35,7 @@ module hazardunit (
 
     //Rs2 MUX forwarding
     always_comb begin
-        if(Rs2E == RdW)begin
+        if((Rs2E == RdW) && (Rs2E != 5'd0))begin
             if(Rs2E == RdM)begin
                 forwardBE = 2'b01; // MEM TO EXE prioritisation
             end
@@ -44,7 +44,7 @@ module hazardunit (
             end
         end
         else begin
-            if(Rs2E == RdM)begin
+            if((Rs2E == RdM) && (Rs2E != 5'd0))begin
                 forwardBE = 2'b01; // MEM TO EXE
             end
             else begin
@@ -55,13 +55,16 @@ module hazardunit (
 
     always_comb begin
         //Stall
-        if (((AddrModeM == 4'b0000) || (AddrModeM == 4'b0001) || (AddrModeM == 4'b0010) || (AddrModeM == 4'b0011) || (AddrModeM == 4'b0100)) && ((RdM == Rs1E) || (RdM == Rs2E))) begin
+        if (((AddrModeM >= 4'b0000) && (AddrModeM <= 4'b0100)) && ((RdM == Rs1E) || (RdM == Rs2E))) begin
             stall = 1'b1;
         end
         else begin 
             stall = 1'b0;
         end
+    end
 
+
+    always_comb begin
         //Branch double check this could potentially be deleted
         if (flushE) begin //flush signal should be based on PCsrc for branch and jump instructions
             flush = 1'b1; //Flush if there is a branch or Jump
@@ -69,7 +72,6 @@ module hazardunit (
         else begin
             flush = 1'b0;
         end
-
     end
 
 

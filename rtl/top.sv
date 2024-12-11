@@ -109,6 +109,13 @@ module top #(
     //UNIQUE INTERNAL TOP SIGNAL
     logic [WIDTH-1:0] WD3W;
 
+    //initialize pipeline
+    initial begin
+        AddrModeD = 4'b1000;
+        AddrModeE = 4'b1000;
+        AddrModeM = 4'b1000;
+    end
+
     // Pipeline Stage 1 - Fetch (FEC)
     
     //Completed 
@@ -246,7 +253,7 @@ module top #(
             1'b0: BranchCondE = 0;
         endcase
 
-        flushE = BranchCondE | JumpE[1];
+        flushE = BranchCondE || JumpE[1]; //logical OR
     end
 
     //PCsrcE logic
@@ -362,7 +369,9 @@ module top #(
 
         .RegWriteW(RegWriteW),
         .ResultSrcW(ResultSrcW),
-        .WD3SrcW(WD3SrcW)
+        .WD3SrcW(WD3SrcW),
+
+        .flush(flush)
     );
 
     // Pipeline Stage 5 - Writeback (WB)
