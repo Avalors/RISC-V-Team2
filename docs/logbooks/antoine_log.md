@@ -5,7 +5,7 @@
 For lab 4, I was in charge of the doit.sh file, as well as the integration and overall testbenching (top.sv and top_tb.cpp). I also added some assembly files (xor.s, or.s, counter.s) and copied files from the lab 4 instructions (verify.cpp, mux_tb.cpp, compile.sh).
 
 For the rest of the project, I got to familiarise myself with the ALU unit, as well as testbenching my own modules, and then working as a team on data memory and the pdf testbench (adding comments and starting on the python graphing program). 
-I fully implemented the cache (one-way and two-way, and 3 assembly files) and started on the branch brediction too (2-bit simple dynamic module and the relevant assembly file).
+I fully implemented the cache (one-way and two-way, and 3 assembly files) and started on the branch prediction too (2-bit simple dynamic module and the relevant assembly file).
 
 I also took on the responsability of being repo master and designed much of the repo.
 
@@ -222,30 +222,20 @@ Originally started off with a 3-bit AddrMode signal, but later amended that to 4
 
 ![image](https://github.com/user-attachments/assets/c178be15-c7a7-4736-9198-ffce1a548d41)
 
+I used a reset signal for the testbenching to make sure the cache was empty which isn't used for the top level implementation. 
 I had some issues calculating the hit and miss ratios and implemented two different logics for read and write instructions.
 
-// Read logic
-    always_comb begin
-        if (cache_mem[set].valid && cache_mem[set].tag == tag) begin
-            hit_reg = 1'b1; // Cache hit
-            $display("Cache HIT: Set %0d, Tag %h", set, tag);
-            // Determine output data based on AddrMode
-            case (AddrMode)
-                3'b000: out = {{24{cache_mem[set].data[7]}}, cache_mem[set].data[7:0]};   // LB (signed byte)
-                3'b001: out = {{16{cache_mem[set].data[15]}}, cache_mem[set].data[15:0]};  // LH (signed halfword)
-                3'b010: out = cache_mem[set].data;                                         // LW (full word)
-                3'b011: out = {24'b0, cache_mem[set].data[7:0]};                           // LBU (unsigned byte)
-                3'b100: out = {16'b0, cache_mem[set].data[15:0]};                          // LHU (unsigned halfword)
-                default: out = 32'b0;
-            endcase
-        end else begin
-            hit_reg = 1'b0; // Cache miss
-            $display("Cache MISS: Set %0d, Tag %h", set, tag);
-            out = RD;   // Data from main memory
-        end
-    end
-
-    // Write logic
+Read logic: 
+        case (AddrMode)
+            3'b000: out = {{24{cache_mem[set].data[7]}}, cache_mem[set].data[7:0]};   // LB (signed byte)
+            3'b001: out = {{16{cache_mem[set].data[15]}}, cache_mem[set].data[15:0]};  // LH (signed halfword)
+            3'b010: out = cache_mem[set].data;                                         // LW (full word)
+            3'b011: out = {24'b0, cache_mem[set].data[7:0]};                           // LBU (unsigned byte)
+            3'b100: out = {16'b0, cache_mem[set].data[15:0]};                          // LHU (unsigned halfword)
+            default: out = 32'b0;
+        endcase
+       
+Write logic:
     always_ff @(posedge clk or posedge reset) begin
         if (reset) begin
             // Reset all cache entries
@@ -260,6 +250,7 @@ I had some issues calculating the hit and miss ratios and implemented two differ
             miss_counter <= 0;
             hit <= 1'b0;
         end else begin
+        
             // Update performance counters
             // Only update performance counters for load/store operations
             if (AddrMode == 4'b0010 || AddrMode == 4'b0111 || AddrMode == 4'b0000 || AddrMode == 4'b0001 || AddrMode == 4'b0101 || AddrMode == 4'b0110) begin
@@ -274,29 +265,6 @@ I had some issues calculating the hit and miss ratios and implemented two differ
                     cache_mem[set].data <= RD;   // Fetch data from memory
                 end
             end
-
-            // Handle write operations
-            case (AddrMode)
-                4'b0101: begin // SB (store byte)
-                    case (byte_offset)
-                        2'b00: cache_mem[set].data[7:0]   <= WD[7:0];
-                        2'b01: cache_mem[set].data[15:8]  <= WD[7:0];
-                        2'b10: cache_mem[set].data[23:16] <= WD[7:0];
-                        2'b11: cache_mem[set].data[31:24] <= WD[7:0];
-                    endcase
-                end
-                4'b0110: begin // SH (store halfword)
-                    case (byte_offset[1]) // Upper or lower halfword
-                        1'b0: cache_mem[set].data[15:0] <= WD[15:0];
-                        1'b1: cache_mem[set].data[31:16] <= WD[15:0];
-                    endcase
-                end
-                4'b0111: begin // SW (store word)
-                    cache_mem[set].data <= WD;
-                end
-            endcase
-        end
-    end
 
   2. Fully implemented the two-way set associative cache using an LRU policy
 
