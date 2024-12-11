@@ -71,12 +71,12 @@ This file will note down **major meetups** and breakdown the progress completed 
 ![image](https://github.com/user-attachments/assets/46d4181e-92d0-480e-a301-8ffec25d1f41)
 
 ## Team meetup (30/11)
-  - Changed the ROM so it can take the instructions from the compiled hex file
+  - Changed the ROM so it can take the instructions from the compiled hex file
   - Deleted program.s as it was identical to the counter.s file we had
   - Implemented a instr_mem.sv module, as well as the corresponding instr_mem_tb.cpp testbench
   - We then tested the instruction memory, and using verilator we saw it was fully functional
 ![image](https://github.com/user-attachments/assets/f7543cea-5e5e-48bc-a64d-770b39fec8ec) 
-  - We had some issues running gtkwave, but after correcting the relevant syntax error, we could see the first few cycles in gtkwave of our counter.s program running on our CPU
+  - We had some issues running gtkwave, but after correcting the relevant syntax error, we could see the first few cycles in gtkwave of our counter.s program running on our CPU
 ![WhatsApp Image 2024-11-30 at 16 28 04_63dadce4](https://github.com/user-attachments/assets/e6fa36a9-d57e-492f-8dfa-af812792dbbb)
 and the last few cycles resemble this:
 ![WhatsApp Image 2024-11-30 at 16 28 53_bd83cdcf](https://github.com/user-attachments/assets/d7d6402d-6f15-48ea-ae67-18a3e8fb9a51)
@@ -124,11 +124,21 @@ and the last few cycles resemble this:
   - Had a quick call to see at what stage we all were
   - Split the roles for the pipeline stage
 
+## Team meetup (08/12)
+  - Made amendments to the control unit and fully debugged the PDF and the f1_lights
+  - Started working on implementing pipelining modules
 
+## Team meetup (09/12)
+  - Worked on implementing a high-level diagram
+  - Wrote the team statements for each branch
+  - Worked on the pipeline
 
+## Team meetup (10/12)
+  - Final implementation of the instructions
+  - Pipelining done
+  - Cache done, debugged and integrated
 
+Planning the week out:
 
-
-
-
+![IMG_4506](https://github.com/user-attachments/assets/7e8a9971-efcc-4d83-81d5-2d3cb69a4b93)
 

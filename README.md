@@ -61,6 +61,19 @@ For wsl users, some packages may need to be installed, which can be found in [Ba
 - [`rtl`](rtl/): RV32I processor modules
 - [`tb`](tb/): Testbench and scripts
 
+General specifications:
+
+| Property                              | Value                 |
+| ------------------------------------- |---------------------- |
+| Instruction Memory Size               | 2^12 bits             |
+| Instruction Width                     | 32 bits               |
+| Data Memory Size                      | 2^20 bits             |
+| Data Width                            | 32 bits               |
+| Data Cache Size                       | 61 bits               |
+| Data Cache Sets                       | 4                     |
+| Data Cache Ways                       | 2                     |
+
+
 ### Workflow
 
 - After `lab4`, modules / work were dynamically allocated to team members
@@ -69,8 +82,30 @@ For wsl users, some packages may need to be installed, which can be found in [Ba
 - All personal contributions and progress (such as debugging notes) are noted 
   down in personal logbooks in [`docs/logbooks`](docs/logbooks/)
 
+### Testbench
+
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 7fc6d5450e1a2d458b746d9bd9ef6969ff93db19
+Here are the relevant commands. More can be found in the documentation.
+
+| Command                               | Explanation                           |
+| ------------------------------------- |-------------------------------------- |
+| `./doit.sh`                           | Runs the entire testbench.            |
+| `./doit.sh test/top_tb_lab4.cpp`      | Runs the entire testbench for lab 4   |
+| `./doit.sh test/top_tb_data_mem.cpp`  | Runs the entire testbench for single cycle|
+| `./doit.sh test/top_pdf_tb.cpp`       | Runs the PDF testbench* (stdout)      |
+| `./doit.sh test/top_pdf_Vbuddy.cpp`   | Runs the PDF testbench* (vBuddy)      |
+| `./doit.sh test/top_f1lights_tb.cpp`  | Runs the F1 lights testbench (stdout) |
+| `./doit.sh test/top_f1lights_Vbuddy.cpp`| Runs the F1 lights testbench (vBuddy) |
+| `./doit.sh test/top_tb_pdf_gtk.cpp`   | Purely used for debugging using GTKwave|
+| `./graphs.py`                         | Creates PDF graphs of all reference data
+
 ## Working Evidence
 
+>>>>>>> e546df4d2f7747e0075b0dcd4d24a258348bb6a5
 - If you want to check our [`testbenches`](tb/)
 - Here is a proof of our PDF testbench being fully functional, as it outputs the following graphs using plotly:
 
