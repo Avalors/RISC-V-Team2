@@ -71,31 +71,33 @@ TEST_F(BranchPredictorTestbench, PredictionAccuracyTest)
     top->branch_valid = 1;
 
     // Initial state: STRONGLY_NOT_TAKEN
-    EXPECT_EQ(top->prediction, 0);
+    EXPECT_EQ(top->prediction, 0); 
 
-    // Branch taken, transition to WEAKLY_NOT_TAKEN
+    // Branch taken, transition to WEAKLY_NOT_TAKEN  then WEAKLY_TAKEN
     top->branch_taken = 1;
-    runSimulation(1); // Prediction may not change yet
-    runSimulation(1); // Allow state update
-    EXPECT_EQ(top->prediction, 0); // Still predicts not taken
+    runSimulation(2); // Run two cycles to allow state transition
+    EXPECT_EQ(top->prediction, 1); 
 
-    // Branch taken again, transition to WEAKLY_TAKEN
+    // Branch taken again, transition to WEAKLY_TAKEN then STRONGLY_TAKEN
     top->branch_taken = 1;
-    runSimulation(1); // Prediction may not change yet
-    runSimulation(1); // Allow state update
-    EXPECT_EQ(top->prediction, 1); // Predicts taken
+    runSimulation(2); // Run two cycles to allow state transition
+    EXPECT_EQ(top->prediction, 1); // Predicts taken (transition from WEAKLY_NOT_TAKEN to WEAKLY_TAKEN)
 
-    // Branch not taken, transition to WEAKLY_NOT_TAKEN
+    // Branch not taken, transition to WEAKLY_TAKEN then WEAKLY_NOT_TAKEN
     top->branch_taken = 0;
-    runSimulation(1); // Prediction may not change yet
-    runSimulation(1); // Allow state update
-    EXPECT_EQ(top->prediction, 1); // Predicts taken (WEAKLY_TAKEN)
+    runSimulation(2); // Run two cycles to allow state transition
+    EXPECT_EQ(top->prediction, 0); // Still predicts taken (transition from WEAKLY_TAKEN to STRONGLY_TAKEN)
 
-    // Branch not taken again, transition to STRONGLY_NOT_TAKEN
+    // Branch not taken again, transition to STRONGLY_NOT_TAKEN then STRONGLY_NOT_TAKEN
     top->branch_taken = 0;
-    runSimulation(1); // Prediction may not change yet
-    runSimulation(1); // Allow state update
-    EXPECT_EQ(top->prediction, 0); // Strongly predicts not taken
+    runSimulation(2); // Run two cycles to allow state transition
+    EXPECT_EQ(top->prediction, 0); // Predicts taken (transition from STRONGLY_TAKEN to WEAKLY_TAKEN)
+
+    // Branch not taken again, stays at STRONGLY_NOT_TAKEN
+    top->branch_taken = 0;
+    runSimulation(2); // Run two cycles to allow state transition
+    EXPECT_EQ(top->prediction, 0); // Predicts not taken (transition from WEAKLY_TAKEN to WEAKLY_NOT_TAKEN)
+
 }
 
 int main(int argc, char **argv)
