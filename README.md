@@ -5,7 +5,7 @@ We are team 2 (H.A.D.E.S), each with distinct roles for the coursework (we had d
   - Elson Tho: completing full RISC-V instruction set by editing the control unit, ALU & register file, instruction memory, testing & verification, MUX, pipelining, f1_lights, made the new top file for the pipeline branch
   - Ahmed Hamid: program counter, sign extension, ROM, instruction memory, control unit, data memory (assembly, module & testbench), pipelining (forwarding, flushing, stalling; hazard unit), PDF
   - Antoine Divet: top module and testbench, assembly instructions (xor, or, counter), doit script, data memory, cache (1-set and 2-set), admin work (README, team statements, logbooks), branch prediction
-  - Jihwan Shin: building the initial instruction memory V1(ROM), sign extension(I-type, B-type), control unit, respective initial testbenches of each module, PDF testbench, debugging PDF.
+  - Jihwan Shin: building the initial instruction memory, initial sign extension (I-type, B-type), initial control unit, and their testbenches, PDF testbench
 
 There was a lot of teamwork evolved, so despite some members focused on their own role, they also helped out others. 
 
