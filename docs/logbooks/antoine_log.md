@@ -95,7 +95,7 @@ I also took on the responsability of being repo master and designed much of the 
 
 - As repo master:
     1. Took charge of many commits and amendments including updating the team logbook and the README file
-    2. Added screenshots of gtkwave, of the top level schematic, code snippets as proof of work
+    2. Added screenshots of gtkwave, of the top level schematic, code snippets as proof of work, video
     3. Created and deleted the relevant branches and directories
     4. Use of markdown for the team contribution table and other instructions such as the quick start and general requirements (ie. file locations and package downloads)
     6. Had to deal with a few merge conflicts
@@ -217,11 +217,28 @@ I wondered how to implement a random number generator in assembly and thought ab
 ## Cache & Branch Prediction
 
   1. Fully implemented the one-way set associative cache
+
+Originally started off with a 3-bit AddrMode signal, but later amended that to 4 bits after some debugging via GTKwave.
+
+![image](https://github.com/user-attachments/assets/c178be15-c7a7-4736-9198-ffce1a548d41)
+
+I had some issues calculating the hit and miss ratios and implemented two different logics for read and write instructions.
+
   2. Fully implemented the two-way set associative cache using an LRU policy
-  3. Implemented two assembly test files in assembly for the cache
-  4. Kicked off the branch prediction, trying to implement a simple dynamic 2-bit branch prediction
+  3. Implemented three assembly test files in assembly for the cache
+
+These were cache_read.s, cache_temporal_locality.s and cache.s. They allowed us to compare how many hits and misses we were getting compared to how many we were expecting. 
+
+  4. Kicked off the branch prediction, trying to implement a simple dynamic 2-bit branch prediction, as well as the branch_prediction.s assembly file.
+
+Here we can see we implemented a FSM, using knowledge acquired in lab 3:
+
+![image](https://github.com/user-attachments/assets/59745681-3b06-426c-b565-05fcdf41d690)
+
+![image](https://github.com/user-attachments/assets/8c6d933b-4ba2-4f6d-8d7e-1aa8df097041)
 
 ![image](https://github.com/user-attachments/assets/2372924e-5e68-40b9-8bc2-acaf7a683c8e)
+
 
 
 
