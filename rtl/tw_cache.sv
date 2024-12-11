@@ -46,7 +46,7 @@ module tw_cache #(
     
     // Internal signals
     logic [DATA_WIDTH-1:0] RD;
-    logic [26:0] tag;
+    logic [27:0] tag;
 <<<<<<< HEAD
     logic [1:0] set;  // Only 2 bits for set index (4 sets)
 =======
