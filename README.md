@@ -97,11 +97,6 @@ General specifications:
 
 ### Testbench
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 7fc6d5450e1a2d458b746d9bd9ef6969ff93db19
 Here are the relevant commands. More can be found in the documentation.
 
 | Command                               | Explanation                           |
@@ -118,7 +113,6 @@ Here are the relevant commands. More can be found in the documentation.
 
 ## Working Evidence
 
->>>>>>> e546df4d2f7747e0075b0dcd4d24a258348bb6a5
 - If you want to check our [`testbenches`](tb/)
 - Here is a proof of our PDF testbench being fully functional, as it outputs the following graphs using plotly:
 
@@ -162,5 +156,11 @@ https://github.com/user-attachments/assets/613020e6-d185-4d5f-b77a-37042ea824e3
 |              | Register File                 |                    |    x             |                          |                  |
 |              | Instruction Memory            |                    |                  |                          |    x             |
 |              | Control Unit                  |                    |    x             |                          |                  |
-|              | Sign Extend                   |                    |                  |                          |    x             |
+|              | Sign Extend                   |                    |                  |       x                  |                  |
 |              | Doit.sh                       |   x                |                  |                          |                  |
+| Pipeline & Cache | Pipeline Registers        |                    |    x             |    x                    |                  |
+|              | Hazard Unit                   |                    |                  |   x                      |                  |
+|              | Testbenching & Integration    |                    |   x              |         x                |                  |                  
+|              | One-way associative cache     |       x            |   x              |                          |                  |
+|              | Two-way associative cache     |       x            |                  |                          |                 |
+| Extra        | Branch Prediction             |   x                |                  |                         |                  |
