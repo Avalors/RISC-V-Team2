@@ -3,7 +3,7 @@ module alu (
     input  logic [31:0] ALUop2,    
     input  logic [3:0]  ALUctrl,    
     output logic [31:0] Result,    
-    output logic ZeroE                
+    output logic EQ                
 );
 
 //Signed values for ASR and SLT
@@ -14,13 +14,13 @@ assign ALUop2_signed = ALUop2;
 
     always_comb begin
         Result = 32'b0;
-        ZeroE = 0;
+        EQ = 0;
 
         case (ALUctrl)
             4'b0000: Result = ALUop1 + ALUop2; // ADD (used in addi)
             4'b0001: begin                     // SUB (used in bne)
                 Result = ALUop1 - ALUop2;
-                ZeroE = (Result == 32'b0) ? 1 : 0 ;           // Set ZeroE flag if ALUop1 == ALUop2
+                EQ = (Result == 0);
             end
             4'b0010:     Result = ALUop1 & ALUop2; //AND
             4'b0011:     Result = ALUop1 | ALUop2; //OR
@@ -33,5 +33,6 @@ assign ALUop2_signed = ALUop2;
             4'b1010:     Result = ALUop2; //B
             default: Result = 32'b0;    
         endcase
+        EQ = (Result == 0'b0) ? 1 : 0;
     end
 endmodule

@@ -29,21 +29,21 @@ module pipeline_DECtoEXE #(
     //Decode Stage
     input logic RegWriteD,
     input logic ResultSrcD,
-    input logic [2:0] ALUctrlD,
+    input logic [3:0] ALUctrlD,
     input logic  ALUsrcD,
     input logic WD3SrcD,
     input logic [3:0] AddrModeD,
-    input logic [1:0] branchD,
+    input logic [2:0] branchD,
     input logic [1:0] JumpD,
 
     //Execute Stage
     output logic RegWriteE,
     output logic ResultSrcE,
-    output logic [2:0] ALUctrlE,
+    output logic [3:0] ALUctrlE,
     output logic [3:0] AddrModeE,
     output logic ALUsrcE,
     output logic WD3SrcE,
-    output logic [1:0] branchE,
+    output logic [2:0] branchE,
     output logic [1:0] JumpE
 );
 
@@ -75,11 +75,11 @@ always_ff @ (posedge clk) begin
             //control path
             RegWriteE <= 1'b1;
             ResultSrcE <= 1'b0;
-            ALUctrlE <= 3'b000;
+            ALUctrlE <= 4'b0000;
             AddrModeE <= 4'b1000;
             ALUsrcE <= 1'b1;
             WD3SrcE <= 1'b0;
-            branchE <= 2'b00;
+            branchE <= 3'b000;
             JumpE <= 2'b00;
 
             //Data path
