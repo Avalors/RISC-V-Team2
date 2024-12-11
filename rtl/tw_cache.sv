@@ -5,7 +5,7 @@ module tw_cache #(
               NUM_WAYS = 2     // Two-way set associative
 )(
     input logic clk,
-    input logic [2:0] AddrMode,
+    input logic [3:0] AddrMode,
     input logic [ADDR_WIDTH-1:0] A,
     input logic [DATA_WIDTH-1:0] WD,
     output logic hit,
@@ -73,7 +73,7 @@ module tw_cache #(
     // Write Logic with LRU management
     always_ff @(posedge clk) begin
         // Performance Tracking
-        if (AddrMode != 3'b111) begin  // Exclude store operations
+        if (AddrMode != 4'b0111) begin  // Exclude store operations
             access_counter <= access_counter + 1;
             
             if (hit) begin
@@ -83,7 +83,7 @@ module tw_cache #(
             end else begin
                 miss_counter <= miss_counter + 1;
                 // On miss, update the LRU way
-                if (AddrMode inside {`DATA_ADDR_MODE_B, `DATA_ADDR_MODE_BU}) begin
+                if (AddrMode == 4'b0010 || AddrMode == 4'b0011) begin
                     // Byte write
                     case (byte_offset)
                         2'b00: cache[set][lru_bits[set]].data[7:0] <= WD[7:0];
@@ -105,7 +105,7 @@ module tw_cache #(
 
         // Handle writes on hits
         if (hit && AddrMode == 3'b111) begin  // Store operation
-            if (AddrMode inside {`DATA_ADDR_MODE_B, `DATA_ADDR_MODE_BU}) begin
+            if (AddrMode == 4'b0010 || AddrMode == 4'b0011) begin
                 // Byte write to the hitting way
                 case (byte_offset)
                     2'b00: cache[set][hit_way].data[7:0] <= WD[7:0];
