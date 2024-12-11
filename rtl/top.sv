@@ -18,8 +18,8 @@ module top #(
     logic [WIDTH-1:0] PCPlus4W;
 
     // ALU    
-    logic [2:0] ALUctrlD;
-    logic [2:0] ALUctrlE;
+    logic [3:0] ALUctrlD;
+    logic [3:0] ALUctrlE;
     
     logic [WIDTH-1:0] SrcAE;
     logic [WIDTH-1:0] SrcBE;
@@ -27,7 +27,7 @@ module top #(
     logic ALUsrcD;
     logic ALUsrcE;
     
-    logic ZeroE;
+    logic EQ;
     
     logic [WIDTH-1:0] PCF;
     logic [WIDTH-1:0] PCD;
@@ -89,8 +89,8 @@ module top #(
     logic [WIDTH-1:0] ResultW;
 
     // Branch
-    logic [1:0] branchD;
-    logic [1:0] branchE;
+    logic [2:0] branchD;
+    logic [2:0] branchE;
 
     // Jump
     logic [1:0] JumpD;
@@ -103,8 +103,6 @@ module top #(
 
     //flush relatead signals
     logic flush; //universal flush signal
-    logic flushE;//flush trigger signal from execute stage
-    logic BranchCondE; //output of branch mux
 
     //UNIQUE INTERNAL TOP SIGNAL
     logic [WIDTH-1:0] WD3W;
@@ -251,7 +249,13 @@ module top #(
         if(JumpE == 2'b11) begin
             PCsrcE = 2'b10;
         end
-        else if(JumpE == 2'b10 || branchE[1] == 1'b1)begin
+        else if(JumpE == 2'b10)begin
+            PCsrcE = 2'b01;
+        end
+        else if((((branchE == 3'b001) || (branchE >= 3'b010)) && (EQ == 1'b1))) begin
+            PCsrcE = 2'b01;
+        end
+        else if((branchE == 3'b010) && (EQ == 1'b0)) begin
             PCsrcE = 2'b01;
         end
         //standard PC incrementation for normal instructions
@@ -299,7 +303,7 @@ module top #(
         .ALUop2(SrcBE),
         .ALUctrl(ALUctrlE),
 
-        .ZeroE(ZeroE),
+        .EQ(EQ),
         .Result(ALUResultE)
     );
 
@@ -374,7 +378,7 @@ module top #(
         .AddrModeM(AddrModeM),
         .branchE(branchE),
         .JumpE(JumpE),
-        .ZeroE(ZeroE),
+        .EQ(EQ),
 
         .forwardAE(forwardAE),
         .forwardBE(forwardBE),

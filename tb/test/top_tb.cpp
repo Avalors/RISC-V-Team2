@@ -1,6 +1,7 @@
-//Completed
-
 #include "sync_testbench.h"
+#include "vbuddy.cpp"
+#include <iostream>
+#include <cstdlib>
 
 #define NAME            "top-f1lights"
 #include "vbuddy.cpp"
@@ -31,20 +32,32 @@ TEST_F(CpuTestbench, RunvBuddy)
     {
         SUCCEED();
     }
-    vbdHeader("F1-Lights");
+    vbdHeader("PDF plotting");
     //-------------------------------------------------------------------------
+    
+    int plot = 0;
 
-    for (int i = 0; i < max_cycles; ++i)
+    for (int i = 0; i < 1'000'000; ++i)
     {
-        // Mask to get 8 bits
-        vbdBar(top->a0 & 0xFF);
-        runSimulation();
-        sleep(1);
+        runSimulation(1);
+
+        if (plot == false && top->a0 != 0)
+        {
+            plot = 1;
+        }
+        if (plot && (int)top->a0 >= 0)
+        {
+            vbdPlot(top->a0, 0, 255);
+            plot++;
+        }
+        if (plot > 256)
+        {
+            break;
+        }
     }
 
     SUCCEED();
 }
-
 
 int main(int argc, char **argv)
 {
@@ -53,9 +66,5 @@ int main(int argc, char **argv)
     Verilated::mkdir("logs");
     auto res = RUN_ALL_TESTS();
     
-    // VerilatedCov::write(
-    //     ("logs/coverage_" + std::string(NAME) + ".dat").c_str()
-    // );
-
     return res;
 }

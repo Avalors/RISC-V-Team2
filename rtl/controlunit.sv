@@ -2,11 +2,11 @@ module controlunit #(
     parameter DATA_WIDTH = 32
 ) (
     input logic [DATA_WIDTH-1:0] instr,   // Instruction input
-    output logic [2:0]          ALUctrl,  // ALU control signal
+    output logic [3:0]          ALUctrl,  // ALU control signal - changed to 4 bit to work for all instr
     output logic                ALUsrc,   // ALU source (1 for immediate, 0 for register)
     output logic [2:0]          ImmSrc,   // Immediate source selection
     output logic                RegWrite,  // Register write enable 
-    output logic [1:0]          branch,    //2 bit branch signal: MSB for branch confirmation, LSB for branch type
+    output logic [2:0]          branch,    //2 bit branch signal: MSB for branch confirmation, LSB for branch type
     output logic [1:0]          Jump,      //2 bit Jump signal: MSB for jump confirmation, LSB for Jump type
     output logic [3:0]          AddrMode,  // sets the instruction for data memory
     output logic                ResultSrc, // control signal for output mux
@@ -24,26 +24,32 @@ module controlunit #(
 
     always_comb begin
         // Default values
-        ALUctrl = 3'b000;
+        ALUctrl = 4'b0000;
         ALUsrc = 1'b0;
         ImmSrc = 3'b000;
         RegWrite = 1'b0;
         AddrMode = 4'b1000;
         ResultSrc = 1'b0;
         WD3Src = 1'b0;
-        branch = 2'b00;
+        branch = 3'b000;
         Jump =  2'b00;
 
         case (op)
             // R-Type
             7'b0110011: begin 
                 case (funct3)
-                    3'b000: ALUctrl = (funct7 == 7'b0100000) ? 3'b001 : 3'b000; // SUB/ADD
-                    3'b110: ALUctrl = 3'b011; // OR
-                    3'b100: ALUctrl = 3'b100; //XOR
-                    3'b111: ALUctrl = 3'b010; // AND
-                    3'b010: ALUctrl = 3'b101; // SLT
-                    default: ALUctrl = 3'b000;
+                    3'b000: ALUctrl = (funct7 == 7'b0100000) ? 4'b0001 : 4'b0000; // SUB/ADD
+                    3'b110: ALUctrl = 4'b0011; // OR
+                    3'b100: ALUctrl = 4'b0100; //XOR
+                    3'b111: ALUctrl = 4'b0010; // AND
+                    //Shifts
+                    3'b001: ALUctrl = 4'b0101; // SLL(LSL)
+                    3'b101:  ALUctrl = (funct7 == 7'b0100000) ? 4'b0111 : 4'b0110; // SRA(ASR)/SRL(LSR)
+
+                    3'b010: ALUctrl = 4'b1000; //SLT 
+                    3'b011: ALUctrl = 4'b1001; // SLTU
+
+                    default: ALUctrl = 4'b0000;
                 endcase
                 RegWrite = 1'b1;
                 ALUsrc = 1'b0;
@@ -52,11 +58,17 @@ module controlunit #(
             // I-Type (Arithmetic)
             7'b0010011: begin 
                 case (funct3)
-                    3'b000: ALUctrl = 3'b000; // ADDI
-                    3'b110: ALUctrl = 3'b011; // ORI
-                    3'b111: ALUctrl = 3'b010; // ANDI
-                    3'b010: ALUctrl = 3'b101; // SLTI
-                    default: ALUctrl = 3'b000;
+                    3'b000: ALUctrl = 4'b0000; // ADDI
+                    3'b110: ALUctrl = 4'b0011; // ORI
+                    3'b111: ALUctrl = 4'b0010; // ANDI
+                    3'b100: ALUctrl = 4'b0100; // XORI (assuming XOR immediate)
+
+                    3'b001: ALUctrl = 4'b0101; // SLLI (Shift Left Logical Immediate)          
+                    3'b101:  ALUctrl = (funct7 == 7'b0100000) ? 4'b0111 : 4'b0110; // SRAI(ASR)/SRLI(LSR)
+
+                    3'b010: ALUctrl = 4'b1000; // SLTI
+                    3'b011: ALUctrl = 4'b1001; // SLTIU (Set Less Than Immediate Unsigned)
+                    default: ALUctrl = 4'b0000;
                 endcase
                 RegWrite = 1'b1;
                 ALUsrc = 1'b1;
@@ -65,7 +77,7 @@ module controlunit #(
 
             // Load (I-Type)
             7'b0000011: begin 
-                ALUctrl = 3'b000; // ADD for address calculation
+                ALUctrl = 4'b0000; // ADD for address calculation
                 RegWrite = 1'b1;
                 ALUsrc = 1'b1;
                 ImmSrc = 3'b000;
@@ -84,7 +96,7 @@ module controlunit #(
 
             // Store (S-Type)
             7'b0100011: begin 
-                ALUctrl = 3'b000; // ADD for address calculation
+                ALUctrl = 4'b0000; // ADD for address calculation
                 ALUsrc = 1'b1; // Uses rd2
                 ImmSrc = 3'b001; // S-Type immediate
                 
@@ -99,19 +111,16 @@ module controlunit #(
 
             // Branch (B-Type)
             7'b1100011: begin 
-                ALUctrl = 3'b001; // SUB for comparison
-                ImmSrc = 3'b010;  // B-Type immediate
-                // branch signal used for PCsrc and flush
+                ALUctrl = 4'b0001; // SUB for comparison
+                ImmSrc = 3'b010; // B-Type immediate
                 case (funct3)
-                    3'b000: begin // BEQ
-                        branch = 2'b11; // BEQ branch = 1
-                    end
-                    3'b001: begin // BNE
-                        branch = 2'b10; // BNE branch = 0
-                    end
-                    default: begin
-                        branch = 2'b11; // Default branch = 0
-                    end
+                    3'b000: branch = 3'b001;  // BEQ
+                    3'b001: branch = 3'b010;  // BNE
+                    3'b100: branch = 3'b011; // BLT (Branch if Less Than)
+                    3'b101: branch = 3'b100;  // BGE (Branch if Greater or Equal)
+                    3'b110: branch = 3'b101;  // BLTU (Branch if Less Than Unsigned)
+                    3'b111: branch = 3'b110;  // BGEU (Branch if Greater or Equal Unsigned)
+                    default: branch = 3'b001;
                 endcase
             end
 
@@ -143,23 +152,26 @@ module controlunit #(
                 
             end
 
+            //U-Type
             // LUI (Load Upper Immediate)
             7'b0110111: begin 
                 RegWrite = 1'b1;
                 ALUsrc = 1'b1;
                 ImmSrc = 3'b011;
+                ALUctrl = 4'b1010;
             end
 
             //NOTE: NOT fully implemented/used here
-
+            //concern that this is not implemented properly
             // AUIPC (Add Upper Immediate to PC)
             7'b0010111: begin 
                 RegWrite = 1'b1;
                 ALUsrc = 1'b1;
-                ImmSrc = 3'b011;
+                ALUctrl = 4'b0000;       
+                ImmSrc = 3'b011; 
             end
 
-            // I-Type (ecall, ebreak)
+            // Environment-Type (ecall, ebreak)
             7'b1110011: begin 
                 ALUsrc = 1'b1;
                 if (funct3 == 3'b000) begin
@@ -171,14 +183,14 @@ module controlunit #(
 
             // Default case (unknown opcode)
             default: begin
-                ALUctrl = 3'b000;
+                ALUctrl = 4'b0000;
                 ALUsrc = 1'b0;
                 ImmSrc = 3'b000;
                 RegWrite = 1'b0;
                 AddrMode = 4'b1000;
                 ResultSrc = 1'b0;
                 WD3Src = 1'b0;
-                branch = 2'b00;
+                branch = 3'b000;
                 Jump = 2'b00;
             end
         endcase
