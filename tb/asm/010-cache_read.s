@@ -13,5 +13,5 @@ main:
 
     # Read Test
     lb x11, 0(x10)   # Read first word, expect cache miss
-    lb x11, 1(x10)   # Read second word, expect cache miss
+    lb x11, 1(x10)   # Read second word, expect cache hit as same code block
     lb x11, 0(x10)   # Read first word again, expect cache hit

@@ -47,14 +47,12 @@ module cache #(
         set = A[4:2]; // Set index (middle bits)
         byte_offset = A[1:0]; // Byte offset (LSBs)
 
-        $display("Address: %h, Tag: %h, Set: %d, Byte Offset: %d", A, tag, set, byte_offset);
     end
 
     // Read logic
     always_comb begin
         if (cache_mem[set].valid && cache_mem[set].tag == tag) begin
             hit_reg = 1'b1; // Cache hit
-            $display("Cache HIT: Set %0d, Tag %h", set, tag);
             // Determine output data based on AddrMode
             case (AddrMode)
                 3'b000: out = {{24{cache_mem[set].data[7]}}, cache_mem[set].data[7:0]};   // LB (signed byte)
@@ -66,7 +64,6 @@ module cache #(
             endcase
         end else begin
             hit_reg = 1'b0; // Cache miss
-            $display("Cache MISS: Set %0d, Tag %h", set, tag);
             out = RD;   // Data from main memory
         end
     end
