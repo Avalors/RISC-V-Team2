@@ -85,6 +85,7 @@ I also took on the responsability of being repo master and designed much of the 
     - Worked with Elson on debugging the one-way cache module, going more in depth on the two-way cache 
     - Changed AddrMode from 3 bits to 4 bits and had to make the relevant changes in data memory, control unit and top file
     - Used GTKwave for debugging and verifying the hit/miss rate
+    - Worked on updating the README
 
 ![image](https://github.com/user-attachments/assets/889df366-2875-471d-a3ea-9ac5b6f69d7e)
 
@@ -225,31 +226,47 @@ Originally started off with a 3-bit AddrMode signal, but later amended that to 4
 I used a reset signal for the testbenching to make sure the cache was empty which isn't used for the top level implementation. 
 I had some issues calculating the hit and miss ratios and implemented two different logics for read and write instructions.
 
-//Read logic: 
-        case (AddrMode)
-            3'b000: out = {{24{cache_mem[set].data[7]}}, cache_mem[set].data[7:0]};   // LB (signed byte)
-            3'b001: out = {{16{cache_mem[set].data[15]}}, cache_mem[set].data[15:0]};  // LH (signed halfword)
-            3'b010: out = cache_mem[set].data;                                         // LW (full word)
-            3'b011: out = {24'b0, cache_mem[set].data[7:0]};                           // LBU (unsigned byte)
-            3'b100: out = {16'b0, cache_mem[set].data[15:0]};                          // LHU (unsigned halfword)
-            default: out = 32'b0;
-        endcase
-       
-//Write logic:
-    always_ff @(posedge clk or posedge reset) begin
-        if (reset) begin
-            // Reset all cache entries
-            for (int i = 0; i < 8; i++) begin
-                cache_mem[i].valid <= 1'b0;
-                cache_mem[i].tag <= 27'b0;
-                cache_mem[i].data <= 32'b0;
+//Read logic: case (AddrMode) 
+    3'b000: out = {{24{cache_mem[set].data[7]}}, cache_mem[set].data[7:0]};   // LB (signed byte)
+    3'b001: out = {{16{cache_mem[set].data[15]}}, cache_mem[set].data[15:0]}; // LH (signed halfword)
+    3'b010: out = cache_mem[set].data;                                        // LW (full word)
+    3'b011: out = {24'b0, cache_mem[set].data[7:0]};                          // LBU (unsigned byte)
+    3'b100: out = {16'b0, cache_mem[set].data[15:0]};                         // LHU (unsigned halfword)
+    default: out = 32'b0;
+endcase
+
+//Write logic: 
+always_ff @(posedge clk or posedge reset) begin
+    if (reset) begin
+        // Reset all cache entries
+        for (int i = 0; i < 8; i++) begin
+            cache_mem[i].valid <= 1'b0;
+            cache_mem[i].tag <= 27'b0;
+            cache_mem[i].data <= 32'b0;
+        end
+        // Reset performance counters
+        access_counter <= 0;
+        hit_counter <= 0;
+        miss_counter <= 0;
+        hit <= 1'b0;
+    end else begin
+    
+        // Update performance counters
+        // Only update performance counters for load/store operations
+        if (AddrMode == 4'b0010 || AddrMode == 4'b0111 || AddrMode == 4'b0000 || AddrMode == 4'b0001 || AddrMode == 4'b0101 || AddrMode == 4'b0110) begin
+            access_counter <= access_counter + 1;
+            if (cache_mem[set].valid && cache_mem[set].tag == tag) begin
+                hit_counter <= hit_counter + 1; // Cache hit
+            end else begin
+                miss_counter <= miss_counter + 1; // Cache miss
+                // Update cache on miss (simulate memory fetch)
+                cache_mem[set].valid <= 1'b1; // Mark as valid
+                cache_mem[set].tag <= tag;    // Update tag
+                cache_mem[set].data <= RD;   // Fetch data from memory
             end
-            // Reset performance counters
-            access_counter <= 0;
-            hit_counter <= 0;
-            miss_counter <= 0;
-            hit <= 1'b0;
-        end else begin
+        end
+    end
+end
         
             // Update performance counters
             // Only update performance counters for load/store operations
