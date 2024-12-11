@@ -2,7 +2,10 @@
 module top (
     input logic clk,          // Clock signal
     input logic rst,          // Reset signal
-    output logic [31:0] a0    // Contents of result (output)
+    output logic [31:0] a0,    // Contents of result (output)
+    output logic [31:0] total_accesses, // Total memory accesses
+    output logic [31:0] total_hits,      // Total cache hits
+    output logic [31:0] total_misses      // Total cache misses
 );
 
     // Internal Signals
@@ -21,6 +24,7 @@ module top (
     logic ResultSrc;                      // result mux control signal
     logic [31:0] Result;                  // result of output mux
     logic WD3Src;                         // control signal for Write port input to allow for jumps
+    logic hit;
     
     // Program Counter
     program_counter #(.WIDTH(32)) PC_Reg (
@@ -121,6 +125,19 @@ module top (
         .A(ALUout),
         .WD(RD2),
         .RD(ReadData)
+    );
+
+    cache Cache (
+        .clk(clk),
+        .reset(rst),
+        .AddrMode(AddrMode),
+        .A(ALUout),
+        .WD(RD2),
+        .hit(hit),
+        .out(ReadData),
+        .total_accesses(total_accesses),
+        .total_hits(total_hits),
+        .total_misses(total_misses)
     );
 
     //Result mux

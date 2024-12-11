@@ -18,12 +18,7 @@ TEST_F(CpuTestbench, cache_read_test)
 {
     system("./compile.sh --input asm/010-cache_read.s");
     
-    runSimulation(15);
-
-    int hits = top->total_hits;
-    int misses = top->total_misses;
-
-    std::cout << "After write - Hits: " << hits << ", Misses: " << misses << std::endl;
+    runSimulation(50);
     
     EXPECT_EQ((int)top->a0, 0);
 }
@@ -41,19 +36,19 @@ TEST_F(CpuTestbench, cache_overwrite_byte)
 {
     system("./compile.sh --input asm/012-overwrite_byte.s");
     
-    runSimulation(100);
+    runSimulation(50);
     
     EXPECT_EQ((int)top->a0, 0x0403FFFF);
 }
 
-    // TEST_F(CpuTestbench, cache_endian)
-    // {
-    //     system("./compile.sh --input asm/013-endian.s > logs/013-endian.log");
-        
-    //     runSimulation(50);
-        
-    //     EXPECT_EQ((int)top->a0, 0x12);
-    // }
+TEST_F(CpuTestbench, cache_endian)
+{
+    system("./compile.sh --input asm/013-endian.s");
+    
+    runSimulation(50);
+    
+    EXPECT_EQ((int)top->a0, 0x12);
+}
 
 TEST_F(CpuTestbench, cache_coherence)
 {

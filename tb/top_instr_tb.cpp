@@ -1,4 +1,4 @@
-// Full RV32I instr testbench 
+// Full RV32I instr testbench - Completed
 
 #include "sync_testbench.h"
 #include <cstdlib>
