@@ -4,7 +4,9 @@
 
 For lab 4, I was in charge of the doit.sh file, as well as the integration and overall testbenching (top.sv and top_tb.cpp). I also added some assembly files (xor.s, or.s, counter.s) and copied files from the lab 4 instructions (verify.cpp, mux_tb.cpp, compile.sh).
 
-For the rest of the project, I got to familiarise myself with the ALU unit, as well as testbenching my own modules, and then working as a team on data memory and the pdf testbench. I fully implemented the cache and started on the branch brediction too.
+For the rest of the project, I got to familiarise myself with the ALU unit, as well as testbenching my own modules, and then working as a team on data memory and the pdf testbench (adding comments and starting on the python graphing program). 
+I fully implemented the cache (one-way and two-way, and 3 assembly files) and started on the branch brediction too (2-bit simple dynamic module and the relevant assembly file).
+
 I also took on the responsability of being repo master and designed much of the repo.
 
 ## Chronological work
@@ -78,6 +80,14 @@ I also took on the responsability of being repo master and designed much of the 
     - Sat with Elson to see how to implement the cache in the top file
     - Updated the README
     - Started branch prediction
+
+## 11/12/2024
+    - Worked with Elson on debugging the one-way cache module, going more in depth on the two-way cache 
+    - Changed AddrMode from 3 bits to 4 bits and had to make the relevant changes in data memory, control unit and top file
+    - Used GTKwave for debugging and verifying the hit/miss rate
+
+![image](https://github.com/user-attachments/assets/889df366-2875-471d-a3ea-9ac5b6f69d7e)
+
 
 # Work by section
 
