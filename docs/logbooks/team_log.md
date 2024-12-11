@@ -143,7 +143,7 @@ Planning the week out:
 ![IMG_4506](https://github.com/user-attachments/assets/7e8a9971-efcc-4d83-81d5-2d3cb69a4b93)
 
 ## Team meetup (11/12)
-  - Ahmed: big push for pipelining debugging
+  - Ahmed: completed 5-stage pipelining
   - Elson looked at potentially implementing code coverage 
   - Elson and Antoine debugged the direct mapped cache and changed AddrMode from 3 bits to 4 bits and so had to make amendments in the top file, data memory and control unit
 
