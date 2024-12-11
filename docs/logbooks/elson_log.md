@@ -60,3 +60,6 @@ I also helped out in designing the **control unit** and its respective testbench
 
 ### 10/12/24
 - Completed the full RV32I changing the controlunit.sv, alu.sv and writing testbenches and asm code for verification: [Completed full RV32I instructions and testbench and asm code for verification](https://github.com/aa6dcc/RISC-V-Team2/commit/14e4e17063317b12e1dfb36917cbb79eb7aec45a)
+
+### 11/12/24
+- Completed direct mapped cache with Antoine and respective testbenches and assemnbly code: [Direct-mapped cache completed](https://github.com/aa6dcc/RISC-V-Team2/commit/ca013aad029b479c8335ec7aebd2990b17f65c63)
