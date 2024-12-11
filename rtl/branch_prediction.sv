@@ -1,4 +1,4 @@
-#Draft for the 2-bit simple dynamic branch prediction
+// Draft for the 2-bit simple dynamic branch prediction
 
 module branch_predictor (
     input logic clk,                   // Clock signal
