@@ -245,17 +245,6 @@ module top #(
 
     // Pipeline Stage 3 - Execute (EXE)
 
-    
-    //flush conditional logic
-    always_comb begin
-        case(branchE[1])
-            1'b1: BranchCondE = ZeroE ^~ branchE[0];  //XNOR to get is branch is satisfied
-            1'b0: BranchCondE = 0;
-        endcase
-
-        flushE = BranchCondE || JumpE[1]; //logical OR
-    end
-
     //PCsrcE logic
     always_comb begin
         //JALR/RET PC value implementation
@@ -383,7 +372,9 @@ module top #(
         .RdM(RdM),
         .RdW(RdW),
         .AddrModeM(AddrModeM),
-        .flushE(flushE),
+        .branchE(branchE),
+        .JumpE(JumpE),
+        .ZeroE(ZeroE),
 
         .forwardAE(forwardAE),
         .forwardBE(forwardBE),

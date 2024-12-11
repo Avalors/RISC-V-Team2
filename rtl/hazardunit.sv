@@ -4,12 +4,17 @@ module hazardunit (
     input logic [4:0] RdM,
     input logic [4:0] RdW,
     input logic [3:0] AddrModeM,
-    input logic flushE,
+    input logic [1:0] branchE,
+    input logic [1:0] JumpE,
+    input logic ZeroE,
+
     output logic [1:0] forwardAE,
     output logic [1:0] forwardBE,
     output logic stall,
     output logic flush
 );
+
+    logic BranchCondE;
 
     //Forwarding
 
@@ -63,15 +68,14 @@ module hazardunit (
         end
     end
 
-
+    //flush conditional logic
     always_comb begin
-        //Branch double check this could potentially be deleted
-        if (flushE) begin //flush signal should be based on PCsrc for branch and jump instructions
-            flush = 1'b1; //Flush if there is a branch or Jump
-        end
-        else begin
-            flush = 1'b0;
-        end
+        case(branchE[1])
+            1'b1: BranchCondE = ZeroE ^~ branchE[0];  //XNOR to get is branch is satisfied
+            1'b0: BranchCondE = 0;
+        endcase
+
+        flush = BranchCondE || JumpE[1]; //logical OR
     end
 
 
