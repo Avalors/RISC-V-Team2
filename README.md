@@ -120,9 +120,9 @@ Here are the relevant commands. More can be found in the documentation.
 
 - Below are links to the videos of the f1_lights script running for both the single cycle and pipelined branch:
 
-[Single Cycle]https://github.com/aa6dcc/RISC-V-Team2/blob/cache-branch/docs/videos/single_cycle.md
+[Single Cycle](https://github.com/aa6dcc/RISC-V-Team2/blob/cache-branch/docs/videos/single_cycle.md)
 
-[Pipeline]https://github.com/aa6dcc/RISC-V-Team2/tree/cache-branch/docs/videos
+[Pipeline](https://github.com/aa6dcc/RISC-V-Team2/tree/cache-branch/docs/videos)
 
 
 ## Team Contribution
