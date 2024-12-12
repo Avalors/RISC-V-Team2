@@ -154,3 +154,4 @@ Here are the relevant commands. More can be found in the documentation.
 |              | One-way associative cache     |       x            |   x              |                          |                  |
 |              | Two-way associative cache     |       x            |                  |                          |                 |
 | Extra        | Branch Prediction             |   x                |                  |                         |                  |
+|              | Interrupts                    |                    |                  |         x               |                  |
