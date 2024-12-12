@@ -118,6 +118,8 @@ and the last few cycles resemble this:
   - Updated the README
   - Started thinking about how to implement the pipelining at the next stage
 
+Elson working hard on his birthday!
+
 ![IMG_4494](https://github.com/user-attachments/assets/f4e1a226-f472-4e1b-81ad-f74eda5a4290)
 
 ## Team meetup (07/12)
@@ -146,4 +148,8 @@ Planning the week out:
   - Ahmed: completed 5-stage pipelining
   - Elson looked at potentially implementing code coverage 
   - Elson and Antoine debugged the direct mapped cache and changed AddrMode from 3 bits to 4 bits and so had to make amendments in the top file, data memory and control unit
+  - Elson and Antoine tested branch prediction which was a success
 
+![image](https://github.com/user-attachments/assets/89235d3d-c5cf-495f-a5f1-e8f1d3571e32)
+
+![WhatsApp Image 2024-12-11 at 17 50 54_a770b903](https://github.com/user-attachments/assets/e6f9fa33-87fe-43b5-979d-d0a94055bdc2)
