@@ -118,6 +118,8 @@ and the last few cycles resemble this:
   - Updated the README
   - Started thinking about how to implement the pipelining at the next stage
 
+Elson working hard on his birthday!
+
 ![IMG_4494](https://github.com/user-attachments/assets/f4e1a226-f472-4e1b-81ad-f74eda5a4290)
 
 ## Team meetup (07/12)
