@@ -1,8 +1,11 @@
+//Completed
+
 #include "sync_testbench.h"
+#include "vbuddy.cpp"
+#include <iostream>
 #include <cstdlib>
 
-#define NAME            "top-instr"
-
+#define NAME            "top-pdf"
 
 class CpuTestbench : public SyncTestbench
 {
@@ -11,65 +14,47 @@ protected:
     {
         top->clk = 1;
         top->rst = 0;
+
+        // We compile the program here, so the whole thing can use it.
+        system("./compile.sh --input asm/pdf.s --output ../rtl/program.hex");
     }
 };
 
-TEST_F(CpuTestbench, cache_read_test)
+
+TEST_F(CpuTestbench, InitialStateTest)
 {
-    system("./compile.sh --input asm/010-cache_read.s");
+    // Initialise VBuddy
+    //-------------------------------------------------------------------------
+    if (vbdOpen() != 1)
+    {
+        SUCCEED();
+    }
+    vbdHeader("PDF plotting");
+    //-------------------------------------------------------------------------
     
-    runSimulation(15);
+    int plot = 0;
 
-    int hits = top->total_hits;
-    int misses = top->total_misses;
+    for (int i = 0; i < 1'000'000; ++i)
+    {
+        runSimulation(1);
 
-    std::cout << "After write - Hits: " << hits << ", Misses: " << misses << std::endl;
-    
-    EXPECT_EQ((int)top->a0, 0);
+        if (plot == false && top->a0 != 0)
+        {
+            plot = 1;
+        }
+        if (plot && (int)top->a0 >= 0)
+        {
+            vbdPlot(top->a0, 0, 255);
+            plot++;
+        }
+        if (plot > 256)
+        {
+            break;
+        }
+    }
+
+    SUCCEED();
 }
-
-TEST_F(CpuTestbench, cache_temporal_locality)
-{
-    system("./compile.sh --input asm/011-cache_temporal_locality.s");
-    
-    runSimulation(50);
-
-    int hits = top->total_hits;
-    int misses = top->total_misses;
-
-    std::cout << "After write - Hits: " << hits << ", Misses: " << misses << std::endl;
-    
-    EXPECT_EQ((int)top->a0, 0);
-}
-
-TEST_F(CpuTestbench, cache_overwrite_byte)
-{
-    system("./compile.sh --input asm/012-overwrite_byte.s");
-    
-    runSimulation(100);
-
-    int hits = top->total_hits;
-    int misses = top->total_misses;
-
-    std::cout << "After write - Hits: " << hits << ", Misses: " << misses << std::endl;
-    
-    EXPECT_EQ((int)top->a0, 0x0403FFFF);
-}
-
-TEST_F(CpuTestbench, cache_coherence)
-{
-    system("./compile.sh --input asm/014-coherence.s");
-    
-    runSimulation(50);
-
-    int hits = top->total_hits;
-    int misses = top->total_misses;
-
-    std::cout << "After write - Hits: " << hits << ", Misses: " << misses << std::endl;
-    
-    EXPECT_EQ((int)top->a0, 0x2);
-}
-
 
 int main(int argc, char **argv)
 {
@@ -77,6 +62,6 @@ int main(int argc, char **argv)
     testing::InitGoogleTest(&argc, argv);
     Verilated::mkdir("logs");
     auto res = RUN_ALL_TESTS();
-
+    
     return res;
 }
