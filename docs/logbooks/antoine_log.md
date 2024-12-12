@@ -267,6 +267,8 @@ I had some issues calculating the hit and miss ratios and implemented two differ
                 end
             end
 
+![WhatsApp Image 2024-12-11 at 15 32 39_abd640c8](https://github.com/user-attachments/assets/3ed575b8-904c-4395-b56a-1d8fe2f7d851)
+
   2. Fully implemented the two-way set associative cache using an LRU policy
 
 Built on top of the direct-mapped cache, but changed the tag from 27 bits to 28 bits
@@ -282,6 +284,8 @@ Here we can see we implemented a FSM, using knowledge acquired in lab 3:
 ![image](https://github.com/user-attachments/assets/59745681-3b06-426c-b565-05fcdf41d690)
 
 ![image](https://github.com/user-attachments/assets/8c6d933b-4ba2-4f6d-8d7e-1aa8df097041)
+
+![WhatsApp Image 2024-12-11 at 22 02 57_09869dea](https://github.com/user-attachments/assets/013e13d0-b9dd-485f-947c-ee8fa5ab5739)
 
 ![image](https://github.com/user-attachments/assets/2372924e-5e68-40b9-8bc2-acaf7a683c8e)
 
