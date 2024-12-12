@@ -4,8 +4,8 @@ This project was done as a team of 4.
 We are team 2 (H.A.D.E.S), each with distinct roles for the coursework (we had different roles for lab4, single cycle, pipelining, cache, branch prediction):
   - Elson Tho: completing full RISC-V instruction set by editing the control unit, ALU & register file, instruction memory, testing & verification, MUX, pipelining, f1_lights, made the new top file for the pipeline branch
   - Ahmed Hamid: program counter, sign extension, ROM, instruction memory, control unit, data memory (assembly, module & testbench), pipelining (forwarding, flushing, stalling; hazard unit), PDF
-  - Antoine Divet: top module and testbench, assembly instructions (xor, or, counter), doit script, data memory, cache, admin work (README, team statements, logbooks)
-  - Jihwan Shin: foundations of instruction memory, sign extension (I-type), PDF 
+  - Antoine Divet: top module and testbench, assembly instructions (xor, or, counter), doit script, data memory, cache (1-set and 2-set), admin work (README, team statements, logbooks), branch prediction
+  - Jihwan Shin: building the initial instruction memory, initial sign extension (I-type, B-type) and their testbenches, PDF testbench
 
 There was a lot of teamwork evolved, so despite some members focused on their own role, they also helped out others. 
 
@@ -15,6 +15,19 @@ We used five different branches (one for lab4, one for single cycle, one for pip
 
 | Antoine Divet (repo manager) | Elson Tho | Ahmed Hamid | Jihwan Shin |
 |-|-|-|-|
+
+## Final submission
+
+Our team has successfully completed and verified the following for our RV32I 
+  processor:
+
+| Branch                                                         | Description  | Statement |
+| -------------------------------------------------------------- |------------- |-----------|
+| [lab4](https://github.com/aa6dcc/RISC-V-Team2/tree/lab4)       | Lab4         | [lab4_statement.md](https://github.com/aa6dcc/RISC-V-Team2/blob/cache-branch/docs/team_statement_sections/lab4_statement.md) | 
+| [Single-cycle](https://github.com/aa6dcc/RISC-V-Team2/tree/Single-cycle) | Single-Cycle | [single_cycle_statement.md](https://github.com/aa6dcc/RISC-V-Team2/blob/cache-branch/docs/team_statement_sections/single_cycle_statement.md) |
+| [Pipeline](https://github.com/aa6dcc/RISC-V-Team2/tree/pipeline) | Pipelined    | [pipeline_statement.md](https://github.com/aa6dcc/RISC-V-Team2/blob/cache-branch/docs/team_statement_sections/pipeline_statement.md) |
+| [Cache-branch](https://github.com/aa6dcc/RISC-V-Team2/tree/cache-branch) | Cache      | [cache_statement.md](https://github.com/aa6dcc/RISC-V-Team2/blob/cache-branch/docs/team_statement_sections/pipeline_statement.md) |
+| [Cache-branch](https://github.com/aa6dcc/RISC-V-Team2/tree/cache-branch) | Extra      | [extra_statement.md](https://github.com/aa6dcc/RISC-V-Team2/blob/cache-branch/docs/team_statement_sections/extra_statement.md) |
 
 ## Quick Start
 
@@ -105,21 +118,11 @@ Here are the relevant commands. More can be found in the documentation.
 
 ![WhatsApp Image 2024-12-06 at 20 26 17_3822e0e1](https://github.com/user-attachments/assets/9058539d-87ef-4f9b-a326-ce6913300366)
 
-- Below are videos of the f1_lights script running on our Vbuddy:
+- Below are links to the videos of the f1_lights script running for both the single cycle and pipelined branch:
 
-https://github.com/user-attachments/assets/2d5fab74-0c4f-42d6-81e2-061014974476
+[Single Cycle](https://github.com/aa6dcc/RISC-V-Team2/blob/cache-branch/docs/videos/single_cycle.md)
 
-https://github.com/user-attachments/assets/9c8ab023-abfc-4bbc-b051-39e5a309ecaa
-
-- And here are videos of the PDF file running several distributions:
-
-https://github.com/user-attachments/assets/d3b0d004-0e46-4f6d-b30e-b2f08f6b4daf
-
-https://github.com/user-attachments/assets/ee9ae772-b272-4f0e-9d3b-2f691b65131c
-
-https://github.com/user-attachments/assets/d733fc9d-4276-4c07-b944-313d11218ab8
-
-https://github.com/user-attachments/assets/613020e6-d185-4d5f-b77a-37042ea824e3
+[Pipeline](https://github.com/aa6dcc/RISC-V-Team2/tree/cache-branch/docs/videos)
 
 
 ## Team Contribution
@@ -133,7 +136,7 @@ https://github.com/user-attachments/assets/613020e6-d185-4d5f-b77a-37042ea824e3
 |              | ALU                           |  x                 |  x                |                        |                  |
 |              | Register File                 |                    | x                 |                        |                  |
 |              | Instruction Memory            |                    |                  |                          | x               |
-|              | Control Unit                  |                    |                  |  x                        | x               |
+|              | Control Unit                  |                    |                  |  x                        |                |
 |              | Sign Extend                   |                    |                  |                          |x               |
 |              | Testbench                     |   x                 |                |                          |                  |
 |              | Doit.sh                       |   x                |      x           |                          |                  |
@@ -143,5 +146,12 @@ https://github.com/user-attachments/assets/613020e6-d185-4d5f-b77a-37042ea824e3
 |              | Register File                 |                    |    x             |                          |                  |
 |              | Instruction Memory            |                    |                  |                          |    x             |
 |              | Control Unit                  |                    |    x             |                          |                  |
-|              | Sign Extend                   |                    |                  |                          |    x             |
+|              | Sign Extend                   |                    |                  |       x                  |                  |
 |              | Doit.sh                       |   x                |                  |                          |                  |
+| Pipeline & Cache | Pipeline Registers        |                    |    x             |    x                    |                  |
+|              | Hazard Unit                   |                    |                  |   x                      |                  |
+|              | Testbenching & Integration    |                    |   x              |         x                |                  |                  
+|              | One-way associative cache     |       x            |   x              |                          |                  |
+|              | Two-way associative cache     |       x            |                  |                          |                 |
+| Extra        | Branch Prediction             |   x                |                  |                         |                  |
+|              | Interrupts                    |                    |                  |         x               |                  |
