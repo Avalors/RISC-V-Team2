@@ -25,7 +25,7 @@ module data_mem #(
         //loads data.hex into array of data memory
         //commented for the purpose of adding more instr
         $display("Loading program into data memory...");
-        $readmemh("../tb/data/gaussian.mem", array, 20'h10000, 20'h1FFFF);
+        $readmemh("../tb/data/noisy.mem", array, 20'h10000, 20'h1FFFF);
 
     end
 

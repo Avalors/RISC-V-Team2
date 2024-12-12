@@ -3,7 +3,10 @@ module top #(
 )(
     input logic clk,
     input logic rst,
-    output logic [WIDTH-1:0] a0
+    output logic [WIDTH-1:0] a0,
+    output logic [31:0] total_accesses, // Total memory accesses
+    output logic [31:0] total_hits,      // Total cache hits
+    output logic [31:0] total_misses      // Total cache misses
 );
     // Program counter
     logic [1:0] PCsrcE;
@@ -400,6 +403,32 @@ module top #(
         .forwardBE(forwardBE),
         .stall(stall),
         .flush(flush)
+    );
+
+    //     cache Cache (
+    //     .clk(clk),
+    //     .reset(rst),
+    //     .AddrMode(AddrModeM),
+    //     .A(ALUResultM),
+    //     .WD(WriteDataM),
+    //     .hit(hit),
+    //     .out(ReadDataM),
+    //     .total_accesses(total_accesses),
+    //     .total_hits(total_hits),
+    //     .total_misses(total_misses)
+    // );
+
+    tw_cache Tw_Cache(
+        .clk(clk),
+        .reset(rst),
+        .AddrMode(AddrModeM),
+        .A(ALUResultM),
+        .WD(WriteDataM),
+        .hit(hit),
+        .out(ReadDataM),
+        .total_accesses(total_accesses),
+        .total_hits(total_hits),
+        .total_misses(total_misses)
     );
 
 

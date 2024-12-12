@@ -17,34 +17,27 @@
 #define OPCODE_R        0b011'0011          // add, sub, xor... (register)
 #define OPCODE_J        0b110'1111          // jal  (jump and link)
 
-
 class ControlunitTestbench : public BaseTestbench
 {
 protected:
     void initializeInputs() override
     {
         top->instr = 0;
-        top->EQ = 0;
         // outputs: 
         // ALUctrl - controls the alu
         // ALUsrc - selects between rd2 (0) and ImmOp (1)
         // ImmSrc - selects between I (0), S (1) and B (2) type
-        // PCsrc - selects next PC (0) or branch (1)
         // RegWrite - enables writing of register
     }
 };
 
-
 TEST_F(ControlunitTestbench, ALUControl)
 {
     // ADD (000)    - add, addi, lw, sw
-    // SUB (001)    - sub, beq
+    // SUB (001)    - sub
     // AND (010)    - and
-    // OR  (011)     - or
-    // --  (100)
-    // SLT (101)    - slt
-    // --  (110)
-    // --  (111)
+    // OR  (011)    - or
+    // SLT (100)    - slt
 
     // lw should always signify an ADD
     top->instr = OPCODE_I2;
@@ -56,16 +49,15 @@ TEST_F(ControlunitTestbench, ALUControl)
     top->eval();
     EXPECT_EQ(top->ALUctrl, 0) << "Test 2";
     
-    // beq should always signify an SUB
+    // beq should always signify a SUB
     top->instr = OPCODE_B + (0b000 << 12);
     top->eval();
     EXPECT_EQ(top->ALUctrl, 1) << "Test 3";
 
-    // bne should always signify an SUB
+    // bne should always signify a SUB
     top->instr = OPCODE_B + (0b001 << 12);
     top->eval();
     EXPECT_EQ(top->ALUctrl, 1) << "Test 4";
-
 }
 
 TEST_F(ControlunitTestbench, RegWriteTest) {   
@@ -122,37 +114,6 @@ TEST_F(ControlunitTestbench, ALUsrcTest)
     }
 }
 
-
-TEST_F(ControlunitTestbench, PCsrcTest)
-{
-    // PCsrc = 1: B-Type (EQ=1), J-Type, I-Type (JALR)
-    top->EQ = 1;
-    for (int opcode : { OPCODE_B, OPCODE_J, OPCODE_I3 }) {  // Ensure JALR is included
-        top->instr = opcode;
-        top->eval();
-        EXPECT_EQ(top->PCsrc, (opcode == OPCODE_I3 ? 2 : 1))  // JALR should have PCsrc = 2
-            << "Opcode: " << std::bitset<7>(opcode);
-    }
-
-    // PCsrc = 2'b10: JALR (J-type)
-    top->instr = OPCODE_I3;  // JALR opcode
-    top->eval();
-    EXPECT_EQ(top->PCsrc, 2) << "Opcode: " << std::bitset<7>(OPCODE_I3);
-
-    // PCsrc = 0: All other cases
-    top->EQ = 0;
-    for (int opcode : { 
-        OPCODE_I1, OPCODE_I2, OPCODE_I4, OPCODE_R, 
-        OPCODE_U1, OPCODE_U2, OPCODE_S 
-    }) {
-        top->instr = opcode;
-        top->eval();
-        EXPECT_EQ(top->PCsrc, 0) << "Opcode: " << std::bitset<7>(opcode);
-    }
-}
-
-
-
 TEST_F(ControlunitTestbench, ImmSrc0Test)
 {   
     // Checks the I instructions
@@ -165,7 +126,6 @@ TEST_F(ControlunitTestbench, ImmSrc0Test)
     }
 }
 
-
 TEST_F(ControlunitTestbench, ImmSrc1Test)
 {   
     // Checks the S instructions
@@ -175,7 +135,6 @@ TEST_F(ControlunitTestbench, ImmSrc1Test)
     EXPECT_EQ(top->ImmSrc, 1);
 }
 
-
 TEST_F(ControlunitTestbench, ImmSrc2Test)
 {   
     // Checks the B instructions
@@ -184,7 +143,6 @@ TEST_F(ControlunitTestbench, ImmSrc2Test)
 
     EXPECT_EQ(top->ImmSrc, 2);
 }
-
 
 int main(int argc, char **argv)
 {
