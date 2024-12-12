@@ -74,11 +74,11 @@ module hazardunit (
             flush = 1'b1;
         end
         else begin
-            if((((branchE == 3'b001) || (branchE >= 3'b010)) && (EQ == 1'b1))) begin
+            if(((branchE == 3'b001) || (branchE > 3'b010)) && (EQ == 1'b1)) begin
                 flush = 1'b1;
             end
             else if((branchE == 3'b010) && (EQ == 1'b0)) begin //BNE
-                flush = 1'b1
+                flush = 1'b1;
             end
             else begin
                 flush = 1'b0;

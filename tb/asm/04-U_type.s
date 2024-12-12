@@ -15,7 +15,7 @@ next_test_2:
     nop                       # No operation, just to separate the tests
 
     # Check Test 2 result
-    li t1, 0x12345000        
+    li t1, 0x12345014        # change reflects AUIPC functionality PC + signExt(U)
     bne a0, t1, fail_test    # If a0 != 0x12356000, jump to fail_test
     j success_test           # Jump to success_test
 

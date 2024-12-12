@@ -57,6 +57,11 @@ module top #(
     logic [4:0] RdM;
     logic [4:0] RdW;
 
+    logic RDPCD;           // mux control signal for auipc functionality (replace RD1 with PCD)
+
+
+    logic [WIDTH-1:0] RD1; // intermediate register signal
+
     logic [WIDTH-1:0] RD1D;
     logic [WIDTH-1:0] RD1E;
     logic [WIDTH-1:0] RD2D;
@@ -102,7 +107,7 @@ module top #(
     logic stall;
 
     //flush relatead signals
-    logic flush; //universal flush signal
+    logic flush; 
 
     //UNIQUE INTERNAL TOP SIGNAL
     logic [WIDTH-1:0] WD3W;
@@ -159,15 +164,17 @@ module top #(
     //Completed
     controlunit controlunit (
         .instr(instrD),
-        .AddrMode(AddrModeD),
-        .RegWrite(RegWriteD),
+       
         .ALUctrl(ALUctrlD),
         .ALUsrc(ALUsrcD),
         .ImmSrc(ImmSrcD),
+        .RegWrite(RegWriteD),
+        .branch(branchD),
+        .Jump(JumpD),
+        .AddrMode(AddrModeD),
         .ResultSrc(ResultSrcD),
         .WD3Src(WD3SrcD),
-        .branch(branchD),
-        .Jump(JumpD)
+        .RDPC(RDPCD)
     );
 
     //Completed
@@ -194,10 +201,19 @@ module top #(
         .WE3(RegWriteW),
         .WD3(WD3W),
 
-        .RD1(RD1D),
+        .RD1(RD1),
         .RD2(RD2D),
         .a0(a0)
     );
+
+    //ADD auipc logic here
+
+    always_comb begin
+        case(RDPCD)
+        1'b0: RD1D = RD1;
+        1'b1: RD1D = PCD;
+        endcase
+    end
 
     //Completed
     pipeline_DECtoEXE pipeline_DECtoEXE (
@@ -252,7 +268,7 @@ module top #(
         else if(JumpE == 2'b10)begin
             PCsrcE = 2'b01;
         end
-        else if((((branchE == 3'b001) || (branchE >= 3'b010)) && (EQ == 1'b1))) begin
+        else if(((branchE == 3'b001) || (branchE > 3'b010)) && (EQ == 1'b1)) begin
             PCsrcE = 2'b01;
         end
         else if((branchE == 3'b010) && (EQ == 1'b0)) begin

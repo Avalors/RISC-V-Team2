@@ -1,16 +1,17 @@
 module controlunit #(
     parameter DATA_WIDTH = 32
 ) (
-    input logic [DATA_WIDTH-1:0] instr,   // Instruction input
-    output logic [3:0]          ALUctrl,  // ALU control signal - changed to 4 bit to work for all instr
-    output logic                ALUsrc,   // ALU source (1 for immediate, 0 for register)
-    output logic [2:0]          ImmSrc,   // Immediate source selection
+    input logic [DATA_WIDTH-1:0] instr,    // Instruction input
+    output logic [3:0]          ALUctrl,   // ALU control signal - changed to 4 bit to work for all instr
+    output logic                ALUsrc,    // ALU source (1 for immediate, 0 for register)
+    output logic [2:0]          ImmSrc,    // Immediate source selection
     output logic                RegWrite,  // Register write enable 
-    output logic [2:0]          branch,    //2 bit branch signal: MSB for branch confirmation, LSB for branch type
-    output logic [1:0]          Jump,      //2 bit Jump signal: MSB for jump confirmation, LSB for Jump type
+    output logic [2:0]          branch,    // 2 bit branch signal: MSB for branch confirmation, LSB for branch type
+    output logic [1:0]          Jump,      // 2 bit Jump signal: MSB for jump confirmation, LSB for Jump type
     output logic [3:0]          AddrMode,  // sets the instruction for data memory
     output logic                ResultSrc, // control signal for output mux
-    output logic                WD3Src     // control unit signal for write port for register allowing Jump instruction implementation       
+    output logic                WD3Src,    // control unit signal for write port for register allowing Jump instruction implementation
+    output logic                RDPC       // control signal for auipc mux
 );
 
     // Extract instruction fields
@@ -33,6 +34,7 @@ module controlunit #(
         WD3Src = 1'b0;
         branch = 3'b000;
         Jump =  2'b00;
+        RDPC = 1'b0;
 
         case (op)
             // R-Type
@@ -162,13 +164,13 @@ module controlunit #(
             end
 
             //NOTE: NOT fully implemented/used here
-            //concern that this is not implemented properly
             // AUIPC (Add Upper Immediate to PC)
             7'b0010111: begin 
                 RegWrite = 1'b1;
                 ALUsrc = 1'b1;
                 ALUctrl = 4'b0000;       
                 ImmSrc = 3'b011; 
+                RDPC = 1'b1;
             end
 
             // Environment-Type (ecall, ebreak)
@@ -192,6 +194,7 @@ module controlunit #(
                 WD3Src = 1'b0;
                 branch = 3'b000;
                 Jump = 2'b00;
+                RDPC = 1'b0;
             end
         endcase
     end
