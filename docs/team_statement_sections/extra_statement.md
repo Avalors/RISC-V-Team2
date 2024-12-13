@@ -111,7 +111,7 @@ Within the top module adjusted for branch prediction:
 
 We added two new signals:
 
-'''SV
+'''
 // Branch Prediction signals
 
 logic pred_taken;         // From predictor: tells if branch predicted taken
@@ -125,7 +125,7 @@ and the PCSrcE logic was altered:
 
 I also added a flush signal to the hazard unit:
 
-'''SV
+'''
 .flush(flush | prediction_wrong)  // Added prediction_wrong to flush
 '''
 
