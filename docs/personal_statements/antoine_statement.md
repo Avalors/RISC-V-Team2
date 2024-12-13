@@ -9,22 +9,22 @@
 ## Overview
 - [Summary of Contributions](#summary-of-contributions)
     - [Lab 4](#lab-4)
-        - [Top Level Testbenching]
-        - [Top Level Integration]
-        - [Doit.sh script]
-        - [Assembly instructions]     
+        - [Top Level Testbenching](#Top-Level-Testbenching)
+        - [Top Level Integration])(#Top-Level-Integration)
+        - [Doit.sh script](#Doit.sh-script)
+        - [Assembly instructions](#Assembly-instructions)     
     - [Single Cycle](#Single-cycle)
-        - [Data memory]
-        - [Analyse.py] 
+        - [Data memory](#Data-memory)
+        - [Analyse.py](#Analyse.py) 
     - [Cache](#Cache)
-        - [One-way set associative cache]
-        - [Two-way set associative cache]
-        - [Verification using assembly]
+        - [One-way set associative cache](#One-way-set-associative-cache)
+        - [Two-way set associative cache](#Two-way-set-associative-cache)
+        - [Verification using assembly](#Verification-using-assembly)
     - [Branch Prediction](#branch-prediction)
-        - [Two-bit simple dynamic branch predictor]
-        - [Integration]
-        - [Testing via assembly] 
-    - [As repo master]     
+        - [Two-bit simple dynamic branch predictor](#Two-bit-simple-dynamic-branch-predictor)
+        - [Integration](#Integration)
+        - [Testing via assembly](#Testing-via-assembly)
+    - [As repo master](#As-repo-master)
 - [What I learned](#what-i-learned)
 - [Mistakes I made](#mistakes-i-made)
 - [What I would do differently](#what-i-would-do-differently)
