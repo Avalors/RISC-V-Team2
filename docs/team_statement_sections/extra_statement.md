@@ -111,13 +111,11 @@ Within the top module adjusted for branch prediction:
 
 We added two new signals:
 
-'''
 // Branch Prediction signals
 
 logic pred_taken;         // From predictor: tells if branch predicted taken
 
 logic prediction_wrong;   // Indicates if prediction was incorrect
-'''
 
 and the PCSrcE logic was altered: 
 
@@ -125,9 +123,7 @@ and the PCSrcE logic was altered:
 
 I also added a flush signal to the hazard unit:
 
-'''
 .flush(flush | prediction_wrong)  // Added prediction_wrong to flush
-'''
 
 After using new signals, we had to update the actual branch prediction module and we obtained:
 
