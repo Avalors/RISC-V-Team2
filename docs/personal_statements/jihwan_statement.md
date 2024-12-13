@@ -90,8 +90,12 @@ Lastly, I believe this project had helped me significantly in reaching a deeper 
 
 ## Mistakes I made
 
+1. When implementing the sign extension module, I struggled in implementing the branch instruction because I still struggled on how the branch instruction machine code would function, especially when it came to deciphering the machine code. Therefore I couldn't implement it fully without the help of my teammates.
 
+2. It took some time in trying to debug the PDF file, even though I have analyzed the problem behind it. It seemed it was due to my lack of understanding of fully understanding  the RISCV CPU architecture at the time, which led to a slight delay in delivering the testbench.
+
+3. Lastly, it took some time for me to understand the concepts of the CPU relative to others, which therefore led to slight delays when trying to deliver/finish the tasks in time. I believe that if I had more time to prepare in advance for the group project, I would have been able to swiftly deliver more results without the help of my teammates. Unfortunately this wasn't the case which is why I think I have relatively less commits than my other teammates especially since we didn't define a clean and organised way in the boundaries of how our tasks were assigned originally.
 
 ## What I would do differently
 
-Overall, besides the downsides, I still believe we worked well as a team, and I am most definitely proud of the work we produced in such a short time. However, as mentioned above, if we were to collaborate again on a RISC-V CPU design, I would ensure a more organised way of dealing with the group project, and make sure that I am more active next time.
+Overall, besides the downsides, I still believe we worked well as a team, and I am most definitely proud of the work we produced in such a short time. However, as mentioned above, if we were to collaborate again on a RISC-V CPU design, I would ensure a more organised way of dealing with the group project, especially when it came down to properly assigning roles and tasks so that they aren't as easily delegated, and additionally study and prepare more in advance to help with the understanding of the RISCV CPU for a more smoother team experience.
