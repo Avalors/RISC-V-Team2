@@ -223,7 +223,31 @@ was set to default.
 
 We implemented a write-through policy (writes update both cache and memory) with direct memory update on writes. 
 
-### Testing and testbenching
+### Testing and testbenching (../../tb/test/cache_tb.cpp)
+
+```
+main:
+    addi x13, x13, 0x1
+    sw x13, 0(x10)
+
+    addi x13, x13, 0x1
+    sw x13, 4(x10)
+
+    addi x13, x13, 0x1
+    sw x13, 8(x10)
+
+    addi x13, x13, 0x1
+    sw x13, 12(x10)
+
+    # Read Test
+    lb x11, 0(x10)   # Read first word, expect cache miss
+    lb x11, 1(x10)   # Read second word, expect cache hit as same code block
+    lb x11, 0(x10)   # Read first word again, expect cache hit
+```
+
+By using the above code we get 4 misses and 3 hits. Upon looking at gtkwave it seems that the store instructions are all the misses and the loads are hits. This is right because the cache implements temporal locality and therefore the store accesses the address and therefore the first load would be a hit.
+
+![image](https://github.com/user-attachments/assets/49b23f1f-1ada-496c-8658-de589986f87f)
 
 
 ## [Two-Way Set Associative Cache](../../rtl/tw_cache.sv) 
