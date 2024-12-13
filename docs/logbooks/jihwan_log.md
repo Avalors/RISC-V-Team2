@@ -33,5 +33,19 @@ I was in charge of designing the **ROM(Instruction Memory Prototype, not actual 
   - Started work on the pdf program/testbench
 
 ### 4/12/2024
-  - Finished up pdf testbench
   - Worked with group in-person to finalise data memory module.
+
+### 8/12/2024
+  - Finished up pdf testbench with Ahmed(Implementing JALR, RET Functionality)
+  - Tested pdf with Ahmed and made sure that it was functioning properly
+
+### 9/12/2024
+  - Started Work on the Cache with Antoine
+  - Drew diagram to illustrate how the Cache could function
+
+### 10/12/2024 
+  - Finalised cache.sv module with the group
+  - Started writing personal statement
+
+### 13/12/2024
+  - Finalised writing personal statement
