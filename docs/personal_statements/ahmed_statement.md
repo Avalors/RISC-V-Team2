@@ -35,6 +35,7 @@
 ## Summary of Contributions
 ---
 ### Lab 4
+---
 
 #### Program Counter
 ##### *Relevant commits*:
@@ -47,7 +48,7 @@
 
 ---
 ### Single cycle
-
+---
 #### sine extension 2
 ##### *Relevant commits*:
 
@@ -59,7 +60,7 @@
 
 ---
 ### Pipeline
-
+---
 #### Fetch
 ##### *Relevant commits*:
 
@@ -76,21 +77,21 @@
 ##### *Relevant commits*:
 ---
 ### Full ISA
-
+---
 #### AUIPC
 ##### *Relevant commits*:
 
 ---
 ### Extra
-
+---
 #### Interrupts
 ##### *Relevant commits*:
 
-
+---
 ## What I learned
 
 
-
+---
 ## Mistakes I made
 
 
