@@ -26,19 +26,13 @@ All prcoessors now include cache memory to mitigate against the disparity betwee
 In order to make memory accesses fast, we have to exploit the principle of locality.
 
 Temporal Locality:
-
   • Locality in time
-  
   • If data used recently, likely to use it again soon
-  
   • How to exploit: keep recently accessed data in higher levels of memory hierarchy
   
 Spatial Locality:
-
   • Locality in space
-  
   • If data used recently, likely to use nearby data soon
-  
   • How to exploit: when access data, bring
 
 At the time of writing, we have a complete working version of `direct-mapped cache`, and a draft of `two-way set associative cache`, which was not fully integrated.
@@ -56,6 +50,42 @@ In order to analyse memory performance, we used two variables, called hit and mi
 Effectiveness of cache memory is dependent on how often a memory access is found in the cache memory in a given level of memory hierarchy. A cache
 “hit” happens when the data or instruction required is found in the cache and therefore there is no need to go to the next level to fetch from memory. A
 miss happens when the data or instruction is not in cache, and a fetch from the main memory is required, thus incurring extra latency.
+
+We tested our cache using assembly files, which tested different characteristics:
+
+1) Sequential read and write pattern
+
+![image](https://github.com/user-attachments/assets/9c59d6bb-5315-4dc0-8282-0184ce70057f)
+
+This test checks:
+  - Sequential write operations at word boundaries (0, 4, 8, 12)
+  - Cache miss behavior on first access (cold misses)
+  - Both temporal locality (rereading 0(x10))
+  - Byte-level access granularity using lb
+
+2) Loop access pattern
+
+![image](https://github.com/user-attachments/assets/448e5dba-24d1-47c6-8859-c25adae05142)
+
+This test checks:
+  - Repeated memory access patterns in a loop
+  - Non-sequential memory access (4→12→8)
+  - Cache behavior with loop iterations
+  - Word-aligned loads
+
+3) Byte store operations
+
+![image](https://github.com/user-attachments/assets/5771977e-a6c7-4324-9b23-67218f455d88)
+
+This test checks:
+  - Byte-level store operations (sb)
+  - Sequential byte writes within a word
+  - Mixed operation patterns (sb followed by lw)
+  - Byte modification and word reads
+  - Overwriting previously stored bytes (0xFF)
+
+Together, these tests cover different access patterns (sequential, looped, random), various data sizes (byte, word), mixed operations (loads and stores),
+cache hit/miss behavior, temporal and spatial locality, memory alignment handling
 
 ## Direct Mapped Cache
 
