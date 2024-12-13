@@ -2,7 +2,7 @@
 
 ## Role
 
-I was in charge of designing the **ALU**, **Register File** and **Mux**, as well as testbenching my own modules, and then working as a team on pipelining, cache memory and branch prediction.
+I was in charge of designing the **ALU**, **Register File** and **Mux** for Lab 4, as well as testbenching my own modules, and then working as a team on pipelining, cache memory and branch prediction.
 I also helped out in designing the **control unit** and its respective testbench. 
 
 ## Timetable details
@@ -63,3 +63,11 @@ I also helped out in designing the **control unit** and its respective testbench
 
 ### 11/12/24
 - Completed direct mapped cache with Antoine and respective testbenches and assemnbly code: [Direct-mapped cache completed](https://github.com/aa6dcc/RISC-V-Team2/commit/ca013aad029b479c8335ec7aebd2990b17f65c63)
+
+### 12/12/24
+- Merged the direct mapped cache onto the full pipline and RV32I version and tested to work successfully: [Merged full pipeline RV32I onto DM cache and tested a TW cache](https://github.com/aa6dcc/RISC-V-Team2/commit/c118a1d49282d4a143e912e7bd6a1d6fee3edfa4)
+- Started on the testing for a two-way set associative cache and top-level integration testing
+
+### 13/12/24
+- Finalised documentation for logbooks, personal statements, and team statements
+- Started on some extra features on top of stretch goals as a team (e.g branch prediction, two-way set associative cache, interrupts)
