@@ -620,24 +620,32 @@ The pipelining stages in order are:
   - Writeback
 
 For the fetch stage:
+
   - Branch predictor makes prediction (pred_taken signal)
+
   - Program counter uses prediction to speculatively fetch:
       - If pred_taken: PC = PC + ImmOp - pred_taken is for speculative execution, flush is for correction if the speculation was wrong
       - If not pred_taken: PC = PC + 4
    
 and for the execute stage:
+
   - Actual branch outcome (BranchCondE) is compared with prediction
+
   - On misprediction:
       - PCsrcE set to correct path
       - Flush signal triggered
       - Pipeline flushed to handle misprediction
 
 For the branch prediction module, I set the default state as STRONGLY NOT TAKEN. We had also considered implementing a static predictor with dynamic initial allocation: 
+
   - Forward branches (positive offset) → Start at WEAKLY_NOT_TAKEN
+
   - Backward branches (negative offset) → Start at WEAKLY_TAKEN
 
 Prediction is based on the most significant bit (MSB):
+
   - MSB = 1: Predict taken
+
   - MSB = 0: Predict not taken
 
 I implemetented the simple dynamic 2-bit branch prediction using historical information for prediction. The logic behind this is: if branch was taken last time, predict will also be taken next time: [commit](https://github.com/aa6dcc/RISC-V-Team2/commit/6bf5a97c89c84997f2d1140afb834e01b31e491c)
