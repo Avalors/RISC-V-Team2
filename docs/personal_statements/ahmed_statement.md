@@ -2,29 +2,32 @@
 
 
 **CID:** 02427719
+
 **Name:** Ahmed Hamid
+
 **Github Username:** Avalors
+
 ---
 ## Overview
 - [Summary of Contributions](#summary-of-contributions)
     - [Lab 4](#lab-4)
-          -[program counter]()
-          -[instruction memory]()
-          -[sine extension 1]()
-    - [Single Cycle]()
-          -[sine extension 2]()
-          -[data memory]()
-          -[pdf debugging]()
-    - [Pipeline]()
-          -[Fetch]()
-          -[stalling]()
-          -[flushing]()
-          -[forwarding]()
-          -[debugging]()
-    -[Full ISA]()
-          -[AUIPC]()
-    - [Extras]()
-          -[Interrupts]()
+        - [program counter](#program-counter)
+        - [instruction memory](#instruction-memory)
+        - [sine extension 1](#sine-extension-1)
+    - [Single Cycle](#Single-cycle)
+        - [sine extension 2](#sine-extension-2)
+        - [data memory](#data-memory)
+        - [pdf debugging](#pdf-debugging)
+    - [Pipeline](#pipeline)
+        - [Fetch](#Fetch)
+        - [stalling](#stalling)
+        - [flushing](#flushing)
+        - [forwarding](#forwarding)
+        - [debugging](#debugging)
+    - [Full ISA](#Full-ISA)
+        - [AUIPC](#AUIPC)
+    - [Extras](#Extra)
+        - [Interrupts](#Interrupts)
 - [What I learned](#what-i-learned)
 - [Mistakes I made](#mistakes-i-made)
 - [Next steps](#Next-steps)
