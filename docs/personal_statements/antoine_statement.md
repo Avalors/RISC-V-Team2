@@ -652,7 +652,7 @@ Prediction is based on the most significant bit (MSB):
 
   - MSB = 0: Predict not taken
 
-I implemetented the simple dynamic 2-bit branch prediction using historical information for prediction. The logic behind this is: if branch was taken last time, predict will also be taken next time: [!commit](https://github.com/aa6dcc/RISC-V-Team2/commit/6bf5a97c89c84997f2d1140afb834e01b31e491c)
+I implemetented the simple dynamic 2-bit branch prediction using historical information for prediction. The logic behind this is: if branch was taken last time, predict will also be taken next time: [commit](https://github.com/aa6dcc/RISC-V-Team2/commit/6bf5a97c89c84997f2d1140afb834e01b31e491c)
 
 We want to maintain a table of branch instructions (called branch target buffer, which includes destination address of branch) and what happened most recently.
 
