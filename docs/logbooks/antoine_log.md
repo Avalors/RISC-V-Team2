@@ -89,6 +89,14 @@ I also took on the responsability of being repo master and designed much of the 
 
 ![image](https://github.com/user-attachments/assets/889df366-2875-471d-a3ea-9ac5b6f69d7e)
 
+## 12/12/2024
+    - Worked on branch prediction
+    - Worked on the README
+
+## 13/12/2024
+    - Fully implemented the branch prediction team statement as well as the cache team statement
+    - Worked on branch prediction and integration
+    - Wrote my personal statement
 
 # Work by section
 
@@ -139,7 +147,7 @@ I also took on the responsability of being repo master and designed much of the 
  
 ![image](https://github.com/user-attachments/assets/c253fee4-26cc-48c4-9710-c71e12a0a7ed)
 
-
+```SV
     always_comb begin
         case(AddrMode)
         
@@ -192,6 +200,7 @@ I also took on the responsability of being repo master and designed much of the 
 
 
     assign RD = temp; 
+```
 
 In the code above, we created a temp variable which allows us to implement 8 different instructions (store byte, load byte... defined as above by concatenation or using byte-by-byte little endian assignment) and is then assigned to RD
   4. Worked on the first version of data memory testbench, integrated within the top_tb.cpp program.
@@ -225,7 +234,8 @@ Originally started off with a 3-bit AddrMode signal, but later amended that to 4
 
 I used a reset signal for the testbenching to make sure the cache was empty which isn't used for the top level implementation. 
 I had some issues calculating the hit and miss ratios and implemented two different logics for read and write instructions.
-    
+
+    ```SV
         //Read logic: case (AddrMode) 
             3'b000: out = {{24{cache_mem[set].data[7]}}, cache_mem[set].data[7:0]};   // LB (signed byte)
             3'b001: out = {{16{cache_mem[set].data[15]}}, cache_mem[set].data[15:0]}; // LH (signed halfword)
@@ -266,7 +276,7 @@ I had some issues calculating the hit and miss ratios and implemented two differ
                     cache_mem[set].data <= RD;   // Fetch data from memory
                 end
             end
-
+    ```
 ![WhatsApp Image 2024-12-11 at 15 32 39_abd640c8](https://github.com/user-attachments/assets/3ed575b8-904c-4395-b56a-1d8fe2f7d851)
 
   2. Fully implemented the two-way set associative cache using an LRU policy
