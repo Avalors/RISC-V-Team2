@@ -9,7 +9,7 @@ I also helped out in designing the **control unit** and its respective testbench
 
 ### 14/11/2024
 - Got familiar with the top level design of RISC V, understanding the different units
-- Created a first draft program alu.sv and registerfile.sv files for Lab 4 on separate branch then merged
+- Created a first draft program alu.sv and registerfile.sv files for Lab 4 on separate branch then merged: [RegisterFile, ALU, and MUX done](https://github.com/aa6dcc/RISC-V-Team2/commit/c84f24871c5a7911610828e2e62cf69224e74bcf)
 - Got to meet other team members
 
 ### 21/11/2024
@@ -18,11 +18,11 @@ I also helped out in designing the **control unit** and its respective testbench
 
 ### 25/11/2024
 - Uploaded formatting for individual personal statements to repo.
-- Changed the alu.sv and controlunit.sv 
+- Changed the alu.sv and controlunit.sv: [Added controlunit](https://github.com/aa6dcc/RISC-V-Team2/commit/5fa1a412a6342c5cc21ca651c8444c2814a2f9e5) , [Fixed the control unit testbench and brought in the new doit.sh script](https://github.com/aa6dcc/RISC-V-Team2/commit/5773432255b8a4a536ed3b52fe3cfc900075aa9f)
 
 ### 27/11/24   
 - Came together as a team to debug the testbenches for alu, mux, sign extension, and top-level as well as the individual modules
-- Antoine did livehsare on VScode where we all worked together on his IDE in which he committed to the github
+- Antoine did livehsare on VScode where we all worked together on his IDE in which he committed to the github: [Restructure folder](https://github.com/aa6dcc/RISC-V-Team2/commit/f9f399da2d43315a25bb588428c69cf0d946753d) , [Added .gitignore to ignore large files and gave our team merge conflicts](https://github.com/aa6dcc/RISC-V-Team2/commit/9af8479508d7274a99b07ba0c5b31bc86df42bb3)
 
 ### 28/11/24
 - Fixed the controlunit testbench, refactored doit.sh script, and added gitignore of obj_dir
@@ -30,12 +30,12 @@ I also helped out in designing the **control unit** and its respective testbench
 - Updated logbook and personal statement
 
 ### 29/11/24
-- Met up as a team to fix the program counter, rom, and top testbenches and successfully got all verification test successful
+- Met up as a team to fix the program counter, rom, and top testbenches and successfully got all verification test successful: [Worked on Antoine's Liveshare of VSCode as a team for debugging and testbenching](https://github.com/aa6dcc/RISC-V-Team2/commit/e3fd87fdfd4d9f00b7447949e95964d28db9bb20#diff-9b9a6efe51731ef72a27f44c26c78fb4b1e55f3e88676bf0140041f7af99e2ee): For more detail and evidence see [Team Log (27/11)](../logbooks/team_log.md#team-meetup-27-11).
 
 
 ### 30/11/24
 - Worked with Ahmed to fix the top testbench to write to gtkwave to simulate our counter
-- Completed a new instr_mem.sv and respective testbench to be able to directly use complie.sh to compile the assembly file into hex and load into instruction memory (replacing rom.sv in this case)
+- Completed a new instr_mem.sv and respective testbench to be able to directly use complie.sh to compile the assembly file into hex and load into instruction memory (replacing rom.sv in this case): [Instruction Memory implementation and Lab 4 debugging: Counter fully working](https://github.com/aa6dcc/RISC-V-Team2/commit/edc939dadaaca6523c7ef921765ea0f2ed3c03f0): For more detail and evidence see [Team Log (30/11)](../logbooks/team_log.md#team-meetup-30-11).
     
 ### 01/12/24
 - Worked on the foundation of the f1_lights.sv and the respective testbench: [F1Lights asm code and respective testbench](https://github.com/aa6dcc/RISC-V-Team2/commit/0a6c948daec468a1f3c2d683eaa48e9bb5bda528) 
