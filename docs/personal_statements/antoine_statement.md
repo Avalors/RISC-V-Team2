@@ -700,8 +700,6 @@ This is a two-level decision making:
 
 The branch predictor I fully implemented was fully tested by Elson's testbench, unfortunately we didn't have time to fully integrate it.
 
-![image](https://github.com/aa6dcc/RISC-V-Team2/commit/28ca6bac0710ecb4394eee240b3122a09837c235)
-
 #### Integration
 
 In order to try and integrate the 2-bit branch predictor, I had to make changes to the program counter and top module. 
