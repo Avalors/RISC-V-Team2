@@ -26,13 +26,19 @@ All prcoessors now include cache memory to mitigate against the disparity betwee
 In order to make memory accesses fast, we have to exploit the principle of locality.
 
 Temporal Locality:
+
   • Locality in time
+  
   • If data used recently, likely to use it again soon
+  
   • How to exploit: keep recently accessed data in higher levels of memory hierarchy
   
 Spatial Locality:
+
   • Locality in space
+  
   • If data used recently, likely to use nearby data soon
+  
   • How to exploit: when access data, bring
 
 At the time of writing, we have a complete working version of `direct-mapped cache`, and a draft of `two-way set associative cache`, which was not fully integrated.
