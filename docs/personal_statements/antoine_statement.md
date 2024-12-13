@@ -10,7 +10,7 @@
 - [Summary of Contributions](#summary-of-contributions)
     - [Lab 4](#lab-4)
         - [Top Level Testbenching](#Top-Level-Testbenching)
-        - [Top Level Integration])(#Top-Level-Integration)
+        - [Top Level Integration](#Top-Level-Integration)
         - [Doit.sh script](#Doit.sh-script)
         - [Assembly instructions](#Assembly-instructions)     
     - [Single Cycle](#Single-cycle)
