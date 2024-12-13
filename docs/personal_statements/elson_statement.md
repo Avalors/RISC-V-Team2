@@ -12,6 +12,8 @@
 
 - I was responsible for team debugging both in person and online using the VS Code Live Share feature. This allowed me to directly contribute by editing code on my teammates' IDEs during collaboration sessions, although some commits were made by them.
 
+[Contributions](#contributions)
+
 ## Contributions
 
 The evidence for the [summary](#summary) section is linked below.
