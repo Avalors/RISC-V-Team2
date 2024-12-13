@@ -97,4 +97,13 @@ The branch_prediction module was implemented relatively fast and was proved succ
 
 ![WhatsApp Image 2024-12-11 at 22 02 57_81b446a5](https://github.com/user-attachments/assets/44bd6959-c3e1-4a16-9515-41f4826ac7de)
 
+For the program counter, we implemented a two-level MUX:
+    - First choose based on prediction
+    - Then override with PCsrcE if prediction was wrong
+
+Here we can see the edited program counter module which accounts for branch prediction and imports signals from pipelining such as stall. 
+
+![image](https://github.com/user-attachments/assets/7645b9a2-9c57-4b4c-a0b7-ccb6c5900c5f)
+
+
 
