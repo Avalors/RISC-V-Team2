@@ -1,4 +1,4 @@
-# Extra
+# Branch Prediction
 
 | Table of Contents |
 |-|
