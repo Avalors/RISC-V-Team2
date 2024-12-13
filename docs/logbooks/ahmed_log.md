@@ -2,8 +2,7 @@
 
 ## Role
 
-I was initially in charge of designing the **program counter**, as well as testbenching my own modules, and then working as a team on pipelining, cache memory and branch prediction.
-I also worked on the **instruction ROM**, **sign extension**, **Data memmory**, **hazard unit** modules respectively.
+I implemented the **program counter** and **data memory** as well as implemented the **pipelining** logic including for: **flushing**, **stalling** and **forwarding** . I resolved all the conflicts when implmenting the single-cycle full RISCV ISA onto the pipeline and made significant contributions to the **sign extension unit**. I created the initial **instruction ROM** built off Jihwans inital model, which was later replaced by Elsons and attempted to implement **interrupts**.
 
 ## Timetable details
 
