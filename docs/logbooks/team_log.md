@@ -84,12 +84,86 @@ and the last few cycles resemble this:
   - We can now move onto the pipelining, hazard control...
 ![image](https://github.com/user-attachments/assets/1be4de09-46ea-4221-9d46-4a927ca86585)
 
+## Team meetup (01/12)
+  - Went over the project brief instructions
+  - Created a new branch for single cycle, and the README for the rtl folder
+  - Allocated roles for the next few days, from the f1 assembly file, to amending the sign extension or implementing the data memory
 
+## Team meetup (02/12)
+  - Ahmed fixed the sign extension module and testbench, then amended the top file accordingly
+  - Ahmed and Antoine worked on implementing the data memory module as well as the data memory test (little_endian.s)
+  - Ahmed and Antoine had to add a AddrMode signal, which also had to be added to the control unit module
+  - Elson worked on the f1 lights module and testbench
+  - The next objective is to implement the data memory and pdf testbench 
 
+## Team meetup (04/12)
+  - We met today to debug the pdf testbench, the data memory testbench (included in the top testbench), instruction memory testbench too
+  - We used gtkwave to verify the correct values were appearing
+  - We're also running tests on the f1 assembly file and testbench
 
+![IMG_4482](https://github.com/user-attachments/assets/131e9d23-55db-48a8-94be-37f7cd7227ad)
 
+## Team meetup (05/12)
+  - We ran a fully functional data memory for the first time, hence concluding single cycle
 
+![WhatsApp Image 2024-12-05 at 12 44 28_d4c94fb7](https://github.com/user-attachments/assets/f7c1c6ea-b557-4c85-9163-8a8124b108ff)
 
+  - We then ran some tests using the pdf testbench (as well as creating a file to plot the different distributions) and f1 lights, which we had to amend
+  - f1_lights had some issues which needed amending, and forced us to consider how to randomly generate numbers
 
+![IMG_4488](https://github.com/user-attachments/assets/7676f42a-3b97-456e-b2af-5446f02c6ca2)
 
+## Team meetup (06/12)
+  - Debugging session
+  - Updated the README
+  - Started thinking about how to implement the pipelining at the next stage
 
+Elson working hard on his birthday!
+
+![IMG_4494](https://github.com/user-attachments/assets/f4e1a226-f472-4e1b-81ad-f74eda5a4290)
+
+## Team meetup (07/12)
+  - Had a quick call to see at what stage we all were
+  - Split the roles for the pipeline stage
+
+## Team meetup (08/12)
+  - Made amendments to the control unit and fully debugged the PDF and the f1_lights
+  - Started working on implementing pipelining modules
+
+## Team meetup (09/12)
+  - Worked on implementing a high-level diagram
+  - Wrote the team statements for each branch
+  - Worked on the pipeline
+
+## Team meetup (10/12)
+  - Final implementation of the instructions
+  - Pipelining done
+  - Cache done, debugged and integrated
+
+Planning the week out:
+
+![IMG_4506](https://github.com/user-attachments/assets/7e8a9971-efcc-4d83-81d5-2d3cb69a4b93)
+
+## Team meetup (11/12)
+  - Ahmed: completed 5-stage pipelining
+  - Elson looked at potentially implementing code coverage 
+  - Elson and Antoine debugged the direct mapped cache and changed AddrMode from 3 bits to 4 bits and so had to make amendments in the top file, data memory and control unit
+  - Elson and Antoine tested branch prediction which was a success
+
+![image](https://github.com/user-attachments/assets/89235d3d-c5cf-495f-a5f1-e8f1d3571e32)
+
+![WhatsApp Image 2024-12-11 at 17 50 54_a770b903](https://github.com/user-attachments/assets/e6f9fa33-87fe-43b5-979d-d0a94055bdc2)
+
+## Team meetup (12/12)
+  - Worked on admin work
+  - Added finishing touches to pipelining
+  - Worked on 1-way and 2-way cache
+  - Branch prediction
+
+## Team meetup(13/12)
+  - Finished everything
+  - Synced the different branches (when relevant)
+  - Updated personal statements
+  - Did team statements
+  - Worked on interrupts and integrated branch prediction
+  - DONE!
