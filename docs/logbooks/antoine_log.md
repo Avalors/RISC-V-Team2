@@ -97,6 +97,7 @@ I also took on the responsability of being repo master and designed much of the 
     - Fully implemented the branch prediction team statement as well as the cache team statement
     - Worked on branch prediction and integration
     - Wrote my personal statement
+    - Two way cache was fully implemented and functional
 
 # Work by section
 
@@ -278,7 +279,7 @@ I had some issues calculating the hit and miss ratios and implemented two differ
 
 ![WhatsApp Image 2024-12-11 at 15 32 39_abd640c8](https://github.com/user-attachments/assets/3ed575b8-904c-4395-b56a-1d8fe2f7d851)
 
-  2. Fully implemented the two-way set associative cache using an LRU policy
+  2. Fully implemented the two-way set associative cache using an LRU policy, fully functional
 
 Built on top of the direct-mapped cache, but changed the tag from 27 bits to 28 bits
 
