@@ -461,4 +461,5 @@ Compared to the direct-mapped cache, the main improvements were:
 
 ## Conclusion
 
+We were able to fully implement the direct mapped cache and were proud of our work, and despite having a draft ready for the two-way cache, we didn't have time to integrate it. While testing it, we also realised it had the same hit/miss proportion as the direct-mapped cache.
 
