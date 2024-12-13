@@ -33,7 +33,7 @@ The pipelining stages in order are:
 For the fetch stage:
   - Branch predictor makes prediction (pred_taken signal)
   - Program counter uses prediction to speculatively fetch:
-      - If pred_taken: PC = PC + ImmOp
+      - If pred_taken: PC = PC + ImmOp - pred_taken is for speculative execution, flush is for correction if the speculation was wrong
       - If not pred_taken: PC = PC + 4
    
 and for the execute stage:
@@ -105,5 +105,24 @@ Here we can see the edited program counter module which accounts for branch pred
 
 ![image](https://github.com/user-attachments/assets/7645b9a2-9c57-4b4c-a0b7-ccb6c5900c5f)
 
+Within the top module adjusted for branch prediction:
+
+![image](https://github.com/user-attachments/assets/f586d0bc-fb26-45a5-b4ea-66a5e642a9c4)
+
+We added two new signals:
+
+// Branch Prediction signals
+logic pred_taken;         // From predictor: tells if branch predicted taken
+logic prediction_wrong;   // Indicates if prediction was incorrect
+
+and the PCSrcE logic was altered: 
+
+![image](https://github.com/user-attachments/assets/a20510a6-5f12-4932-ae97-b4d2f2d7e2d6)
+
+I also added a flush signal to the hazard unit:
+
+.flush(flush | prediction_wrong)  // Added prediction_wrong to flush
+
+After using new signals, we had to update the actual branch prediction module and we obtained:
 
 
