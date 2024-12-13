@@ -199,6 +199,10 @@ For the loop control, we chose to use bne (branch if not equal). The second bne 
 bne     a1, t1, iloop       # if a1 = 255, branch to iploop
 bne     t1, zero, mloop     #  ... else always brand to mloop
 ```
+Here is an example of me using GTKwave: in this example I was running the 'counter.s' file
+
+This is from the 'waveform.vcd' file:
+![image](https://github.com/user-attachments/assets/bfb0e1e4-b835-4a2b-ad42-11fff2f5103b)
 
 `or.s` is a simple RISC-V assembly program that demonstrates the OR logical operation. It loads two values and performs a bitwise OR between them.
 For the initial value loading, we load a0 with decimal 15 (binary 00001111)
@@ -254,6 +258,7 @@ main:
 # regfile[x11] = 32'b0, therefore using 'base + offset' addressing we accessing the first 4 (0 through to 3)
 # memory locations in the data memory.
 ```
+![image](https://github.com/user-attachments/assets/551c4b0f-357e-4647-baf3-b0616f4f2a73)
 
 I then tried to make a draft for the data memory, and then updated it with Ahmed, as seen here [commit](https://github.com/aa6dcc/RISC-V-Team2/blob/3e585a9d6a521a006d7788d3563aa2bd31bece07/rtl/data_mem.sv).
 We chose to use 20 bits for the width of the address (leaving us with 2^20 total memory locations), and used an intermediate temp register for combinational logic. We also used a continuous assignment for read data. 
@@ -318,6 +323,8 @@ else if(AddrMode == 4'b0111)begin
             array[A+3] <= WD[31:24]; // stores the most significant byte
         end
 ```
+
+![image](https://github.com/user-attachments/assets/692bd481-65ae-44a2-bd66-2e4efb3db5f5)
  
 I also tried to work on a draft for the testbench in order to develop some intuition, but my draft was never fully used ([commit](https://github.com/aa6dcc/RISC-V-Team2/commit/2b868068dcbeb311ae430f8b233fe275991bf74d)). My logic was to try and make many `if` statements, which would then run different instructions depending on the clock cycle (which could tell us if the data memory was synced as expected). The idea was to use gtkwave to see what instructions should be running on what clock cycle and then amend the code according to that (as all the tests would be within a large for loop). This would imply making many if statements ie. (if == 2) where i corresponds to the clock cycle to make sure the module and testbench are synchronised. 
 I didn't get to spend much time on this draft and so quickly moved on to the cache. 
