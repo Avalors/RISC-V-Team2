@@ -237,7 +237,96 @@ xor a0, a0, a1
 
 #### Data memory
 
+For data memory, I started working with Ahmed and we both agree to opt for a little-endian storage
+
+![image](https://github.com/user-attachments/assets/dead0385-ac2f-406e-a7cc-0d8518593d85)
+
+I chose to implement a `little_endian.s` assembly file, a program that demonstrates memory operations and byte-level access, testing both store word (sw) and load byte (lb) instructions. 
+```ASM
+main:
+    li x10, 0x12345678      # Pseudo-instruction: regfile[x10] = 0x12345678
+    sw x10, 0(x11)          # Store the word from regfile[x10] into data location indexed 0
+    lb x12, 0(x11)          # Load first byte  | regfile[x12] = 0x78
+    lb x13, 1(x11)          # Load second byte | regfile[x13] = 0x56
+    lb x14, 2(x11)          # Load third byte  | regfile[x14] = 0x34
+    lb x10, 3(x11)          # Load fourth byte | regfile[x10] = 0x12
+    
+# regfile[x11] = 32'b0, therefore using 'base + offset' addressing we accessing the first 4 (0 through to 3)
+# memory locations in the data memory.
+```
+
+I then tried to make a draft for the data memory, and then updated it with Ahmed, as seen here [commit](https://github.com/aa6dcc/RISC-V-Team2/blob/3e585a9d6a521a006d7788d3563aa2bd31bece07/rtl/data_mem.sv).
+We chose to use 20 bits for the width of the address (leaving us with 2^20 total memory locations), and used an intermediate temp register for combinational logic. We also used a continuous assignment for read data. 
+```SV
+assign RD = temp;
+```
+We then implemented all the RISC-V load/store operations with little-endian byte ordering. Most of this came from Ahmed, but I was still able to contribute to this section. 
+```SV
+// load byte
+        3'b000:begin
+            temp = {24{array[A][7]},array[A]};
+        end
+        
+        // load half
+        3'b001:begin
+            temp = {{16{array[A+1][7]}}, array[A+1], array[A]};
+        end
+
+        // load word
+        3'b010:begin
+            temp = {array[A+3], array[A+2], array[A+1], array[A]};
+        end
+
+        // load byte unsigned
+        3'b011:begin
+            temp = {24'b0, array[A]};
+        end
+
+
+        // load half unsigned
+        3'b100:begin
+            temp = {16'b0, array[A+1], array[A]};
+        end
+
+
+        // store byte
+        3'b101:begin
+            array[A] = WD[7:0];
+        end
+        
+        // store half
+        3'b110:begin
+            array[A] = WD[7:0];
+            array[A+1] = WD[15:8];
+        end
+
+
+        // store word
+        3'b111:begin
+            array[A] = WD[7:0]; // stores the least significant byte
+            array[A+1] = WD[15:8];
+            array[A+2] = WD[23:16];
+            array[A+3] = WD[32:24]; // stores the most significant byte
+        end
+```
+I also got to show my understanding of little-endian storage by working on the synchronous version of the store word operation:
+```SV
+else if(AddrMode == 4'b0111)begin
+            array[A] <= WD[7:0]; // stores the least significant byte
+            array[A+1] <= WD[15:8];
+            array[A+2] <= WD[23:16];
+            array[A+3] <= WD[31:24]; // stores the most significant byte
+        end
+```
+ 
+I also tried to work on a draft for the testbench in order to develop some intuition, but my draft was never fully used ([commit](https://github.com/aa6dcc/RISC-V-Team2/commit/2b868068dcbeb311ae430f8b233fe275991bf74d)). My logic was to try and make many `if` statements, which would then run different instructions depending on the clock cycle (which could tell us if the data memory was synced as expected). The idea was to use gtkwave to see what instructions should be running on what clock cycle and then amend the code according to that (as all the tests would be within a large for loop). This would imply making many if statements ie. (if == 2) where i corresponds to the clock cycle to make sure the module and testbench are synchronised. 
+I didn't get to spend much time on this draft and so quickly moved on to the cache. 
+
 #### Analyse.py
+
+I briefly tried to work on using plotly (Python) to show the gaussian, noisy, sine, triangle graphs of the PDF, but Elson picked up on the project instead and fully implemented `graphs.py`.
+My idea was to make a Python script which serves as a performance analysis and visualization tool for a CPU implementation. It would process test output logs to extract key performance metrics, particularly focusing on cache behavior and branch prediction accuracy. Through a command-line interface, users could have run the tool in three modes: analyzing instruction testbench results, plotting performance data, or running a complete automated demo that handles testing and visualization. 
+The extended objective would then have been to generate various graphs showing cache hit rates and branch prediction accuracy, helping validate the CPU implementation and identify potential performance optimizations.
 
 ### Cache
 
