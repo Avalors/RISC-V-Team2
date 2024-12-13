@@ -223,6 +223,9 @@ was set to default.
 
 We implemented a write-through policy (writes update both cache and memory) with direct memory update on writes. 
 
+### Testing and testbenching
+
+
 ## [Two-Way Set Associative Cache](../../rtl/tw_cache.sv) 
 
 The tag was changed from 27 to 28 bits (to compensate for fewer sets), and the number of sets went from 8 to 4. The cache line was a total of 61 bits.
