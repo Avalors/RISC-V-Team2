@@ -70,4 +70,4 @@ I also helped out in designing the **control unit** and its respective testbench
 
 ### 13/12/24
 - Finalised documentation for logbooks, personal statements, and team statements
-- Complete some extra features on top of stretch goals as a team (e.g branch prediction, two-way set associative cache, interrupts)
+- Started on some extra features on top of stretch goals as a team (e.g branch prediction, two-way set associative cache, interrupts)
