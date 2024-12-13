@@ -118,17 +118,52 @@ and the last few cycles resemble this:
   - Updated the README
   - Started thinking about how to implement the pipelining at the next stage
 
+Elson working hard on his birthday!
+
 ![IMG_4494](https://github.com/user-attachments/assets/f4e1a226-f472-4e1b-81ad-f74eda5a4290)
 
 ## Team meetup (07/12)
   - Had a quick call to see at what stage we all were
   - Split the roles for the pipeline stage
 
+## Team meetup (08/12)
+  - Made amendments to the control unit and fully debugged the PDF and the f1_lights
+  - Started working on implementing pipelining modules
 
+## Team meetup (09/12)
+  - Worked on implementing a high-level diagram
+  - Wrote the team statements for each branch
+  - Worked on the pipeline
 
+## Team meetup (10/12)
+  - Final implementation of the instructions
+  - Pipelining done
+  - Cache done, debugged and integrated
 
+Planning the week out:
 
+![IMG_4506](https://github.com/user-attachments/assets/7e8a9971-efcc-4d83-81d5-2d3cb69a4b93)
 
+## Team meetup (11/12)
+  - Ahmed: completed 5-stage pipelining
+  - Elson looked at potentially implementing code coverage 
+  - Elson and Antoine debugged the direct mapped cache and changed AddrMode from 3 bits to 4 bits and so had to make amendments in the top file, data memory and control unit
+  - Elson and Antoine tested branch prediction which was a success
 
+![image](https://github.com/user-attachments/assets/89235d3d-c5cf-495f-a5f1-e8f1d3571e32)
 
+![WhatsApp Image 2024-12-11 at 17 50 54_a770b903](https://github.com/user-attachments/assets/e6f9fa33-87fe-43b5-979d-d0a94055bdc2)
 
+## Team meetup (12/12)
+  - Worked on admin work
+  - Added finishing touches to pipelining
+  - Worked on 1-way and 2-way cache
+  - Branch prediction
+
+## Team meetup(13/12)
+  - Finished everything
+  - Synced the different branches (when relevant)
+  - Updated personal statements
+  - Did team statements
+  - Worked on interrupts and integrated branch prediction
+  - DONE!
