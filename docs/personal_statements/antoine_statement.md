@@ -776,9 +776,13 @@ The loop:
 ### As repo master
 
 I got to write the team statements for:
+
 	- lab 4
+
  	- single cycle
+
   	- cache
+
    	- branch prediction
 
 I also designed the entire README, organised the repo, took care of the team logbook and regularly updated it.
