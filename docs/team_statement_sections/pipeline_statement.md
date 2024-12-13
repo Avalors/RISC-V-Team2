@@ -29,7 +29,12 @@ Other delays that reduce the effectiveness of a pipeline, come from **control ha
 Despite this, this **data hazard stall** cannot be circumvented in our case for load instructions where a stall is still necessassary as the correct data is an output of the data memory instead of the ALU, hence requiring for us to make the bypass whilst its in the write-back stage (for a 5 stage pipeline
 
 ## Design Specification
-We opted to implement a 5 stage pipline based on the notes in Lecture 8, splitting the harware into: FETCH, DECODE, EXECUTE, MEMORY and 
+We opted to implement a 5 stage pipline based on the notes in Lecture 8, splitting the harware into: 
+-FETCH 
+-DECODE 
+-EXECUTE 
+-MEMORY
+-WRITE-BACK
 
 
 The reason for this is
