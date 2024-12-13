@@ -26,6 +26,8 @@ ________________________________________________________________________________
         - [Full RV32I implemented](#full-rv32i-implemented)
     - [Cache](#Cache)
         - [Testing DM_Cache](#dm-cache)
+    - [Branch Prediction](#branch-predicition)
+        - [Branch Prediction Testing](#branch-predicition-testing)
 - [What I learned](#what-i-learned)
 - [Mistakes I made](#mistakes-i-made)
 - [What I would do differently](#what-i-would-do-differently)
@@ -37,6 +39,8 @@ ________________________________________________________________________________
 - I was in charge of implementing the **complete RV32I instruction set** and did testbenching with assembly codes for every instruction. 
 
 - I was responsible for team debugging both in person and online using the VS Code Live Share feature. This allowed me to directly contribute by editing code on my teammates' IDEs during collaboration sessions, although some commits were made by them.
+
+- I also introduced the VSCode Liveshare feature to my team for us to work more efficiently on one IDE durng debugging sessions
 
 ## Contributions
 
@@ -283,6 +287,8 @@ In this implementation, I was responsible for testing a set of RV32I instruction
 
 Each test performs an operation and then checks whether the result matches an expected value. If the result matches, the program proceeds to the next test; otherwise, it jumps to a fail block. If all tests pass, the program ends successfully, indicating success with a special value (150).
 
+<img width="547" alt="FullRV32I" src="https://github.com/user-attachments/assets/d114aaa6-9fb9-421b-b083-97e6cf5a3f15" />
+
 **Test Sequence**
 The tests are organized sequentially, where each test checks a different RV32I instruction. Below is a breakdown one sample of the assembly code for R-type instructions:
 
@@ -323,7 +329,6 @@ Here I worked on a initial testing branch for cache branched from Single-Cycle w
 
 - [Edited direct mapped cache.sv, added testbenches and asm code for testing](https://github.com/aa6dcc/RISC-V-Team2/commit/7a61fd2918b27e52af0d4cc86411fd7ff472ffdd)
 - [Direct-mapped cache completed](https://github.com/aa6dcc/RISC-V-Team2/commit/ca013aad029b479c8335ec7aebd2990b17f65c63)
-- [Completed branch prediction testbench and tested: Works as individual module](https://github.com/aa6dcc/RISC-V-Team2/commit/86b56e701d798e3d486f71c5a5f6acf23f11edd5)
 - [Merged full pipeline RV32I onto DM cache and tested a TW cache: TW cache not completely successful yet
 ](https://github.com/aa6dcc/RISC-V-Team2/commit/c118a1d49282d4a143e912e7bd6a1d6fee3edfa4)
 
@@ -331,16 +336,24 @@ I was mainly responsible for doing the testbenching for the direct mapped cache 
 
 **Cache Testing Procedure**:
 1. Initial Testing (Before Integration):
+
+<img width="790" alt="Cache" src="https://github.com/user-attachments/assets/1d0412b0-cc71-4539-8e5d-d7ecb945931b" />
+
 I initially tested the cache as an independent module, verifying how it handles memory accesses (reads and writes).
+
 By using specific test code, I monitored cache hits and misses. For example, if I executed a store instruction followed by a load instruction, the cache would miss on the first access (store), but the subsequent load would hit, demonstrating temporal locality.
 
-2. Hit and Miss Analysis:
+3. Hit and Miss Analysis:
 During testing, the results showed that the cache experienced:
+
 <img width="692" alt="Screenshot 2024-12-13 at 5 45 17 PM" src="https://github.com/user-attachments/assets/5d15187c-4285-40c9-9491-de1e9a8b1822" />
+
 4 misses and 3 hits when using the store instructions.
 This was because the store instructions caused the cache to miss, but subsequent loads from the same address hit due to temporal locality (i.e., data is reused shortly after it is written).
 Upon further investigation, I found that if you preloaded data in the program.hex file (which initializes memory), the cache hit behavior improved:
+
 <img width="691" alt="Screenshot 2024-12-13 at 5 45 28 PM" src="https://github.com/user-attachments/assets/f8b5a292-981f-4df4-af46-3f6079d2044a" />
+
 2 hits and 1 miss were observed, which matched the expected behavior.
 The first load instruction resulted in a miss, but the second load instruction hit, demonstrating spatial locality (i.e., nearby memory locations are likely to be accessed soon after).
 
@@ -351,6 +364,92 @@ After ensuring the cache worked on its own, I integrated the direct-mapped cache
 I was able to observe cache behavior through tools like gtkwave, which allowed me to visualize cache accesses in terms of hits and misses.
 For example, when I executed store/load instructions, I could see the cache miss initially due to the store, but subsequent loads would hit, confirming the expected behavior based on the locality principles.
 
+### Branch Prediction
+
+#### Branch Prediciton Testing
+- [Completed branch prediction testbench and tested: Works as individual module](https://github.com/aa6dcc/RISC-V-Team2/commit/86b56e701d798e3d486f71c5a5f6acf23f11edd5)
+
+<img width="477" alt="Screenshot 2024-12-11 at 10 02 47 PM" src="https://github.com/user-attachments/assets/4b8c230f-a4ec-46de-9756-8a4edd48b53a" />
+
+I designed the testbench using the Google Test framework, coupled with a custom simulation environment (sync_testbench.h). This allowed me to create a structured and repeatable set of tests for the branch predictor module. The primary objectives of the testbench were to verify:
+
+- Reset behavior: Ensuring the branch predictor initializes to a known state.
+- State transitions: Testing transitions across all states in the state machine, including edge cases.
+- Prediction accuracy: Validating the correctness of the predictions against expected outcomes.
+
+**Test Cases**
+1. Reset Behavior Test
+The goal of this test was to confirm that the branch predictor initializes to the STRONGLY_NOT_TAKEN state after a reset. I simulated the system for one cycle with the reset signal active and checked if the predictor's output (top->prediction) was 0 (indicating STRONGLY_NOT_TAKEN).
+
+```C
+TEST_F(BranchPredictorTestbench, ResetBehaviorTest)
+{
+    runSimulation(1);
+
+    // Ensure predictor starts in STRONGLY_NOT_TAKEN state
+    EXPECT_EQ(top->prediction, 0);
+
+    top->reset = 0;
+    runSimulation(1); // Allow the system to stabilize
+}
+```
+
+2. State Transition Test
+This test was designed to validate the predictor’s state machine transitions. By toggling the branch_taken signal and observing the prediction, I confirmed the correctness of transitions between states:
+
+STRONGLY_NOT_TAKEN → WEAKLY_NOT_TAKEN
+WEAKLY_NOT_TAKEN → WEAKLY_TAKEN
+WEAKLY_TAKEN → STRONGLY_TAKEN
+And the reverse transitions for not-taken branches.
+
+```C
+TEST_F(BranchPredictorTestbench, StateTransitionTest)
+{
+    top->reset = 0;
+    top->branch_valid = 1;
+
+    // STRONGLY_NOT_TAKEN to WEAKLY_NOT_TAKEN
+    top->branch_taken = 1;
+    runSimulation(1);
+    EXPECT_EQ(top->prediction, 0);
+
+    // WEAKLY_NOT_TAKEN to WEAKLY_TAKEN
+    top->branch_taken = 1;
+    runSimulation(1);
+    EXPECT_EQ(top->prediction, 1);
+
+    // WEAKLY_TAKEN to STRONGLY_TAKEN
+    top->branch_taken = 1;
+    runSimulation(1);
+    EXPECT_EQ(top->prediction, 1);
+
+    // Test reverse transitions for not-taken branches...
+}
+```
+
+3. Prediction Accuracy Test
+To test prediction accuracy, I ran a sequence of branch instructions with alternating outcomes. This ensured the predictor adapted correctly to both taken and not-taken branches, transitioning through the states as expected. I also included multiple cycles (runSimulation(2)) to allow the state machine to stabilize after each branch outcome.
+
+```C
+TEST_F(BranchPredictorTestbench, PredictionAccuracyTest)
+{
+    top->reset = 0;
+    top->branch_valid = 1;
+
+    // Initial state: STRONGLY_NOT_TAKEN
+    EXPECT_EQ(top->prediction, 0);
+
+    // Branch taken twice, moving to STRONGLY_TAKEN
+    top->branch_taken = 1;
+    runSimulation(2);
+    EXPECT_EQ(top->prediction, 1);
+
+    // Branch not taken twice, moving back to STRONGLY_NOT_TAKEN
+    top->branch_taken = 0;
+    runSimulation(2);
+    EXPECT_EQ(top->prediction, 0);
+}
+```
 
 ## What I learned
 
