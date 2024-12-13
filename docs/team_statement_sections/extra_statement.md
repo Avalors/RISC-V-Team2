@@ -112,7 +112,9 @@ Within the top module adjusted for branch prediction:
 We added two new signals:
 
 // Branch Prediction signals
+
 logic pred_taken;         // From predictor: tells if branch predicted taken
+
 logic prediction_wrong;   // Indicates if prediction was incorrect
 
 and the PCSrcE logic was altered: 
@@ -124,5 +126,17 @@ I also added a flush signal to the hazard unit:
 .flush(flush | prediction_wrong)  // Added prediction_wrong to flush
 
 After using new signals, we had to update the actual branch prediction module and we obtained:
+
+![image](https://github.com/user-attachments/assets/a80e4b7d-e599-49cd-a211-83c7dcb9d968)
+
+We also had to edit the state transition logic:
+
+![image](https://github.com/user-attachments/assets/4eb893c6-e408-49ba-a4a4-f2ef655f64b5)
+
+and use the BranchCondE signal:
+
+![image](https://github.com/user-attachments/assets/3a935c2a-f37a-4a04-a348-148a9d60b24d)
+
+
 
 
