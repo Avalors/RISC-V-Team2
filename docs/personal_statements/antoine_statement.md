@@ -68,7 +68,25 @@ void runSimulation(int cycles = 1)
 
 #### Top Level Integration
 
+I implemented a SystemVerilog module called `TopLevelCPU.sv` which takes clock and reset inputs and outputs the value of register a0, implementing a simple processor, along with register file access and control logic.
 
+I integrated several modules such as the program counter, control unit, instruction memory, sign extension, ALU, register file. 
+For example, the control unit takes the 7-bit opcode and equality flag to generate all control signals. 
+```SV
+ControlUnit ControlUnit (
+    .opcode(instr[6:0]),    // Opcode from instruction
+    .EQ(EQ),                // Equality signal from ALU
+    .RegWrite(RegWrite),    // Register write enable
+    .ALUsrc(ALUsrc),        // ALU source select
+    .ImmSrc(ImmSrc),        // Immediate source select
+    .PCsrc(PCsrc),          // Program Counter source select
+    .ALUctrl(ALUctrl)       // ALU control signal
+);
+```
+Below, we use a blocking assignment to directly access the register 10 (a0), register 10 being an output register.
+```SV
+assign a0 = RegFile.register[10];
+```
 
 #### Doit.sh script
 
