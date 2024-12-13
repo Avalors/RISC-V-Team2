@@ -26,7 +26,7 @@ Our team has successfully completed and verified the following for our RV32I
 | [lab4](https://github.com/aa6dcc/RISC-V-Team2/tree/lab4)       | Lab4         | [lab4_statement.md](https://github.com/aa6dcc/RISC-V-Team2/blob/cache-branch/docs/team_statement_sections/lab4_statement.md) | 
 | [Single-cycle](https://github.com/aa6dcc/RISC-V-Team2/tree/Single-cycle) | Single-Cycle | [single_cycle_statement.md](https://github.com/aa6dcc/RISC-V-Team2/blob/cache-branch/docs/team_statement_sections/single_cycle_statement.md) |
 | [Pipeline](https://github.com/aa6dcc/RISC-V-Team2/tree/pipeline) | Pipelined    | [pipeline_statement.md](https://github.com/aa6dcc/RISC-V-Team2/blob/cache-branch/docs/team_statement_sections/pipeline_statement.md) |
-| [Cache-branch](https://github.com/aa6dcc/RISC-V-Team2/tree/cache-branch) | Cache      | [cache_statement.md](https://github.com/aa6dcc/RISC-V-Team2/blob/cache-branch/docs/team_statement_sections/pipeline_statement.md) |
+| [Cache-branch](https://github.com/aa6dcc/RISC-V-Team2/tree/cache-branch) | Cache      | [cache_statement.md](https://github.com/aa6dcc/RISC-V-Team2/blob/cache-branch/docs/team_statement_sections/cache_statement.md) |
 | [Cache-branch](https://github.com/aa6dcc/RISC-V-Team2/tree/cache-branch) | Extra      | [extra_statement.md](https://github.com/aa6dcc/RISC-V-Team2/blob/cache-branch/docs/team_statement_sections/extra_statement.md) |
 
 ## Quick Start
