@@ -587,6 +587,8 @@ Compared to the direct-mapped cache, the main improvements were:
 
 ![image](https://github.com/user-attachments/assets/6c9e37fb-a3a4-4239-9b5b-4fa671f2c288)
 
+On the last day, we finally got the two-way cache successfully working, an achievement I am very proud of. 
+
 #### Verification using assembly
 
 In order to test my cache, I used three different assembly files: 
@@ -767,10 +769,14 @@ The loop:
 - Using learning materials correctly: "Digital Design and Computer Architecture", online courses, videos, lecture slides...
 - Working as a team, planning work in advance
 - Gained technical skills whilst integrating the different modules, writing testbenches for each of them, debugging each module...
-- Learnt to use Git and Linux
+- Learnt to use Git (first experience with source control for me, and I got to merge branches, clone repos, edit commits...) and Linux
+- I learnt extensively about RISC-V architecture, how the different units behave and work together
+- I considerably increased my skills in SystemVerilog and hardware design in general
+- Learnt the importance of debugging and learning how to use different tools to do so
 
 ## Mistakes I made
 - Syntax errors (forgetting newlines, getting the number of bits wrong...)
+- Name github commits better, use co-authoring
 - Took some time for me to learn the importance of teamwork and helping one another
 
 Case study - `AddrMode in cache.sv`:
