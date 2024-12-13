@@ -687,10 +687,15 @@ always_comb begin
         WEAKLY_NOT_TAKEN, STRONGLY_NOT_TAKEN: prediction = 0;
 ```
 This is a two-level decision making:
+
 	- First level: Taken vs Not Taken prediction
+ 
 	- Second level: Strong vs Weak confidence
+ 
  with a conservative transition strategy:
+ 
  	- States change gradually (strong → weak → opposite)
+  
 	- Requires multiple mispredictions to completely change prediction
 
  ![image](https://github.com/user-attachments/assets/ecd59193-6644-41a8-aa9c-d83ead6e0264)
@@ -704,7 +709,9 @@ The branch predictor I fully implemented was fully tested by Elson's testbench, 
 In order to try and integrate the 2-bit branch predictor, I had to make changes to the program counter and top module. 
 
 For the program counter, I implemented a two-level MUX:
+
     - First choose based on prediction
+    
     - Then override with PCsrcE if prediction was wrong
 
 Here we can see the edited program counter module which accounts for branch prediction and imports signals from pipelining such as stall. 
@@ -717,20 +724,20 @@ Within the top module adjusted for branch prediction:
 
 I added two new signals:
 
-// Branch Prediction signals
 
+```ASM
 logic pred_taken;         // From predictor: tells if branch predicted taken
 
 logic prediction_wrong;   // Indicates if prediction was incorrect
-
+```
 and the PCSrcE logic was altered: 
 
 ![image](https://github.com/user-attachments/assets/a20510a6-5f12-4932-ae97-b4d2f2d7e2d6)
 
 I also added a flush signal to the hazard unit:
-
+```ASM
 .flush(flush | prediction_wrong)  // Added prediction_wrong to flush
-
+```
 After using new signals, we had to update the actual branch prediction module and we obtained:
 
 ![image](https://github.com/user-attachments/assets/a80e4b7d-e599-49cd-a211-83c7dcb9d968)
@@ -767,14 +774,21 @@ done:
 ```
 This assembly code implements a simple for loop that calculates the sum of numbers from 0 to 9 (first 10 natural numbers).
 It initializes three registers:
+
 	- s1 is initialized to 0 (will hold the running sum)
+ 
 	- s0 is initialized to 0 (loop counter i)
+ 
 	- t0 is set to 10 (loop boundary)
 
 The loop:
+
 	- Uses bge (branch if greater or equal) to check if i >= 10
+ 
 	- Adds the current counter value to the sum (s1 = s1 + s0)
+ 
 	- Increments the counter
+ 
 	- Jumps back to loop start
  
 ### As repo master
