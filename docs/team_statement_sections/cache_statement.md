@@ -223,7 +223,135 @@ was set to default.
 
 We implemented a write-through policy (writes update both cache and memory) with direct memory update on writes. 
 
-### [Testing and testbenching](../../tb/test/cache_tb.cpp)
+### [Testing and testbenching]
+
+#### [Individual level](../../tb/test/cache_tb.cpp)
+
+<img width="790" alt="Cache" src="https://github.com/user-attachments/assets/2a5ef2aa-792e-46f0-9564-6caf674f1da3" />
+
+```
+TEST_F(CacheTestbench, CacheHitTest)
+{
+    // Reset the cache before the test
+    top->reset = 1;
+    runSimulation(1);
+    top->reset = 0;
+    runSimulation(1);
+
+    int address = 0x00000020;
+    int writeData = 0xDEADBEEF;
+
+    // Write data
+    top->AddrMode = 7; // SW (store word)
+    top->A = address;
+    top->WD = writeData;
+    runSimulation(2);
+
+    // Delay between write and read
+    runSimulation(1);
+
+    // Read data
+    top->AddrMode = 2; // LW (load word)
+    top->A = address;
+    runSimulation(2);
+
+    std::cout << "CacheHitTest - Hit: " << (int)top->hit << ", Out: 0x" << std::hex << top->out << std::dec << std::endl;
+
+    EXPECT_EQ(top->hit, 1);
+    EXPECT_EQ(top->out, writeData);
+}
+```
+
+
+This test was used to test a hit as we access the same address from storing to loading
+
+```
+TEST_F(CacheTestbench, CacheMissTest)
+{
+    top->reset = 1;
+    runSimulation(1);
+    top->reset = 0;
+    runSimulation(1);
+
+    const int NUM_ACCESSES = 5;
+    int base_address = 0x30000000;
+    
+    for (int i = 0; i < NUM_ACCESSES; i++) {
+        int address = base_address + (i * 0x1000);
+        
+        top->AddrMode = 2; // LW (load word)
+        top->A = address;
+        runSimulation(1); // Run for only 1 cycle
+
+        std::cout << "CacheMissTest - Access " << i 
+                  << " - Hit: " << (int)top->hit 
+                  << ", Address: 0x" << std::hex << address << std::dec << std::endl;
+
+        if (top->hit == 0) {
+            EXPECT_EQ(top->hit, 0);
+            return; // Exit the test as soon as a miss is detected
+        }
+
+        runSimulation(1); // Run for one more cycle to complete the access
+    }
+
+    FAIL() << "No cache misses observed after " << NUM_ACCESSES << " accesses";
+}
+```
+This test was for a miss by accessing an entirely new location and we reset here to ensure that there is no potential interference from previous simulations or runs. 
+
+```
+TEST_F(CacheTestbench, PerformanceCountersTest)
+{
+
+    int address1 = 0x00000050;
+    int address2 = 0x00000060;
+    int data1 = 0x12345678;
+
+    EXPECT_EQ(top->total_accesses, 0);
+    EXPECT_EQ(top->total_hits, 0);
+    EXPECT_EQ(top->total_misses, 0);
+
+    // First access (miss)
+    top->AddrMode = 2; // LW (load word)
+    top->A = address1;
+    runSimulation(1); // Access should miss
+
+    // Check after first access
+    std::cout << "After first access - Accesses: " << top->total_accesses 
+              << ", Hits: " << top->total_hits 
+              << ", Misses: " << top->total_misses << std::endl;
+
+    // Second access to the same address (hit)
+    top->AddrMode = 2; // LW (load word)
+    top->A = address1;
+    runSimulation(1); // Access should hit
+
+    // Check after second access
+    std::cout << "After second access - Accesses: " << top->total_accesses 
+              << ", Hits: " << top->total_hits 
+              << ", Misses: " << top->total_misses << std::endl;
+
+    // Third access to a different address (miss)
+    top->AddrMode = 2; // LW (load word)
+    top->A = address2;
+    runSimulation(1); // Access should miss
+
+    // Final check
+    std::cout << "Final state - Accesses: " << top->total_accesses 
+              << ", Hits: " << top->total_hits 
+              << ", Misses: " << top->total_misses << std::endl;
+
+    EXPECT_EQ(top->total_accesses, 3); // Expecting total accesses to be counted
+    EXPECT_EQ(top->total_hits, 1);      // Expecting one hit
+    EXPECT_EQ(top->total_misses, 2);    // Expecting two misses
+}
+```
+
+This was to ensure that our performance counters are counting correctly based on the condition. 
+
+
+#### [Top-level integration](../../tb/top_cache_tb.cpp)
 
 ```
 main:
