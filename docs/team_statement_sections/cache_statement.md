@@ -73,7 +73,7 @@ This cache line maps to the memory addressing of the cache:
 | 3 | `SET` | Establish and index the cache storage in memory |
 | 2 | `BYTE OFFSET` | Accommodate word addressing and byte addressing |
 
-A memory address of 32 bits allows for both modes of addressing, controlled by a signal `ADDRMODE`. A set size of $2^3 = 8$ allows for fast compact memory.
+A memory address of 32 bits allows for both modes of addressing, controlled by a signal `AddrMode`. A set size of $2^3 = 8$ allows for fast compact memory.
 
 Finally an internal `HIT` signal was implemented, to ease the debugging, enhance testing and calculate the performance increase specified later in the results.
 
