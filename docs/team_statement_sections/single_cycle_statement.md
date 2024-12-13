@@ -9,6 +9,7 @@
 | [Introduction](#introduction) |
 | [Design Specifications](#design-specifications) |
 | [Simulation and Testing](#simulation-and-testing) |
+| [Full RV32I and assembly code testing](#full-rv32I-and-assembly-code) |
 
 ## Introduction
 
@@ -67,3 +68,5 @@ The 'compile.sh' and 'doit.sh' scripts help compile and assemble C and ASM tests
 We tested our integrated single cycle processor using Vbuddy, by running 'f1_lights.s' but also by running the PDF on it for several signals: sine, triangle, noise, Gaussian.
 
 ![image](https://github.com/user-attachments/assets/2144c6ae-698c-461b-94cf-b4f35223669b)
+
+## Full RV32I and assembly code 
