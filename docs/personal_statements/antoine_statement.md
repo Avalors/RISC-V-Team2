@@ -1,12 +1,30 @@
 # Personal Statement: Antoine Divet
 
 **Name:** Antoine Divet
+
 **CID:** 02379818   
+
 **Github Username:** aa6dcc
 
 ## Overview
 - [Summary of Contributions](#summary-of-contributions)
     - [Lab 4](#lab-4)
+        - [Top Level Testbenching]
+        - [Top Level Integration]
+        - [Doit.sh script]
+        - [Assembly instructions]     
+    - [Single Cycle](#Single-cycle)
+        - [Data memory]
+        - [Analyse.py] 
+    - [Cache](#Cache)
+        - [One-way set associative cache]
+        - [Two-way set associative cache]
+        - [Verification using assembly]
+    - [Branch Prediction](#branch-prediction)
+        - [Two-bit simple dynamic branch predictor]
+        - [Integration]
+        - [Testing via assembly] 
+    - [As repo master]     
 - [What I learned](#what-i-learned)
 - [Mistakes I made](#mistakes-i-made)
 - [What I would do differently](#what-i-would-do-differently)
@@ -14,6 +32,21 @@
 ## Summary of Contributions
 
 ### Lab 4
+
+#### Top Level Testbenching
+
+#### Top Level Integration
+
+#### Doit.sh script
+
+#### Assembly instructions
+
+### Single Cycle
+
+### Cache
+
+### Branch Prediction
+
 
 ## What I learned
 - Using learning materials correctly: "Digital Design and Computer Architecture", online courses, videos, lecture slides...
