@@ -46,7 +46,7 @@ The Singe Cycle CPU stage essentially consists of creating an additional data me
 
 This was where many changes were made for each individual module/testbench, due to having to implement more instruction operations as given in the lecture slides since the given programs required much more instructions than the original program which only consisted of 2 instructions: the addi and the beq.
 
-This stage required large amounts of debugging, where I was in charge of the verification of the PDF program, as shown here: //![PDF1](https://github.com/user-attachments/assets/99c1c954-8ee2-449d-adaf-65545aee1a77)
+This stage required large amounts of debugging, where I was in charge of the verification of the PDF program, as shown here: ![PDF1](https://github.com/user-attachments/assets/99c1c954-8ee2-449d-adaf-65545aee1a77)
 ![PDF2](https://github.com/user-attachments/assets/69986156-2fd2-4172-a027-798fa61d4a58)
 
 In order to debug this issue, I had to use GTKWave extensively to figure out what was going on. It turns out that the output of the GTKWave, which in this case would be the **Result** output out of the mux after the data memory was constantly **outputting zero** when it reached the end of the first subroutine "init".
@@ -57,7 +57,7 @@ Essentially the issue with the pdf was that the JAL/JALR instruction implementat
 
 Below is a diagram to better understand the entirety of the situation, and in the end Ahmed implemented the debugging.
 
-![Diagram for PDF](https://github.com/user-attachments/assets/83fa057e-72ca-4c4b-a26c-fbde5e979ec5)
+![Diagram for PDF](https://github.com/user-attachments/assets/933e7c78-4d48-4d4e-a3bb-65d8780b2629)
 
 As shown above the entire datapath of the CPU has been modified slightly with an additional mux and input coming from the control Unit named **WD3Src**
 
@@ -68,13 +68,13 @@ Me and Antoine started working on the direct-mapped Cache separately, and I succ
 
 Below is a diagram of the Cache that I was planning on implementing:
 
-![Diagram for Cache](https://github.com/user-attachments/assets/ab95231e-cb62-456a-9a66-453bfe128a11)
+![Diagram for Cache](https://github.com/user-attachments/assets/45d3f703-6500-419b-b420-06ce7d5806c4)
 
 And the following initial commits that I have been working on can be found as screenshots here, since the entire cache branch was abandoned due to mismanagement of the GitHub branch/repo.
 
-![Jihwan's Cache commits 1](https://github.com/user-attachments/assets/6447b236-3d5a-4a24-891b-37bdbd769da6)
-![Jihwan's Cache commits 3](https://github.com/user-attachments/assets/c1f095dd-57ce-422d-89c6-166d3ff0d4f0)
 ![Jihwan's Cache commits 2](https://github.com/user-attachments/assets/29cbfa48-a740-48b2-a68b-a44c03d4c60e)
+![Jihwan's Cache commits 3](https://github.com/user-attachments/assets/c1f095dd-57ce-422d-89c6-166d3ff0d4f0)
+![Jihwan's Cache commits 1](https://github.com/user-attachments/assets/6447b236-3d5a-4a24-891b-37bdbd769da6)
 
 As seen in the commits above I was working on cache(ver2).
 
