@@ -229,7 +229,7 @@ We implemented a write-through policy (writes update both cache and memory) with
 
 <img width="790" alt="Cache" src="https://github.com/user-attachments/assets/2a5ef2aa-792e-46f0-9564-6caf674f1da3" />
 
-```
+```C
 TEST_F(CacheTestbench, CacheHitTest)
 {
     // Reset the cache before the test
@@ -265,7 +265,7 @@ TEST_F(CacheTestbench, CacheHitTest)
 
 This test was used to test a hit as we access the same address from storing to loading
 
-```
+```C
 TEST_F(CacheTestbench, CacheMissTest)
 {
     top->reset = 1;
@@ -300,7 +300,7 @@ TEST_F(CacheTestbench, CacheMissTest)
 ```
 This test was for a miss by accessing an entirely new location and we reset here to ensure that there is no potential interference from previous simulations or runs. 
 
-```
+```C
 TEST_F(CacheTestbench, PerformanceCountersTest)
 {
 
