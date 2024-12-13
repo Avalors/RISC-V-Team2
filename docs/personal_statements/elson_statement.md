@@ -26,6 +26,7 @@ ________________________________________________________________________________
         - [Full RV32I implemented](#full-rv32i-implemented)
     - [Cache](#Cache)
         - [Testing DM_Cache](#dm-cache)
+        - [Testing TW_Cache](#tw-cache)
     - [Branch Prediction](#branch-predicition)
         - [Branch Prediction Testing](#branch-predicition-testing)
 - [What I learned](#what-i-learned)
@@ -363,6 +364,157 @@ After ensuring the cache worked on its own, I integrated the direct-mapped cache
 5. Test Results and Observations:
 I was able to observe cache behavior through tools like gtkwave, which allowed me to visualize cache accesses in terms of hits and misses.
 For example, when I executed store/load instructions, I could see the cache miss initially due to the store, but subsequent loads would hit, confirming the expected behavior based on the locality principles.
+
+
+#### TW Cache
+
+- [Completed a new test to show TW cache working](https://github.com/aa6dcc/RISC-V-Team2/commit/5b7e1cb20ec2663d99f11d20c90e06a9060b265f)
+
+[Individual level](../../tb/test/tw_cache_tb.cpp)
+
+<img width="429" alt="Screenshot 2024-12-13 at 11 45 30 PM" src="https://github.com/user-attachments/assets/f0748a6d-f4c6-487e-be1c-be1da0fa0fb5" />
+
+
+```C
+TEST_F(TwoWayCacheTestbench, CacheHitTest) {
+    top->reset = 1;
+    runSimulation(1);
+    top->reset = 0;
+    runSimulation(1);
+
+    int address = 0x20;
+    int writeData = 0xABCD1234;
+
+    // Write
+    top->AddrMode = 7; // Store word
+    top->A = address;
+    top->WD = writeData;
+    runSimulation(2);
+
+    // Read
+    top->AddrMode = 2; // Load word
+    top->A = address;
+    runSimulation(2);
+
+    EXPECT_EQ(top->hit, 1);
+    EXPECT_EQ(top->out, writeData);
+}
+```
+
+This test was used to test a hit.
+
+```C
+TEST_F(TwoWayCacheTestbench, CacheMissAndLRUTest) {
+    top->reset = 1;
+    runSimulation(1);
+    top->reset = 0;
+    runSimulation(1);
+
+    int addr1 = 0x10, addr2 = 0x20, addr3 = 0x30;
+    int data1 = 0xDEADBEEF, data2 = 0xBAADF00D, data3 = 0xFEEDFACE;
+
+    // Write to way 0
+    top->AddrMode = 7;
+    top->A = addr1;
+    top->WD = data1;
+    runSimulation(2);
+
+    // Write to way 1
+    top->AddrMode = 7;
+    top->A = addr2;
+    top->WD = data2;
+    runSimulation(2);
+
+    // Write triggers LRU replacement
+    top->AddrMode = 7;
+    top->A = addr3;
+    top->WD = data3;
+    runSimulation(2);
+
+    // Read addr1 (miss, since it was evicted)
+    top->AddrMode = 2;
+    top->A = addr1;
+    runSimulation(2);
+    EXPECT_EQ(top->hit, 0) << "Expected miss for addr1";
+
+    // Read addr2 (hit, still in way 1)
+    top->AddrMode = 2;
+    top->A = addr2;
+    runSimulation(2);
+    EXPECT_EQ(top->hit, 1) << "Expected hit for addr2";
+    EXPECT_EQ(top->out, data2) << "Expected data2";
+
+    // Read addr3 (hit, replaced way 0)
+    top->AddrMode = 2;
+    top->A = addr3;
+    runSimulation(2);
+    EXPECT_EQ(top->hit, 1) << "Expected hit for addr3";
+    EXPECT_EQ(top->out, data3) << "Expected data3";
+}
+```
+
+This was to test the miss and lru implementation. 
+
+
+[Top-level integration](../../tb/top_cache_tb.cpp)
+**eviction.s**
+```ASM
+main:
+    # Initialize base addresses
+    la x10, 0x0         # Base address in memory
+    li x13, 0x1         # Data to write
+
+    # Write data to addresses that cause conflicts in direct-mapped cache
+    # Assuming cache has 8 sets in direct-mapped (3 index bits)
+    # Addresses: 0x0, 0x40, 0x80 all map to the same set in direct-mapped cache
+    sw x13, 0(x10)      # Write 0x1 to address 0x0
+    addi x13, x13, 0x1  # Increment data
+    sw x13, 64(x10)     # Write 0x2 to address 0x40
+    addi x13, x13, 0x1  # Increment data
+    sw x13, 128(x10)    # Write 0x3 to address 0x80
+
+    # Read data back to test cache behavior
+    lb x11, 0(x10)      # Read address 0x0 (expect miss in direct-mapped due to eviction)
+    lb x11, 64(x10)     # Read address 0x40 (expect hit in two-way, miss in direct-mapped)
+    lb x11, 128(x10)    # Read address 0x80 (expect hit in two-way, miss in direct-mapped)
+    lb x11, 0(x10)      # Read address 0x0 again (miss in direct-mapped, hit in two-way)
+
+    # Introduce additional accesses to force conflicts and evictions
+    addi x13, x13, 0x1
+    sw x13, 192(x10)    # Write 0x4 to address 0xC0 (maps to same set in direct-mapped)
+
+    lb x11, 64(x10)     # Read address 0x40 (expect eviction in direct-mapped)
+    lb x11, 128(x10)    # Read address 0x80 (expect hit in two-way, miss in direct-mapped)
+
+    # End program
+    nop
+    nop
+```
+
+This assembly code tests cache behavior by writing data to memory locations that cause conflicts in a direct-mapped cache and observing how a two-way set-associative cache handles these conflicts. The code writes to addresses that map to the same cache set, causing evictions in the direct-mapped cache, which results in misses.
+
+In the direct-mapped cache, only one address can be stored per set, so writing multiple addresses to the same set leads to conflict misses. In the two-way cache, two addresses can be stored in the same set, reducing conflict misses and allowing for hits when reading back data. This demonstrates that the two-way cache handles conflicts better, resulting in fewer misses compared to the direct-mapped cache.
+
+<img width="766" alt="Screenshot 2024-12-13 at 11 32 00 PM" src="https://github.com/user-attachments/assets/3f5be026-bbe7-4d4a-a946-efd7ad0e46b9" />
+
+**Direct-Mapped Cache**
+- Expected Outcome: A high miss rate due to conflicts, as the cache has only one slot per set (direct-mapped).
+- Tested Addresses: The addresses 0x0, 0x40, 0x80, and 0xC0 all map to the same cache set. This causes evictions when new data is written to the cache, resulting in misses.
+- Result: The direct-mapped cache experienced 0 hits and 10 misses, indicating a poor cache hit rate due to conflict misses (evictions).
+
+
+<img width="777" alt="Screenshot 2024-12-13 at 11 35 45 PM" src="https://github.com/user-attachments/assets/906ece55-8cdd-491d-8323-6fa2ba3017d9" />
+
+**Two-Way Set Associative Cache**
+- Expected Outcome: With two ways per set, the two-way associative cache should exhibit fewer conflict misses compared to the direct-mapped cache. Two addresses within a set can co-exist without causing eviction, allowing better cache performance.
+- Tested Addresses: The same addresses (0x0, 0x40, 0x80, 0xC0) were used, but now each set can hold two addresses before evicting, allowing for more hits.
+- Result: The two-way set associative cache experienced 3 hits and 7 misses, indicating an improvement in hit rate due to the reduced conflict misses. This result is better than the direct-mapped cache, as the associative nature allows more addresses to co-exist in the same set, reducing the number of forced evictions.
+
+
+**Why the Two-Way Cache Has Fewer Misses**
+Conflict Reduction: In the direct-mapped cache, each set can only hold one block of data. If multiple addresses map to the same set, previous entries are evicted, causing more misses. The two-way cache can hold two blocks per set, allowing multiple addresses to be stored in the same set and thus reducing conflicts.
+Cache Behavior: In the assembly code, after writing to the first address (0x0), a second write to 0x40 causes a conflict in the direct-mapped cache but would not cause a conflict in the two-way cache, as both 0x0 and 0x40 can coexist in the same set.
+
 
 ### Branch Prediction
 
