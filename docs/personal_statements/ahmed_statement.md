@@ -1,6 +1,6 @@
 # Personal Statement: Ahmed Hamid
 
-**Name:** Ahmed Hamid
+
 **CID:** 02427719   
 **Github Username:** Avalors
 ---
