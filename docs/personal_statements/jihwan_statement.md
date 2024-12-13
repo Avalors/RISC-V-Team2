@@ -57,7 +57,7 @@ Essentially the issue with the pdf was that the JAL/JALR instruction implementat
 
 Below is a diagram to better understand the entirety of the situation, and in the end Ahmed implemented the debugging.
 
-![Diagram for PDF](https://github.com/user-attachments/assets/83fa057e-72ca-4c4b-a26c-fbde5e979ec5)
+![Diagram for PDF](https://github.com/user-attachments/assets/933e7c78-4d48-4d4e-a3bb-65d8780b2629)
 
 As shown above the entire datapath of the CPU has been modified slightly with an additional mux and input coming from the control Unit named **WD3Src**
 
@@ -68,7 +68,7 @@ Me and Antoine started working on the direct-mapped Cache separately, and I succ
 
 Below is a diagram of the Cache that I was planning on implementing:
 
-![Diagram for Cache](https://github.com/user-attachments/assets/ab95231e-cb62-456a-9a66-453bfe128a11)
+![Diagram for Cache](https://github.com/user-attachments/assets/45d3f703-6500-419b-b420-06ce7d5806c4)
 
 And the following initial commits that I have been working on can be found as screenshots here, since the entire cache branch was abandoned due to mismanagement of the GitHub branch/repo.
 
