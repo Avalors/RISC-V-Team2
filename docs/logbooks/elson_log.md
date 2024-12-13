@@ -70,4 +70,5 @@ I also helped out in designing the **control unit** and its respective testbench
 
 ### 13/12/24
 - Finalised documentation for logbooks, personal statements, and team statements
-- Started on some extra features on top of stretch goals as a team (e.g branch prediction, two-way set associative cache, interrupts)
+- Started on some extra features on top of stretch goals as a team (e.g branch prediction, interrupts)
+- Completed a test to prove the use of TW cache: [Completed a new test to show TW cache working](https://github.com/aa6dcc/RISC-V-Team2/commit/5b7e1cb20ec2663d99f11d20c90e06a9060b265f)
