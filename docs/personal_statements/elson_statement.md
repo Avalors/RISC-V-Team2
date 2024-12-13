@@ -1,7 +1,9 @@
 # Personal Statement: Elson Tho
 
 **Name:** Elson Tho  
+
 **CID:** 02381489 
+
 **Github username:** 3lson  
 
 ## Summary
@@ -12,36 +14,7 @@
 
 - I was responsible for team debugging both in person and online using the VS Code Live Share feature. This allowed me to directly contribute by editing code on my teammates' IDEs during collaboration sessions, although some commits were made by them.
 
-[Contributions](#contributions)
-
 ## Contributions
-
-The evidence for the [summary](#summary) section is linked below.
-
-| Activity           | Link
-| ------------------ |-----------------------------------------------------
-| Writing Tests      | [Example](https://github.com/booth-algo/RISC-V-T24/pull/20) 
-| Code Review        | [Example](https://github.com/booth-algo/RISC-V-T24/pull/8)  
-| Refactoring        | [Example](https://github.com/booth-algo/RISC-V-T24/commit/7d7c6236a89176b0b1c39986e936943954aca37e)  
-| Pipeline Debugging | [Example](https://github.com/booth-algo/RISC-V-T24/commit/3b5122d68dd4ef15d340c3e45828db638e97da53)  
-
-I also worked on the RTL, primarily after Lab4. Here are some of my main 
-contributions:
-
-### General
-
-- Introduced the use of branches and tagging to the team.
-- [Introduced CI (GitHub Actions).](https://github.com/booth-algo/RISC-V-T24/commit/e54ccb36dd0e178ce7d2d33e432cf981efefee37).
-- [Created industry standard testing (GTest).](https://github.com/booth-algo/RISC-V-T24/commit/a2b177139707acfb482ee30f0e28641d65d4e017).
-  Once again, I encourage checking the [`test folder`](../../tb/test/)
-- Pipelined the testing process through bash scripting
-  [doit.sh](https://github.com/booth-algo/RISC-V-T24/commit/3c00492c35f810ab3cbe71c34fc84aca1d494801),
-  [compile.sh](https://github.com/booth-algo/RISC-V-T24/commit/e61392896bef151a95739cd8ffe378ef269152c2)
-
-From this point, I will **not** focus on the testbench commits, but rather RTL 
-work, for I have said enough. 
-
-(Please check it out [here](../../tb), if you haven't already!)
 
 ### Lab 4
 
@@ -51,89 +24,58 @@ work, for I have said enough.
 - [Fixed the control unit testbench and brought in the new doit.sh script](https://github.com/aa6dcc/RISC-V-Team2/commit/5773432255b8a4a536ed3b52fe3cfc900075aa9f)
 - [Added .gitignore to ignore large files and gave our team merge conflicts](https://github.com/aa6dcc/RISC-V-Team2/commit/9af8479508d7274a99b07ba0c5b31bc86df42bb3)
 - [Worked on Antoine's Liveshare of VSCode as a team for debugging and testbenching](https://github.com/aa6dcc/RISC-V-Team2/commit/e3fd87fdfd4d9f00b7447949e95964d28db9bb20#diff-9b9a6efe51731ef72a27f44c26c78fb4b1e55f3e88676bf0140041f7af99e2ee): For more detail and evidence see [Team Log (27/11)](../logbooks/team_log.md#team-meetup-27-11).
+- [](https://github.com/aa6dcc/RISC-V-Team2/commit/edc939dadaaca6523c7ef921765ea0f2ed3c03f0): For more detail and evidence see [Team Log (30/11)](../logbooks/team_log.md#team-meetup-30-11).
 
 ### Single-Cycle
 
+- [F1Lights asm code and testbench foundation](https://github.com/aa6dcc/RISC-V-Team2/commit/0a6c948daec468a1f3c2d683eaa48e9bb5bda528
+- [Completed F1Light verification and Vbuddy simulation](https://github.com/aa6dcc/RISC-V-Team2/commit/1a246636d7341bde9bddb56b764e818dfad377fd)
+- [Added graphs.py to just illustrate our expected graphs for pdf](https://github.com/aa6dcc/RISC-V-Team2/commit/7ad78983211d06f3bb87f3062504e860277b382c)
+- [PDF fully tested with data/.mem files](https://github.com/aa6dcc/RISC-V-Team2/commit/bd1db301e6254e29d24291ed513287c550939ff7)
+- [Added all R-type instr and verification, added the rest of I, J, U, B in controlunit](https://github.com/aa6dcc/RISC-V-Team2/commit/5eccb99f8b08752ab7b98ed65e42157b3a14a190)
+- [Completed full RV32I instructions and testbench and asm code for verification](https://github.com/aa6dcc/RISC-V-Team2/commit/14e4e17063317b12e1dfb36917cbb79eb7aec45a)
 
 
 ### Pipeline
 
+-[Pipelining registers implemented and started the hazard unit](https://github.com/aa6dcc/RISC-V-Team2/commit/34617373aca98c16134c2862ff86bcb8c228c509)
+- [Added WR3Src signal into pipeline](https://github.com/aa6dcc/RISC-V-Team2/commit/47a367c96ebce4d240b61f4a011d2dea61e3c596)
+- [Fixed minor signals spelling bugs: still not functional
+](https://github.com/aa6dcc/RISC-V-Team2/commit/d3df6d10afd85b6dbf4cccfc0d6f6bc7fa467649)
 
 
 ### Cache
 
+Here I worked on a initial testing branch for cache branched from Single-Cycle whilst pipeline was still in development. Then I synced the cache modules to be integrated into the full pipeline RV32I
 
-
-## Special Design Decisions
-
+-[Edited direct mapped cache.sv, added testbenches and asm code for testing](https://github.com/aa6dcc/RISC-V-Team2/commit/7a61fd2918b27e52af0d4cc86411fd7ff472ffdd)
+- [Direct-mapped cache completed](https://github.com/aa6dcc/RISC-V-Team2/commit/ca013aad029b479c8335ec7aebd2990b17f65c63)
+- [Completed branch prediction testbench and tested: Works as individual module](https://github.com/aa6dcc/RISC-V-Team2/commit/86b56e701d798e3d486f71c5a5f6acf23f11edd5)
+- [Merged full pipeline RV32I onto DM cache and tested a TW cache: TW cache not completely successful yet
+](https://github.com/aa6dcc/RISC-V-Team2/commit/c118a1d49282d4a143e912e7bd6a1d6fee3edfa4)
 
 
 ## What I learned
 
-Whilst I did not come into this project empty-handed, I believe that this 
-project has been really useful in consolidating my technical skills. I also
-got the opportunity to learn a hardware description language, SystemVerilog,
-and the RISCV-I ISA.
+This project has given me the opportunity to learn HDL, SystemVerilog, RISCV-I ISA, and to create a framework for testing.
 
-Working on verification was extremely fun in this environment, in which there
-was no *real* pressure to catch every single bug that could slip into 
-production. Nevertheless, I persisted and learnt a lot about every aspect of 
-the CPU, as it was necessary for me to write well-calibrated 
-[tests](../../tb/c/) for every nuance and edge case of the CPU.
+Working on verification and debugging using gtkwave was something I found really useful to understanding where the underlying issue might be coming from that was giving us the incorrect output. 
+
+Communication as a team was really important and we met each other consistently both online and in-person making it easy to give regular updates and help each other on any challenges we faced.
 
 
 ## Mistakes I made
 
-> "The only real mistake is the one from which we learn nothing" - Henry Ford
+One mistake was not implementing the RET instruction properly in the control unit leading to extensive debugging of JALR functionality which Ahmed (@Avalors) had to help fix 
+[pdf fixes: added JALR functionality, RET fix and PC + 4 store for J-type instructions](https://github.com/aa6dcc/RISC-V-Team2/commit/7f4978e6a998b1457e97a4bbc045055ee32e84be)
+- This would probably have been resolved with clear discussion of the necessary instructions needed to test the respective functionalities as control unit I made was designed for Lab 4 Counter and F1 Lights which did not require JALR and therefore was loosely implemented in the control unit - but I should have added clear comments that it was not fully implemented yet
 
-From a technical POV, there were a *lot* of edge cases they were not caught out 
-by the integration tests. For example, here's a case study:
-
-**Case Study**: Cache edge case  
-**Test**: [`027-pdf_up_down.c`](../../tb/c/027-pdf_up_down.c)  
-**Fixed**: [#25](https://github.com/booth-algo/RISC-V-T24/pull/25)
-(same as the commit above: "Solved the edge case of byte addressing").
-
-The cache, before fixing, would pass every single test case that existed before
-027 was written, even [`025-pdf.c`](../../tb/c/025-pdf.c). The need to address
-this issue stemmed from the reference program looking *slightly* off.
-
-However, even 027 exhibited strange behaviour with certain values. At the top of 
-the file is this line of code:
-
-```c
-// ...
-#define SIZE    256
-```
-
-The test will pass for values of `SIZE` small enough, such that there is no
-need to fetch from main memory or certain values below (below 8).
-
-```c
-// ...
-for (int ptr = 0; ptr < SIZE; ++ptr)
-{
-    dataArray[ptr] += 8;
-}
-```
-
-This behaviour is due to overwriting bytes at the same time as a need to fetch
-new data from main memory due to a tag change. The solution is clearly defined
-in the RTL: [`dm_cache.sv`](../../rtl/dm_cache.sv).
-
-In conclusion, the takeaway would be that I should have thought more clearly
-about the possible edge cases before writing the tests, instead of jumping into
-huge integration tests made of 100+ lines of assembly, which would have made the 
-debugging easier.
 
 ## What I would do differently
 
-- Used the co-authoring function on GitHub for clearer contribution tracking.
-- Host formal weekly meetings. We saw each other a lot, but at times, team 
-  members would be unaware of changes/responsibilities.
-- Branch protected `main`, and squashed commits. This would allow freedom to
-  commit as much as one want, without affecting the main branch history.
-- Ensure everyone reads merge requests. This would have been super helpful, as
-  it would have fixed the 2 problems listed directly above.
+- Investigate more use of the co-authoring function on GitHub for clearer contribution tracking.
+- Using squashed commits so we can still commit without affecting the main branch history.
+- We should have used tags instead of branches for our different versions
+
 
 
