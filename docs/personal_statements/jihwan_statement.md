@@ -46,7 +46,7 @@ The Singe Cycle CPU stage essentially consists of creating an additional data me
 
 This was where many changes were made for each individual module/testbench, due to having to implement more instruction operations as given in the lecture slides since the given programs required much more instructions than the original program which only consisted of 2 instructions: the addi and the beq.
 
-This stage required large amounts of debugging, where I was in charge of the verification of the PDF program, as shown here: //![PDF1](https://github.com/user-attachments/assets/99c1c954-8ee2-449d-adaf-65545aee1a77)
+This stage required large amounts of debugging, where I was in charge of the verification of the PDF program, as shown here: ![PDF1](https://github.com/user-attachments/assets/99c1c954-8ee2-449d-adaf-65545aee1a77)
 ![PDF2](https://github.com/user-attachments/assets/69986156-2fd2-4172-a027-798fa61d4a58)
 
 In order to debug this issue, I had to use GTKWave extensively to figure out what was going on. It turns out that the output of the GTKWave, which in this case would be the **Result** output out of the mux after the data memory was constantly **outputting zero** when it reached the end of the first subroutine "init".
