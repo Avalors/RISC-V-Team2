@@ -247,7 +247,20 @@ main:
 
 By using the above code we get 4 misses and 3 hits. Upon looking at gtkwave it seems that the store instructions are all the misses and the loads are hits. This is right because the cache implements temporal locality and therefore the store accesses the address and therefore the first load would be a hit.
 
-![image](https://github.com/user-attachments/assets/49b23f1f-1ada-496c-8658-de589986f87f)
+<img width="692" alt="Screenshot 2024-12-13 at 5 45 17 PM" src="https://github.com/user-attachments/assets/cdfbcb7e-7828-4c6c-a4ff-1745d5ac231c" />
+
+
+```
+main:
+    # Read Test
+    lb x11, 0(x10)   # Read first word, expect cache miss
+    lb x11, 1(x10)   # Read second word, expect cache hit as same code block
+    lb x11, 0(x10)   # Read first word again, expect cache hit
+```
+
+Upon removing the store instructions and preloading the data in our program.hex we are able to get 2 hits and 1 miss which is expected. The 1 miss seems to be coming from the first load instruction which in this case is right and therefore the 2 hits are the following load. The reason the second instruction is a hit is because that it is from the same code block which is implementing the spatial locality.
+
+<img width="691" alt="Screenshot 2024-12-13 at 5 45 28 PM" src="https://github.com/user-attachments/assets/7fa2173a-f2ef-4dfd-a10a-f7a4d90fc4e5" />
 
 
 ## [Two-Way Set Associative Cache](../../rtl/tw_cache.sv) 
