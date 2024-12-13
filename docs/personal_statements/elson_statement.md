@@ -46,10 +46,54 @@ ________________________________________________________________________________
 - [RegisterFile, ALU, and MUX done](https://github.com/aa6dcc/RISC-V-Team2/commit/c84f24871c5a7911610828e2e62cf69224e74bcf)
 
 I mainly added the module implementations for the alu, registerfile, and the alu mux based on the diagram in Lab4
-- **ALU**: I implement just the addition under the `always_comb` block and set the `EQ` flag to toggle if branch is taken or not
-- **RegisterFile**: This module was made to assign the inputs of the register file coming in and wrtie logic to `AD3` in the case the `WE3` is high and `AD3` is not zero
+
+```SV
+    always_comb begin
+        // Perform addition operation
+        SUM = ALUop1 + ALUop2;
+
+        // Set EQ flag to 1 if ALUop1 is equal to ALUop2, otherwise 0
+        EQ = (ALUop1 == ALUop2);
+    end
+```
+- **ALU**: ALU performs arithmetic and logical operations. In this implementation, we focus on:
+    - Addition of two 32-bit operands
+    - Equality comparison to toggle a flag for branch decisions
+    - Features:
+        - Combinational Logic: Uses `always_comb` to ensure purely combinational behaviour
+        - Addition: adds two 32-bit operands and outputs the result
+        - Equality Flag: Sets the `EQ` flag to `1` if operands are equal, otherwise `0`
+     
+```SV
+    logic [31:0] register [31:0]; // Register array: 32 registers, each 32 bits wide
+
+    assign RD1 = register[AD1];   // Read data from register[AD1]
+    assign RD2 = register[AD2];   // Read data from register[AD2]
+
+    always_ff @(posedge clk) begin
+        if (WE3 && AD3 != 5'b0) begin
+            register[AD3] <= WD3;  // Write to register AD3
+        end
+    end
+```
+
+- **RegisterFile**: A memory array consisting of 32 registers, each 32 bits wide. This version supports:
+    - Two read ports to read data from register asynchronously
+    - One write port to write data into a register synchronously on the rising edge of the clock
 
 
+**Design Considerations**:
+Below are some  explanations of the implementation I decided to use for my modules
+
+1. **Zero Register Protection:**
+- The zero register (`x0`) is hardwired to `0` and cannot be modified. This behaviour is enforced by the condition `AD3 != 5'b0` in the RegisterFile
+2. **Combinational vs Sequential Logic:**
+   - The ALU uses `always_comb` for purely combinational operations.
+   - The `RegisterFile` uses `always_ff` to ensure synchronous updates to the registers.
+3. **Expandability:**
+   - Additional ALU operations (e.g., subtraction, bitwise operations) can be added by extending the `always_comb` block in the ALU.
+
+ 
 #### Control Unit 
 - [Added controlunit](https://github.com/aa6dcc/RISC-V-Team2/commit/5fa1a412a6342c5cc21ca651c8444c2814a2f9e5)
 - [Fixed the control unit testbench and brought in the new doit.sh script](https://github.com/aa6dcc/RISC-V-Team2/commit/5773432255b8a4a536ed3b52fe3cfc900075aa9f)
