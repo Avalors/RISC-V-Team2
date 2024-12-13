@@ -10,7 +10,7 @@
 - I was also responsible to doing the testbenching for the **cache** and **branch prediction** modules
 - I was in charge of implementing the **complete RV32I instruction set** and did testbenching with assembly codes for every instruction. 
 
-- I was also in charge of debugging as a team both in-person and online using the VScode liveshare feature and therefore some commit were made by my respective team members however I contributed in editing on their IDE directly with this liveshare feature.
+- I was responsible for team debugging both in person and online using the VS Code Live Share feature. This allowed me to directly contribute by editing code on my teammates' IDEs during collaboration sessions, although some commits were made by them.
 
 ## Contributions
 
@@ -41,42 +41,26 @@ work, for I have said enough.
 
 (Please check it out [here](../../tb), if you haven't already!)
 
+### Lab 4
+
+- [RegisterFile, ALU, and MUX done](https://github.com/aa6dcc/RISC-V-Team2/commit/c84f24871c5a7911610828e2e62cf69224e74bcf)
+- [Added controlunit](https://github.com/aa6dcc/RISC-V-Team2/commit/5fa1a412a6342c5cc21ca651c8444c2814a2f9e5)
+
 ### Single-Cycle
 
-- [Finished implementation of lab4.](https://github.com/booth-algo/RISC-V-T24/commit/7849572c0b5ffa63201225f986d0f0a1d55131a0)
-- [Debugged controlunit.sv to pass 000-020*](https://github.com/booth-algo/RISC-V-T24/commit/466bace0340ff066dbb1aa08de4ab3a05c139f4f)
 
-\* 000-020 refer to the tests in [`tb/c`](../../tb/c)
 
 ### Pipeline
 
-- [Implemented stalling](https://github.com/booth-algo/RISC-V-T24/commit/148bc5501a4bda881a9439e73051a85bc7e8068b)
-- [Co-solved the lw hazard](https://github.com/booth-algo/RISC-V-T24/commit/a274b6a0809ebd906d5dca6ac9c0f9434b25e5f5)
-- [Co-solved the data memory edge case](https://github.com/booth-algo/RISC-V-T24/commit/3b5122d68dd4ef15d340c3e45828db638e97da53)
 
-I worked with Kevin very closely in the pipeline process, primarily in debugging.
 
 ### Cache
 
-- [Finished implementation of DM cache](https://github.com/booth-algo/RISC-V-T24/commit/d2e5dc3ac3e5e3af0489dc1b36680a3acf4d5915). 
-Co-authored by Kevin. 
-- [**Solved the edge case of byte addressing**](https://github.com/booth-algo/RISC-V-T24/commit/2060b0ae0431c7bc4b65d7454ebe4685415ae7da)
 
-The first was co-authored with Kevin. I would also recommend checking out the
-last commit (#25), if you had to check one, in which I also wrote the
-[data analysis script](../../tb/analyse.py).
 
 ## Special Design Decisions
 
-> "Any fool can write code that a computer can understand. 
-> Good programmers write code that humans can understand." (Martin Fowler)
 
-The [`def.sv`](../../rtl/def.sv) is a great example to illustrate the point of
-translating machine 1s and 0s into human readable text. This also allowed the
-control unit and the other unit(s) to share a common interface.
-
-Please see the [testing section](../team_statement_sections/testing.md) for
-more information on the unique testing decisions that I have made.
 
 ## What I learned
 
