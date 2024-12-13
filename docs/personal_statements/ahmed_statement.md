@@ -13,9 +13,9 @@
     - [Lab 4](#lab-4)
         - [program counter](#program-counter)
         - [instruction memory](#instruction-memory)
-        - [sine extension 1](#sine-extension-1)
+        - [sign extension 1](#sign-extension-1)
     - [Single Cycle](#Single-cycle)
-        - [sine extension 2](#sine-extension-2)
+        - [sign extension 2](#sign-extension-2)
         - [data memory](#data-memory)
         - [pdf debugging](#pdf-debugging)
     - [Pipeline](#pipeline)
@@ -33,23 +33,28 @@
 - [Next steps](#Next-steps)
 ---
 ## Summary of Contributions
+I implemented the **program counter** and **data memory** as well as implemented the **pipelining** logic including for: **flushing**, **stalling** and **forwarding** . I resolved all the conflicts when implmenting the single-cycle full RISCV ISA onto the pipeline and made significant contributions to the **sign extension unit**. I created the initial **instruction ROM** built off Jihwans inital model, which was later replaced by Elsons and attempted to implement **interrupts**.
 ---
 ### Lab 4
 ---
 
 #### Program Counter
 ##### *Relevant commits*:
+[First program counter module](https://github.com/aa6dcc/RISC-V-Team2/commit/35177ef1759cfaea8f672c708ca85c8c010a4a60)
+[PC + 1 increment mistake](https://github.com/aa6dcc/RISC-V-Team2/commit/306a1e37a619b20294fffa5b6be66cb0042b2f7a)
+[Program counter (PC + 1) test bench](https://github.com/aa6dcc/RISC-V-Team2/commit/2cbe667ca7a5dcf7f780d5d2dc4c6b26b74b8024#diff-295f2854128a5ffd825544bdef9db361230450e660843b1886b80471349a7c1c)
+
 
 #### instruction Memory
 ##### *Relevant commits*:
 
-#### sine extension 1
+#### sign extension 1
 ##### *Relevant commits*:
 
 ---
 ### Single cycle
 ---
-#### sine extension 2
+#### sign extension 2
 ##### *Relevant commits*:
 
 #### data memory
