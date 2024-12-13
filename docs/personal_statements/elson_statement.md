@@ -38,7 +38,7 @@
 
 ### Pipeline
 
--[Pipelining registers implemented and started the hazard unit](https://github.com/aa6dcc/RISC-V-Team2/commit/34617373aca98c16134c2862ff86bcb8c228c509)
+- [Pipelining registers implemented and started the hazard unit](https://github.com/aa6dcc/RISC-V-Team2/commit/34617373aca98c16134c2862ff86bcb8c228c509)
 - [Added WR3Src signal into pipeline](https://github.com/aa6dcc/RISC-V-Team2/commit/47a367c96ebce4d240b61f4a011d2dea61e3c596)
 - [Fixed minor signals spelling bugs: still not functional
 ](https://github.com/aa6dcc/RISC-V-Team2/commit/d3df6d10afd85b6dbf4cccfc0d6f6bc7fa467649)
@@ -48,7 +48,7 @@
 
 Here I worked on a initial testing branch for cache branched from Single-Cycle whilst pipeline was still in development. Then I synced the cache modules to be integrated into the full pipeline RV32I
 
--[Edited direct mapped cache.sv, added testbenches and asm code for testing](https://github.com/aa6dcc/RISC-V-Team2/commit/7a61fd2918b27e52af0d4cc86411fd7ff472ffdd)
+- [Edited direct mapped cache.sv, added testbenches and asm code for testing](https://github.com/aa6dcc/RISC-V-Team2/commit/7a61fd2918b27e52af0d4cc86411fd7ff472ffdd)
 - [Direct-mapped cache completed](https://github.com/aa6dcc/RISC-V-Team2/commit/ca013aad029b479c8335ec7aebd2990b17f65c63)
 - [Completed branch prediction testbench and tested: Works as individual module](https://github.com/aa6dcc/RISC-V-Team2/commit/86b56e701d798e3d486f71c5a5f6acf23f11edd5)
 - [Merged full pipeline RV32I onto DM cache and tested a TW cache: TW cache not completely successful yet
@@ -75,7 +75,7 @@ One mistake was not implementing the RET instruction properly in the control uni
 
 - Investigate more use of the co-authoring function on GitHub for clearer contribution tracking.
 - Using squashed commits so we can still commit without affecting the main branch history.
-- We should have used tags instead of branches for our different versions
+- We should have used tags instead of branches for our different versions but branches might have worked for us based on the delegation of our work in doing pipeline whilst someone else works on cache and further enhancements 
 
 
 
