@@ -70,7 +70,7 @@ void runSimulation(int cycles = 1)
 
 I implemented a SystemVerilog module called `TopLevelCPU.sv` which takes clock and reset inputs and outputs the value of register a0, implementing a simple processor, along with register file access and control logic.
 
-I integrated several modules such as the program counter, control unit, instruction memory, sign extension, ALU, register file. 
+I integrated several modules such as the program counter, control unit, instruction memory, sign extension, ALU, register file. For the ALU, I used RD1 and ALUop1 as operands, which was later amended to ALUop1 and ALUop2. 
 I also had to define a variety of different internal signals, where the 32-bit signals indicate we are implementing a 32-bit architecture. 
 ```SV
 logic [31:0] PC;                      // Program Counter
@@ -127,7 +127,111 @@ I thought the direct register visibility was important for testing - it makes it
 
 #### Doit.sh script
 
+I fully implemented the `doit.sh` script for lab 4, that is a bash script that automates the process of running the team's CPU testbenches. It handles compilation of SystemVerilog code using Verilator, builds the resulting C++ project, and executes tests while tracking their success/failure. The script essentially creates a complete automated testing pipeline for your CPU implementation.
+
+First, I had to implement the directory structure setup, which required changing folder names and locations in our repo. Below, I simply made sure testbenches are in the test directory. 
+```bash
+SCRIPT_DIR=$(dirname "$(realpath "$0")")
+TEST_FOLDER=$(realpath "$SCRIPT_DIR/test")
+RTL_FOLDER=$(realpath "$SCRIPT_DIR/../rtl")
+```
+The verilator command below compiles SystemVerilog to C++, links with the Google Test framework, enables waveform tracing and sets up coverage reporting, all key for debugging purposes. 
+```bash
+verilator   -Wall --trace \
+            -cc ${RTL_FOLDER}/${name}.sv \
+            --exe ${file} \
+            -y ${RTL_FOLDER} \
+            --prefix "Vdut" \
+            -o Vdut \
+            -CFLAGS "-isystem /opt/homebrew/Cellar/googletest/1.15.2/include"\
+            -LDFLAGS "-L/opt/homebrew/Cellar/googletest/1.15.2/lib -lgtest -lgtest_main -lpthread" \
+            --coverage
+```
+I also made sure to handle files appropriately, here for example, this instruction either runs all the .cpp files in the test folder or specific files given as arguments.  
+```bash
+if [[ $# -eq 0 ]]; then
+    files=(${TEST_FOLDER}/*.cpp)
+else
+    files=("$@")
+fi
+```
+Regarding the build process, I used parallel compilation (-j) to created files in the obj_dir folder (even though this was eventually placed in the `.gitignore`)
+```bash
+make -j -C obj_dir/ -f Vdut.mk
+```
+For the test results tracking, I maintained a running count of passed/failed tests using bash arithmetic expansion, and then used terminal control codes for colored output, making pass/fail status visually clear.
+```bash
+if [ $? -eq 0 ]; then
+        ((passes++))
+    else
+        ((fails++))
+    fi
+    
+done
+
+if [ $fails -eq 0 ]; then
+    echo "${GREEN}Success! All ${passes} test(s) passed!"
+    exit 0
+else
+    total=$((passes + fails))
+    echo "${RED}Failure! Only ${passes} test(s) passed out of ${total}."
+    exit 1
+fi
+```
+
 #### Assembly instructions
+
+I implemented 3 assembly programs for lab4: `counter.s`, `or.s` and `xor.s`. 
+
+`counter.s` implements a nested loops structure, which allowed us to verify if our CPU was counting all the way up to 255. 
+The value is continuously output through register a0.
+Here,  t1 is a constant holding 255 (0xFF), which acts as the de facto loop boundary. It uses immediate addition from zero register to load the value
+```ASM
+addi    t1, zero, 0xff 
+```
+The inner loop copies counter value to output register, and uses addi for increments. 
+```ASM
+addi    a0, a1, 0           # load a0 with a1
+addi    a1, a1, 1           # increment a1
+```
+For the loop control, we chose to use bne (branch if not equal). The second bne is effectively an unconditional jump since t1 (255) will never equal zero
+```ASM
+bne     a1, t1, iloop       # if a1 = 255, branch to iploop
+bne     t1, zero, mloop     #  ... else always brand to mloop
+```
+
+`or.s` is a simple RISC-V assembly program that demonstrates the OR logical operation. It loads two values and performs a bitwise OR between them.
+For the initial value loading, we load a0 with decimal 15 (binary 00001111)
+```ASM
+main:
+    addi a0, zero, 15   # a0 = 15 (binary: 00001111)
+    addi a1, zero, 10   # a1 = 10 (binary: 00001010)
+    or a0, a0, a1       
+    
+	# EXPECTED OUTPUT = 15 (binary: 00001111)
+```
+and for the second value loading, we load a1 with decimal 10 (binary 00001010)
+```ASM
+addi a1, zero, 10   # a1 = 10 (binary: 00001010)
+```
+then, performs a bitwise OR between a0 and a1, storing result in a0, which in this case gives 0000 1111 in binary or 15 in decimal.
+```ASM
+or a0, a0, a1
+```
+
+`xor.s` is a RISC-V assembly program demonstrating the XOR (exclusive OR) logical operation. 
+At the start, a0 is loaded with 15 (00001111 in binary)
+```ASM
+addi a0, zero, 15   # a0 = 15 (binary: 00001111)
+```
+the second value loads a1 with 10 (00001010 in binary)
+```ASM
+addi a1, zero, 10   # a1 = 10 (binary: 00001010)
+```
+and then we perform a bitwise XOR between a0 and a1, storing result in a0
+```ASM
+xor a0, a0, a1
+```
 
 ### Single Cycle
 
