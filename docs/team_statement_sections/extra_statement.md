@@ -30,6 +30,19 @@ The pipelining stages in order are:
   - Memory
   - Writeback
 
+For the fetch stage:
+  - Branch predictor makes prediction (pred_taken signal)
+  - Program counter uses prediction to speculatively fetch:
+      - If pred_taken: PC = PC + ImmOp
+      - If not pred_taken: PC = PC + 4
+   
+and for the execute stage:
+  - Actual branch outcome (BranchCondE) is compared with prediction
+  - On misprediction:
+      - PCsrcE set to correct path
+      - Flush signal triggered
+      - Pipeline flushed to handle misprediction
+
 ![image](https://github.com/user-attachments/assets/8817e07f-d74a-4832-9221-adf632c221cf)
 
 For the branch prediction module, we set the default state as STRONGLY NOT TAKEN. We had also considered implementing a static predictor with dynamic initial allocation: 
@@ -67,5 +80,21 @@ If branch taken: → STRONGLY_TAKEN
 If branch not taken: → WEAKLY_TAKEN
 
 ![image](https://github.com/user-attachments/assets/6e58928a-7b76-4d47-a1c0-35c150668b10)
+
+If we consider the overall performance:
+  - Misprediction Penalty:
+      - 2 cycles minimum (Fetch and Decode stages must be flushed)
+      - Additional cycles for pipeline refill
+  - Hardware Cost:
+      - 2 bits per predictor state
+      - Additional control logic for state transitions
+
+We also used the assembly file from Lecture 11 to test our branch prediction:
+
+![image](https://github.com/user-attachments/assets/a601b19c-ad53-4a79-9814-8e5e11ff27a5)
+
+The branch_prediction module was implemented relatively fast and was proved successful, but another issue was integrating it correctly.
+
+![WhatsApp Image 2024-12-11 at 22 02 57_81b446a5](https://github.com/user-attachments/assets/44bd6959-c3e1-4a16-9515-41f4826ac7de)
 
 
