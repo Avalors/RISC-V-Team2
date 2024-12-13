@@ -51,7 +51,9 @@ We spent a lot of time editing the control unit, specifically dealing with the R
 
 We struggled to run the PDF test: when using GTKwave, we realised the RET instruction wasn't working. By analysing the machine code, we realised it's a version of the JALR instruction, which we hadn't implemented yet. By adding additional control signals (we added an additional bit to PCSrc to allow feedback from the result signal to the program counter input MUX) and we later realised that our B and J type instructions were not storing return addresses in the register file. We resolved this by adding a MUX to the WD3 input which, using a WD3Src control signal, we enabled PC + 4 to be stored in the register file for our B and J type instructions. 
 
-![image](https://github.com/user-attachments/assets/93437a5e-860b-4a46-8a74-2e71d3f5343f)
+![image](https://github.com/user-attachments/assets/098bf343-c304-49dd-80e7-5efa64875fd2)
+
+As shown above there is an additional implementation for the ret instructions under the JALR instruction, since ret is a special case of JALR. 
 
 Here is an example of how we implemented these instructions case by case and according to the input signals.
 
