@@ -71,6 +71,18 @@ void runSimulation(int cycles = 1)
 I implemented a SystemVerilog module called `TopLevelCPU.sv` which takes clock and reset inputs and outputs the value of register a0, implementing a simple processor, along with register file access and control logic.
 
 I integrated several modules such as the program counter, control unit, instruction memory, sign extension, ALU, register file. 
+I also had to define a variety of different internal signals, where the 32-bit signals indicate we are implementing a 32-bit architecture. 
+```SV
+logic [31:0] PC;                      // Program Counter
+logic [31:0] instr;                   // Current instruction
+logic [31:0] ImmOp;                   // Sign-extended immediate value
+logic [31:0] ALUop1, ALUop2, ALUout;  // ALU operands and result
+logic EQ;                             // Equality output from ALU
+logic [31:0] RD1, RD2, WD3;           // Register file read/write data
+logic RegWrite, ALUsrc, PCsrc;        // Control signals
+logic [1:0] ImmSrc;                   // 2-bit Immediate source signal
+logic [2:0] ALUctrl;
+```
 For example, the control unit takes the 7-bit opcode and equality flag to generate all control signals. 
 ```SV
 ControlUnit ControlUnit (
@@ -83,10 +95,35 @@ ControlUnit ControlUnit (
     .ALUctrl(ALUctrl)       // ALU control signal
 );
 ```
+For example, the register file below uses a classic 3-port register design with synchronous write and asynchronous read. 
+```SV
+RegisterFile RegFile (
+    .clk(clk),
+    .WE3(RegWrite),         // Write Enable
+    .AD1(instr[19:15]),     // rs1 - source register 1
+    .AD2(instr[24:20]),     // rs2 - source register 2
+    .AD3(instr[11:7]),      // rd - destination register
+    .WD3(WD3),              // Write data
+    .RD1(RD1),              // Read data 1
+    .RD2(RD2)               // Read data 2
+);
+```
+For instruction memory, we can see we are dealing with an asynchronous read with 5-bit addressing (32 instructions maximum) and 4-byte instructions. The data memory hadn't been implemented yet, so this ROM is for logic operations. 
+```SV
+rom #(
+    .ADDRESS_WIDTH(5),
+    .DATA_WIDTH(32)
+) InstructionMemory (
+    .clk(clk),
+    .addr(PC[6:2]), // Address from PC (word-aligned)
+    .instr(instr)
+);
+```
 Below, we use a blocking assignment to directly access the register 10 (a0), register 10 being an output register.
 ```SV
 assign a0 = RegFile.register[10];
 ```
+I thought the direct register visibility was important for testing - it makes it easier to handle verification. 
 
 #### Doit.sh script
 
