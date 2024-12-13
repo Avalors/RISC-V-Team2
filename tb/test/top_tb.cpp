@@ -70,6 +70,20 @@ TEST_F(CpuTestbench, cache_coherence)
     EXPECT_EQ((int)top->a0, 0x2);
 }
 
+TEST_F(CpuTestbench, evictions)
+{
+    system("./compile.sh --input asm/090-eviction.s");
+    
+    runSimulation(50);
+
+    int hits = top->total_hits;
+    int misses = top->total_misses;
+
+    std::cout << "After write - Hits: " << hits << ", Misses: " << misses << std::endl;
+    
+    EXPECT_EQ((int)top->a0, 0x3);
+}
+
 
 int main(int argc, char **argv)
 {
