@@ -135,26 +135,27 @@ Here are the relevant commands. More can be found in the documentation.
 | Lab 4        | Program Counter               |                  |                  | x                         |                  |
 |              | ALU                           |  x                 |  x                |                        |                  |
 |              | Register File                 |                    | x                 |                        |                  |
-|              | Instruction Memory            |                    |                  |                          | x               |
-|              | Control Unit                  |                    |                  |  x                        |                |
-|              | Sign Extend                   |                    |                  |                          |x               |
-|              | Top                           |   x                 |                |                          |                  |
-|              | Testbench                     |   x                 |                |                          |                  |
+|              | Instruction Memory            |                    |                  |                         |  x               |
+|              | Control Unit                  |                    |                  |  x                      |                  |
+|              | Sign Extend                   |                    |                  |                         |  x               |
+|              | Top                           |   x                 |                |                           |                 |
+|              | Testbench(Top)                |   x                 |                 |                          |                  |
+|              | Testbench                     |   x                 |     x           |    x                     |   x              |
 |              | Doit.sh                       |   x                |      x           |                          |                  |
-| Single Cycle | Data Memory                   |   x                |    x             |    x                    |                  |
-|              | Program Counter               |                    |                  |   x                      |                  |
+| Single Cycle | Data Memory                   |   x                |    x             |    x                     |                  |
+|              | Program Counter               |                    |                  |   x                      |   x              |
 |              | ALU                           |   x                |                  |                          |                  |
 |              | Register File                 |                    |    x             |                          |                  |
-|              | Instruction Memory            |                    |                  |     x                    |                  |
+|              | Instruction Memory            |                    |                  |     x                    |   x              |
 |              | Control Unit                  |                    |    x             |                          |                  |
-|              | Sign Extend                   |                    |                  |       x                  |                  |
-|              | Verification                  |                    |     x            |                          |       x          |
+|              | Sign Extend                   |                    |                  |       x                  |   x              |
+|              | Verification                  |                    |     x            |                          |   x              |
 |              | Doit.sh                       |   x                |                  |                          |                  |
 |              | Top                           |                    |       x          |                          |                  |
 | Pipeline & Cache | Pipeline Registers        |                    |    x             |    x                     |                  |
-|              | Hazard Unit                   |                    |                  |   x                      |                  |
+|              | Hazard Unit                   |                    |                  |    x                     |                  |
 |              | Testbenching & Integration    |                    |   x              |         x                |                  |                  
-|              | One-way associative cache     |       x            |   x              |                          |                  |
+|              | One-way associative cache     |       x            |   x              |                          |   x              |
 |              | Two-way associative cache     |       x            |                  |                          |                 |
 | Extra        | Branch Prediction             |   x                |                  |                         |                  |
 |              | Interrupts                    |                    |                  |         x               |                  |
