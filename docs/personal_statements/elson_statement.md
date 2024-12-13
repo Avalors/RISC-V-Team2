@@ -41,7 +41,7 @@ ________________________________________________________________________________
 
 - I was responsible for team debugging both in person and online using the VS Code Live Share feature. This allowed me to directly contribute by editing code on my teammates' IDEs during collaboration sessions, although some commits were made by them.
 
-- I also introduced the VSCode Liveshare feature to my team for us to work more efficiently on one IDE durng debugging sessions
+- I also introduced the VSCode Liveshare feature to my team for us to work more efficiently on one IDE during debugging sessions
 
 ## Contributions
 
