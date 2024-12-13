@@ -206,3 +206,18 @@ end_tests:
     nop
 ```
 
+```C
+TEST_F(InstrTestbench, RTypeTest)
+{
+    // Compile the assembly code r-type.s
+    system("./compile.sh --input asm/01-R_type.s");
+    
+    runSimulation(1000);
+
+    //value a0 = 150 is arbitrary value that I set to check all R-type instr
+    //All checks are done in the asm code itself and this "special" value 150 only seen if all are passed
+    EXPECT_EQ((int)top->a0, 150);
+}
+```
+
+The way this was implemented was testing the individual instruction in assembly language and using `bne` to branch to `fail_test` if it was not equal to the expected value but it will `jump` to the next test if it is equal to the expected value. 
