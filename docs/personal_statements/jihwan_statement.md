@@ -64,7 +64,7 @@ As shown above the entire datapath of the CPU has been modified slightly with an
 ---
 ### Cache
 
-Me and Antoine started working on the direct-mapped Cache separately, and I successfully implemented up to the read logic of the cache. However, we continued more work on Antoine's implementation. Additionally Elson finalised finishing up the module with its respective testbench.
+Me and Antoine started working on the direct-mapped Cache separately, and I successfully implemented up to the read logic of the cache after going through Antoine's implementation which helped me alot since he figured out the implementation first. We continued more work on Antoine's implementation, finally Elson finished up the module with its respective testbench.
 
 Below is a diagram of the Cache that I was planning on implementing:
 
