@@ -6,6 +6,8 @@
 
 **Github username:** 3lson  
 
+________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
 ## Summary
 
 - I was responsible for the **ALU**, **Control Unit**, **RegisterFile**, and **InstrMem** modules and writing the respective **testbenches** for them
