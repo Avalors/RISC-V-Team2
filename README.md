@@ -142,7 +142,7 @@ Here are the relevant commands. More can be found in the documentation.
 |              | Testbench(Top)                |   x                 |                 |                          |                  |
 |              | Testbench                     |   x                 |     x           |    x                     |   x              |
 |              | Doit.sh                       |   x                |      x           |                          |                  |
-| Single Cycle | Data Memory                   |   x                |    x             |    x                     |   x              |
+| Single Cycle | Data Memory                   |   x                |    x             |    x                     |               |
 |              | Program Counter               |                    |                  |   x                      |   x              |
 |              | ALU                           |   x                |                  |                          |                  |
 |              | Register File                 |                    |    x             |                          |                  |
