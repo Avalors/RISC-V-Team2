@@ -153,3 +153,17 @@ Planning the week out:
 ![image](https://github.com/user-attachments/assets/89235d3d-c5cf-495f-a5f1-e8f1d3571e32)
 
 ![WhatsApp Image 2024-12-11 at 17 50 54_a770b903](https://github.com/user-attachments/assets/e6f9fa33-87fe-43b5-979d-d0a94055bdc2)
+
+## Team meetup (12/12)
+  - Worked on admin work
+  - Added finishing touches to pipelining
+  - Worked on 1-way and 2-way cache
+  - Branch prediction
+
+## Team meetup(13/12)
+  - Finished everything
+  - Synced the different branches (when relevant)
+  - Updated personal statements
+  - Did team statements
+  - Worked on interrupts and integrated branch prediction
+  - DONE!
