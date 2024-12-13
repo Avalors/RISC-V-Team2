@@ -71,58 +71,187 @@ A memory address of 32 bits allows for both modes of addressing, controlled by a
 
 Finally an internal `HIT` signal was implemented, to ease the debugging, enhance testing and calculate the performance increase specified later in the results.
 
-The full code can be located here: [`dm_cache.sv`](../../rtl/cache.sv)
+The cache implements comprehensive performance counters:
+
+```SV
+output logic [31:0] total_accesses,
+output logic [31:0] total_hits,
+output logic [31:0] total_misses
+```
+
+A hit occurs when the cache line is valid and the tag matches the incoming address tag:
+```SV
+if (cache_mem[set].valid && cache_mem[set].tag == tag) begin
+    hit_reg = 1'b1;
+```
+
+whereas on a miss:
+  - the miss counter increments
+  - the cache line is updated with new data
+  - the cache line is updated with new data
+  - the tag is updated
+
+```SV
+miss_counter <= miss_counter + 1;
+cache_mem[set].valid <= 1'b1;
+cache_mem[set].tag <= tag;
+cache_mem[set].data <= RD;
+```
+
+We also had to make sure to synchronise the hit signal at the end of the module:
+```SV
+ always_ff @(posedge clk) begin
+        hit <= hit_reg;
+    end
+```
+
+The full code can be located here: [`cache.sv`](../../rtl/cache.sv)
 
 ### [Read Logic](../../rtl/cache.sv)
 
 The data is read from cache if both:
 
   - the block is valid (`VALID` = 1) 
-  - the `TAG` matches the input `ADDRESS` signal
+  - the `TAG` matches the input address signal
 
-The 4 bytes specified in the data are then forwarded to the output signal `OUT`, 
-and `HIT` is set to high. Otherwise, the output signal is read from the 
-`DATA MEMORY` through the signal read_data.
+The cache implements multiple read modes which support byte loading, halfword loading and word loading. 
+
+```SV
+case (AddrMode)
+    3'b000: out = {{24{cache_mem[set].data[7]}}, cache_mem[set].data[7:0]};   // LB
+    3'b001: out = {{16{cache_mem[set].data[15]}}, cache_mem[set].data[15:0]}; // LH
+    3'b010: out = cache_mem[set].data;                                         // LW
+```
 
 ### [Write Logic](../../rtl/cache.sv) 
 
+The cache implements write operations with byte granularity:
+
 ```SV
-always_ff @(posedge clk) begin
-    if (write_en) begin
-        // Pulls data in from sw/sb
-        cache[set].valid <= 1;
-        cache[set].tag <= addr[31:5];
-        
-        case (addr_mode)
-            // Byte addressing
-            `DATA_ADDR_MODE_B, `DATA_ADDR_MODE_BU: begin
-                case (byte_offset)
-                    2'b00:  cache[set].byte0 <= write_data[7:0];
-                    2'b01:  cache[set].byte1 <= write_data[7:0];
-                    2'b10:  cache[set].byte2 <= write_data[7:0];
-                    2'b11:  cache[set].byte3 <= write_data[7:0];
-                endcase
+// Write logic
+    always_ff @(posedge clk or posedge reset) begin
+        if (reset) begin
+            // Reset all cache entries
+            for (int i = 0; i < 8; i++) begin
+                cache_mem[i].valid <= 1'b0;
+                cache_mem[i].tag <= 27'b0;
+                cache_mem[i].data <= 32'b0;
             end
-            // Word addressing
-            default: begin
-                cache[set].byte0 <= write_data[7:0];
-                cache[set].byte1 <= write_data[15:8];
-                cache[set].byte2 <= write_data[23:16];
-                cache[set].byte3 <= write_data[31:24];
+            // Reset performance counters
+            access_counter <= 0;
+            hit_counter <= 0;
+            miss_counter <= 0;
+            hit <= 1'b0;
+        end else begin
+            // Update performance counters
+            // Only update performance counters for load/store operations
+            if (AddrMode == 4'b0010 || AddrMode == 4'b0111 || AddrMode == 4'b0000 || AddrMode == 4'b0001 || AddrMode == 4'b0101 || AddrMode == 4'b0110) begin
+                access_counter <= access_counter + 1;
+                if (cache_mem[set].valid && cache_mem[set].tag == tag) begin
+                    hit_counter <= hit_counter + 1; // Cache hit
+                end else begin
+                    miss_counter <= miss_counter + 1; // Cache miss
+                    // Update cache on miss (simulate memory fetch)
+                    cache_mem[set].valid <= 1'b1; // Mark as valid
+                    cache_mem[set].tag <= tag;    // Update tag
+                    cache_mem[set].data <= RD;   // Fetch data from memory
+                end
             end
-        endcase
+
+            // Handle write operations
+            case (AddrMode)
+                4'b0101: begin // SB (store byte)
+                    case (byte_offset)
+                        2'b00: cache_mem[set].data[7:0]   <= WD[7:0];
+                        2'b01: cache_mem[set].data[15:8]  <= WD[7:0];
+                        2'b10: cache_mem[set].data[23:16] <= WD[7:0];
+                        2'b11: cache_mem[set].data[31:24] <= WD[7:0];
+                    endcase
+                end
+                4'b0110: begin // SH (store halfword)
+                    case (byte_offset[1]) // Upper or lower halfword
+                        1'b0: cache_mem[set].data[15:0] <= WD[15:0];
+                        1'b1: cache_mem[set].data[31:16] <= WD[15:0];
+                    endcase
+                end
+                4'b0111: begin // SW (store word)
+                    cache_mem[set].data <= WD;
+                end
+            endcase
+        end
     end
 ```
 
 The write logic is split into two modes: byte and word addressing. Word addressing is the more general case in the testbenches written therefore this 
 was set to default. 
 
-In word addressing, the input signal, `write_data[]`, is written to the word, 
-whereas in byte addressing, it is written to the specified byte.
+We implemented a write-through policy (writes update both cache and memory) with direct memory update on writes. 
 
 ## [Two-Way Set Associative Cache](../../rtl/tw_cache.sv) 
 
-We implemented a LRU policy.
+The tag was changed from 27 to 28 bits (to compensate for fewer sets), and the number of sets went from 8 to 4. The cache line was a total of 61 bits.
+We also managed to implement a LRU policy:
+```SV
+logic [NUM_SETS-1:0] lru_bits;  // 0 means way 0 is LRU, 1 means way 1 is LRU
+```
+which was managed accordingly:
+```SV
+if (hit) begin
+    hit_counter <= hit_counter + 1;
+    // Update LRU - mark the other way as LRU
+    lru_bits[set] <= ~hit_way;
+end
+```
+
+The read logic of the two-way set associative cache was as follows:
+```SV
+for (int i = 0; i < NUM_WAYS; i++) begin
+    if (cache[set][i].valid && cache[set][i].tag == tag) begin
+        way_hits[i] = 1'b1;
+        hit = 1'b1;
+        hit_way = i[0:0];
+        out = cache[set][i].data;
+    end
+end
+```
+
+The read operation:
+  - Checks both ways in parallel
+  - Sets hit flags for matching ways
+  - Records which way hit for LRU update
+
+
+On the other hand, the write operation was as follows:
+For a miss:
+```SV
+miss_counter <= miss_counter + 1;
+// On miss, update the LRU way
+cache[set][lru_bits[set]].data <= RD;
+cache[set][lru_bits[set]].valid <= 1'b1;
+cache[set][lru_bits[set]].tag <= tag;
+```
+For a hit:
+```SV
+if (hit && AddrMode == 3'b111) begin  // Store operation
+    case (byte_offset)
+        2'b00: cache[set][hit_way].data[7:0] <= WD[7:0];
+        // ... other byte offsets
+    endcase
+end
+```
+
+We maintained a write-through policy which updates both cache and memory on an LRU based replacement. 
+
+Compared to the direct-mapped cache, the main improvements were:
+  - Conflict Resolution
+      - Two ways per set reduce conflict misses
+      - LRU policy for intelligent replacement
+  - Address Space Mapping
+      - Larger tag field (28 bits vs 27 bits)
+      - More flexible mapping with two ways
+  - Set Organization
+      - 4 sets × 2 ways = 8 total cache lines
+      - Same total capacity, better utilization
 
 ![image](https://github.com/user-attachments/assets/6c9e37fb-a3a4-4239-9b5b-4fa671f2c288)
 
