@@ -336,16 +336,18 @@ By using specific test code, I monitored cache hits and misses. For example, if 
 
 2. Hit and Miss Analysis:
 During testing, the results showed that the cache experienced:
+<img width="692" alt="Screenshot 2024-12-13 at 5 45 17 PM" src="https://github.com/user-attachments/assets/5d15187c-4285-40c9-9491-de1e9a8b1822" />
 4 misses and 3 hits when using the store instructions.
 This was because the store instructions caused the cache to miss, but subsequent loads from the same address hit due to temporal locality (i.e., data is reused shortly after it is written).
 Upon further investigation, I found that if you preloaded data in the program.hex file (which initializes memory), the cache hit behavior improved:
+<img width="691" alt="Screenshot 2024-12-13 at 5 45 28 PM" src="https://github.com/user-attachments/assets/f8b5a292-981f-4df4-af46-3f6079d2044a" />
 2 hits and 1 miss were observed, which matched the expected behavior.
 The first load instruction resulted in a miss, but the second load instruction hit, demonstrating spatial locality (i.e., nearby memory locations are likely to be accessed soon after).
 
-3. Integration Testing with Full Pipeline:
+4. Integration Testing with Full Pipeline:
 After ensuring the cache worked on its own, I integrated the direct-mapped cache with the full RV32I pipeline, running tests to ensure the cache interacts properly within the context of the complete processor pipeline.
 
-4. Test Results and Observations:
+5. Test Results and Observations:
 I was able to observe cache behavior through tools like gtkwave, which allowed me to visualize cache accesses in terms of hits and misses.
 For example, when I executed store/load instructions, I could see the cache miss initially due to the store, but subsequent loads would hit, confirming the expected behavior based on the locality principles.
 
