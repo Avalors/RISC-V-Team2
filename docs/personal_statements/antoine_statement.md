@@ -381,8 +381,11 @@ Spatial Locality:
   I successfully implemented a direct-mapped cache with performance monitoring. 
 
   Firstly, a direct-mapped cache was designed with a cache line of 60 bits:
+  
 	- 32 (least significant bits) assigned to `DATA` 
+ 
 	- 27 (next significant bits) assigned to `TAG`
+ 
 	- 1 (most significant bit) assigned to `VALID` 
 
  I decided to use a packet structure to create a clean, organized cache entry structure. This makes the code more maintainable and clearly shows the components of each cache line.
