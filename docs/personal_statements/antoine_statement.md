@@ -40,9 +40,13 @@ To see a chronological evolution of my contributions, please find my logbook att
 For lab 4, I fully implemented the top level testbench called `top-lab4_tb.cpp` (before later being renamed `top_tb.cpp`), which was a comprehensive testbench for verifying the functionality of the CPU module using Google Test and Verilator frameworks.
 
 It ran four different tests:
+
     - InitialStateTest
+    
     - ResetBehaviourTest
+    
     - InstructionExecutionTest
+    
     - FullCycleTest
 
 I got to learn about the basics of testbenching, such as:
