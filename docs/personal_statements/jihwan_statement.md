@@ -29,15 +29,32 @@ As of now, for lab 4 we decided that it was easier to load the instructions into
 
 The method that we used to decipher the assembly code was given to us in the lab4 repo, which was essentially an online assembly generator site.
 
-Later down the line, instead of reading off of it from a .mem or .hex file, we implemented a more technical ROM that actually could read the files from a given file location.
+In order to implement the ROM Module, I had to add appropriate paramters and input signals, such as the clk, addr and instr. We also had to make early on in the project that we agree on the naming of the signals and make sure that they are used consistently throughtout the group project.
+
+![image](https://github.com/user-attachments/assets/70298701-886b-430a-9e98-0a74974fc909)
+
+Below is code of the 7 instructions that correspond to the given assembly code above.
+
+![image](https://github.com/user-attachments/assets/52c6d9eb-2177-446c-86a0-34061cf092bd)
+
+Later down the line, instead of reading off of it from a .mem or .hex file, we implemented a more technical ROM that actually could read the files from a given file location. We also made sure to initialize all of the contents inside the ROM to its default value of zero for each cell. This effectively prevented any sort of bugs that could have risen in case there was already content within the ROM before use.
 
 The implementation of the sign extension module required 2 instructions, the I-type and the B-type instructions. I managed to implement the I-type instructions as shown in the following commit(At the time we were all working on Antoine's laptop): [Sign_extension](https://github.com/aa6dcc/RISC-V-Team2/commit/f332eedb3b22298e2e9759f0b920a9d4794d299e)
+
+The sign extension module was fairly simple, since I only implemented the I-type instruction that effectively copy-pasted the MSB up to 32 bits:
+
+![image](https://github.com/user-attachments/assets/ee01ef8c-8a95-4a7d-aa84-e4e145a78b22)
 
 Again as with most modules as we progressed further into implementing the goals, many changes have been applied and added.
 
 Along with the 2 initial modules that I have implemented, I also created the testbenches for both modules: [ROM and Sign extension Testbench](https://github.com/aa6dcc/RISC-V-Team2/commit/a1d1e32ab6dbc1e5fb438f5bcfbbe530a0d8f907#diff-b3d3cff2c77df15f509d38ec33d3a1ba5be630fabbccbae9ccb7bed8928e5900).
 
-The ROM testbench was fairly simple, essentially going over the ROM and making sure that the instructions were all contained. The sign extension testbench on the other hand required multiple test cases to make sure that the output of the sign extension matched the corresponding ImmSrc inputs correctly. As can be observed the testbench was for a later version of the sign extension that Elson has additionally implemented(Such as the B-type sign extension)
+I've learned the fundamentals behind testing whilst implementing these testbenches, such as initiating a specific test and evaluating it using the EXPECT_EQ keyword:
+
+Below is a given example of one of the testbenches inside the ROM testbench that I have implemented that includes evaluation of the matching of all the 7 instructions given:
+![image](https://github.com/user-attachments/assets/dba071e2-df10-4676-9105-adcbd6bfd0cd)
+
+The sign extension testbench on the other hand required multiple test cases to make sure that the output of the sign extension matched the corresponding ImmSrc inputs correctly. As can be observed the testbench was for a later version of the sign extension that Elson has additionally implemented(Such as the B-type sign extension)
 
 ---
 ### Single Cycle CPU
